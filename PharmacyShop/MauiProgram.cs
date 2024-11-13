@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
+using PharmacyShop.ViewModels;
+using PharmacyShop.Views;
 
 namespace PharmacyShop
 {
@@ -18,7 +20,8 @@ namespace PharmacyShop
 #if DEBUG
 			builder.Logging.AddDebug();
 #endif
-
+			builder.Services.AddSingleton<CheckoutViewModel>();
+			builder.Services.AddTransient<CheckoutPage>();
 			return builder.Build();
 		}
 	}

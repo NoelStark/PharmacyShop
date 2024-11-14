@@ -22,7 +22,11 @@ namespace PharmacyShop
 
             builder.Logging.AddDebug();
 
-
+#if DEBUG
+			builder.Logging.AddDebug();
+#endif
+			builder.Services.AddSingleton<CheckoutViewModel>();
+			builder.Services.AddTransient<CheckoutPage>();
 			return builder.Build();
 		}
 	}

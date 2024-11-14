@@ -3,10 +3,33 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PharmacyShop.Views.MedicationOverviewPage"
              Title="MedicationOverviewPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <ScrollView>
+        <VerticalStackLayout>
+            <SearchBar Placeholder="Search product" Margin="0,0,0,10" Text="{Binding SearchText}" SearchCommand="{Binding SearchProductCommand}" />
+            
+            <CollectionView ItemsSource="{Binding Medicine}" SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame HeightRequest="90" BorderColor="LightGray" Margin="0,0,0,10" Padding="10">
+                            <Grid ColumnDefinitions="Auto, *, Auto" VerticalOptions="Center" HorizontalOptions="FillAndExpand">
+
+                                <Image Source="{Binding ImageUrl}" WidthRequest="50" HeightRequest="50" VerticalOptions="Center" Grid.Column="0" />
+
+                                <VerticalStackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand" Grid.Column="1" Margin="10,0,0,0">
+                                    <Label Text="{Binding Name}" FontSize="Medium" FontAttributes="Bold" />
+                                    <HorizontalStackLayout Spacing="5">
+                                        <Label Text="{Binding Dose}" FontSize="Small" VerticalOptions="Center" />
+                                        <Label Text="{Binding Description}" FontSize="Small" VerticalOptions="Center" />
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
+
+                                <Label Text="{Binding Price, StringFormat='{0} kr'}" FontSize="Medium" TextColor="Green" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="2" Margin="0,0,80,0" />
+                                <Button Text="Buy" TextColor="White" CornerRadius="10" WidthRequest="60" HeightRequest="40" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="End" />
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

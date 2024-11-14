@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
+using PharmacyShop.ViewModels;
+using PharmacyShop.Views;
 
 namespace PharmacyShop
 {
@@ -14,10 +16,12 @@ namespace PharmacyShop
 					fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 					fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 				});
+            builder.Services.AddSingleton<MedicineConfiguration>();
+            builder.Services.AddSingleton<MedicationOverviewPageViewModel>();
+            builder.Services.AddSingleton<MedicationOverviewPage>();
 
-#if DEBUG
-			builder.Logging.AddDebug();
-#endif
+            builder.Logging.AddDebug();
+
 
 			return builder.Build();
 		}

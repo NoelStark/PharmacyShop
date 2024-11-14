@@ -2,15 +2,25 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PharmacyShop.Views.MedicationOverviewPage"
-             Title="MedicationOverviewPage">
+             xmlns:models="clr-namespace:PharmacyShop.Models"
+             xmlns:viewmodels="clr-namespace:PharmacyShop.ViewModels"
+             x:DataType="viewmodels:MedicationOverviewPageViewModel"
+             Title="Products">
+
     <ScrollView>
         <VerticalStackLayout>
             <SearchBar Placeholder="Search product" Margin="0,0,0,10" Text="{Binding SearchText, Mode=TwoWay}" />
             
             <CollectionView ItemsSource="{Binding Medicine}" SelectionMode="None">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame HeightRequest="90" BorderColor="LightGray" Margin="0,0,0,10" Padding="10">
+                    <DataTemplate x:DataType="models:Medicine">
+                        <Frame HeightRequest="90" BorderColor="LightGray" Margin="5,0,5,10" Padding="10">
+
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:MedicationOverviewPageViewModel}}, Path=InspectChosenMedicineCommand}" CommandParameter="{Binding}" />
+                            </Frame.GestureRecognizers>
+
+
                             <Grid ColumnDefinitions="Auto, *, Auto" VerticalOptions="Center" HorizontalOptions="FillAndExpand">
 
                                 <Image Source="{Binding ImageUrl}" WidthRequest="50" HeightRequest="50" VerticalOptions="Center" Grid.Column="0" />
@@ -24,7 +34,7 @@
                                 </VerticalStackLayout>
 
                                 <Label Text="{Binding Price, StringFormat='{0} kr'}" FontSize="Medium" TextColor="Green" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="2" Margin="0,0,80,0" />
-                                <Button Text="Buy" TextColor="White" CornerRadius="10" WidthRequest="60" HeightRequest="40" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="End" />
+                                <Button Text="Buy" TextColor="White" CornerRadius="10" WidthRequest="60" HeightRequest="40" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="End" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:MedicationOverviewPageViewModel}}, Path=BuyChosenMedicineCommand}" CommandParameter="{Binding}"/>
                             </Grid>
                         </Frame>
                     </DataTemplate>

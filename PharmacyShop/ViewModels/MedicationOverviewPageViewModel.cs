@@ -4,17 +4,21 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using PharmacyShop.Models;
 
 namespace PharmacyShop.ViewModels
 {
-    public partial class MedicationOverviewPageViewModel
+    public partial class MedicationOverviewPageViewModel : ObservableObject
     {
         private readonly MedicineConfiguration _medication;
+        List<Medicine> medicationList;
         public ObservableCollection<Medicine> Medicine { get; set; } = new();
 
-        public ObservableCollection<string> Searchbar = new ObservableCollection<string>();
+        [ObservableProperty]
+        private string searchText;
+
 
         public MedicationOverviewPageViewModel(MedicineConfiguration medication)
         {
@@ -22,10 +26,11 @@ namespace PharmacyShop.ViewModels
             Task await = GetMedicines();
         }
 
+
         [RelayCommand]
         public async Task GetMedicines()
         {
-            List<Medicine> medicationList = await _medication.Medicines();
+            medicationList = await _medication.Medicines();
 
             if (Medicine.Any())
             {
@@ -39,13 +44,33 @@ namespace PharmacyShop.ViewModels
                     Medicine.Add(medicine);
                 }
             }
+        }
 
+        partial void OnSearchTextChanged(string value)
+        {
+            SearchProduct();
         }
 
         [RelayCommand]
-        public async Task SearchProduct(string search)
+        public void SearchProduct()
         {
-            Console.WriteLine();
+            if (SearchText != "")
+            {
+                var filterBySearchResult = medicationList.Where(a => a.Name.ToLower().Contains(SearchText.ToLower()) || a.Dose.ToLower().Contains(SearchText.ToLower()) || a.Description.ToLower().Contains(SearchText.ToLower())).ToList();
+                Medicine.Clear();
+                foreach (var medicine in filterBySearchResult)
+                {
+                    Medicine.Add(medicine);
+                }
+            }
+            else
+            {
+                Medicine.Clear();
+                foreach (var medicine in medicationList)
+                {
+                    Medicine.Add(medicine);
+                }
+            }
         }
 
         [RelayCommand]

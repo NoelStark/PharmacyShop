@@ -5,7 +5,7 @@
              Title="MedicationOverviewPage">
     <ScrollView>
         <VerticalStackLayout>
-            <SearchBar Placeholder="Search product" Margin="0,0,0,10" Text="{Binding SearchText}" SearchCommand="{Binding SearchProductCommand}" />
+            <SearchBar Placeholder="Search product" Margin="0,0,0,10" Text="{Binding SearchText, Mode=TwoWay}" />
             
             <CollectionView ItemsSource="{Binding Medicine}" SelectionMode="None">
                 <CollectionView.ItemTemplate>

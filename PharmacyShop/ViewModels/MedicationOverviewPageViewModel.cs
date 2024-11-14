@@ -27,7 +27,6 @@ namespace PharmacyShop.ViewModels
             Task await = LoadMedicines();
         }
 
-
         [RelayCommand]
         public async Task LoadMedicines()
         {
@@ -79,7 +78,7 @@ namespace PharmacyShop.ViewModels
         {
             if(InspectSelectedMedicine != null)
             {
-                
+                await Shell.Current.GoToAsync("//MedicationDetailsPage");
             }
         }
 

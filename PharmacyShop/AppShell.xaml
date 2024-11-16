@@ -10,5 +10,6 @@
     <ShellContent Title="Overview" ContentTemplate="{DataTemplate local:MedicationOverviewPage}" Route="MedicationOverviewPage" />
     <ShellContent Title="Details" ContentTemplate="{DataTemplate local:MedicationDetailsPage}" Route="MedicationDetailsPage" />
     <ShellContent Title="Checkout" ContentTemplate="{DataTemplate local:CheckoutPage}" Route="CheckoutPage" />
+    <ShellContent Title="Checkout V2" ContentTemplate="{DataTemplate local:PersonalInfoPage}" Route="PersonalInfoPage" />
 
 </Shell>

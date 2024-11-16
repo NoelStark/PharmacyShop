@@ -49,28 +49,28 @@ namespace PharmacyShop.ViewModels
 			{
 				new Cart
 				{
-					Medicine =  new Medicine { Id = 1, Name = "Alvedon", Description = "500mg" },
+					Medicine =  new Medicine { Name = "Alvedon", Description = "500mg" },
 					Quantity = 1,
 					ItemPrice = 32,
-					TotalItemsPrice = 32
+					TotalItemsPrice = 32 
 				},
 				new Cart
 				{
-					Medicine =  new Medicine { Id = 1, Name = "Ipren", Description = "200mg" },
+					Medicine =  new Medicine { Name = "Ipren", Description = "200mg" },
 					Quantity = 1,
 					ItemPrice = 45,
 					TotalItemsPrice = 45
 				},
 				new Cart
 				{
-					Medicine =  new Medicine { Id = 1, Name = "Lalala", Description = "100ml" },
+					Medicine =  new Medicine { Name = "Lalala", Description = "100ml" },
 					Quantity = 1,
 					ItemPrice = 63,
 					TotalItemsPrice = 63
 				},
 				new Cart
 				{
-					Medicine =  new Medicine { Id = 1, Name = "Lalala", Description = "100ml" },
+					Medicine =  new Medicine { Name = "Lalala", Description = "100ml" },
 					Quantity = 1,
 					ItemPrice = 63,
 					TotalItemsPrice = 63

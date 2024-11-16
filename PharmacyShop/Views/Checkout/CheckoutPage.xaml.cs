@@ -1,6 +1,6 @@
 using PharmacyShop.ViewModels;
 
-namespace PharmacyShop.Views;
+namespace PharmacyShop.Views.Checkout;
 
 public partial class CheckoutPage : ContentPage
 {

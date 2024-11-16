@@ -2,8 +2,10 @@
 using Microsoft.Maui.Controls.PlatformConfiguration;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
+using PharmacyShop.Services;
 using PharmacyShop.ViewModels;
 using PharmacyShop.Views;
+using PharmacyShop.Views.Checkout;
 
 
 namespace PharmacyShop
@@ -21,8 +23,21 @@ namespace PharmacyShop
 					fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 				});
             builder.Services.AddSingleton<MedicineConfiguration>();
+
             builder.Services.AddSingleton<MedicationOverviewPageViewModel>();
             builder.Services.AddSingleton<MedicationOverviewPage>();
+
+			builder.Services.AddSingleton<CheckoutViewModel>();
+			builder.Services.AddTransient<CheckoutPage>();
+
+			builder.Services.AddSingleton<PersonalInfoViewModel>();
+			builder.Services.AddTransient<PersonalInfoPage>();
+
+			builder.Services.AddSingleton<PaymentInfoViewModel>();
+			builder.Services.AddTransient<PaymentInfoPage>();
+
+			builder.Services.AddSingleton<PersonService>();
+
 			Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("NoUnderline", (h, v) =>
 			{
 #if ANDROID
@@ -36,8 +51,7 @@ namespace PharmacyShop
 #if DEBUG
 			builder.Logging.AddDebug();
 #endif
-			builder.Services.AddSingleton<CheckoutViewModel>();
-			builder.Services.AddTransient<CheckoutPage>();
+			
 			return builder.Build();
 		}
 	}

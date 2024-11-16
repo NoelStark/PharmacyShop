@@ -70,7 +70,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Views\CheckoutPage.xaml">
+	  <MauiXaml Update="Views\Checkout\CheckoutPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\MedicationDetailsPage.xaml">
@@ -79,10 +79,10 @@
 	  <MauiXaml Update="Views\MedicationOverviewPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\PaymentInfoPage.xaml">
+	  <MauiXaml Update="Views\Checkout\PaymentInfoPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\PersonalInfoPage.xaml">
+	  <MauiXaml Update="Views\Checkout\PersonalInfoPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

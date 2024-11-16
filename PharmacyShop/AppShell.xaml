@@ -4,12 +4,13 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:PharmacyShop.Views"
+    xmlns:checkout="clr-namespace:PharmacyShop.Views.Checkout"
     Shell.FlyoutBehavior="Flyout"
     Title="PharmacyShop">
 
     <ShellContent Title="Overview" ContentTemplate="{DataTemplate local:MedicationOverviewPage}" Route="MedicationOverviewPage" />
     <ShellContent Title="Details" ContentTemplate="{DataTemplate local:MedicationDetailsPage}" Route="MedicationDetailsPage" />
-    <ShellContent Title="Checkout" ContentTemplate="{DataTemplate local:CheckoutPage}" Route="CheckoutPage" />
-    <ShellContent Title="Checkout V2" ContentTemplate="{DataTemplate local:PersonalInfoPage}" Route="PersonalInfoPage" />
-
+    <ShellContent Title="Checkout" ContentTemplate="{DataTemplate checkout:CheckoutPage}" Route="CheckoutPage" />
+    <ShellContent Title="Checkout V2" ContentTemplate="{DataTemplate checkout:PersonalInfoPage}" Route="PersonalInfoPage" />
+    <ShellContent Title="Checkout V3" ContentTemplate="{DataTemplate checkout:PaymentInfoPage}" Route="PaymentInfoPage" />
 </Shell>

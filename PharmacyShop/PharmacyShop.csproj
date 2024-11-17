@@ -58,8 +58,11 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Images\alvedon.png" />
+	  <None Remove="Resources\Images\maestro.png" />
+	  <None Remove="Resources\Images\mastercard.png" />
 	  <None Remove="Resources\Images\minus.png" />
 	  <None Remove="Resources\Images\plus.png" />
+	  <None Remove="Resources\Images\visa.png" />
 	</ItemGroup>
 
 	<ItemGroup>

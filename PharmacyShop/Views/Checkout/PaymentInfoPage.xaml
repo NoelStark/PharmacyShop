@@ -2,11 +2,86 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PharmacyShop.Views.Checkout.PaymentInfoPage"
-             Title="PaymentInfoPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             xmlns:vm="clr-namespace:PharmacyShop.ViewModels"
+             x:DataType="vm:PaymentInfoViewModel"
+             Title="Payment Information">
+    <Grid RowDefinitions="Auto,250,*,Auto, Auto">
+
+        <Grid HorizontalOptions="FillAndExpand" Grid.Row="0" Margin="20,20,20,40">
+            <Frame HorizontalOptions="Start" HeightRequest="64" WidthRequest="100">
+                <Image Source="mastercard.png" HeightRequest="49" WidthRequest="62"/>
+            </Frame>
+            
+            <Frame HorizontalOptions="Center" HeightRequest="64" WidthRequest="100">
+                <Image Source="visa.png" HeightRequest="49" WidthRequest="62" Margin="0,5,0,0"/>
+            </Frame>
+
+            <Frame HorizontalOptions="End" HeightRequest="64" WidthRequest="100">
+                <Image Source="maestro.png" HeightRequest="49" WidthRequest="62"/>
+            </Frame>
+        </Grid>
+
+        <VerticalStackLayout Grid.Row="1" Margin="20,0,20,0" Spacing="15">
+            <VerticalStackLayout>
+                <Label Text="Name"/>
+                <Frame HeightRequest="50">
+                    <Entry Placeholder="John Doe" VerticalOptions="Center" HeightRequest="50" Text="{Binding Name}"></Entry>
+                </Frame>
+                
+            </VerticalStackLayout>
+
+            <VerticalStackLayout>
+                <Label Text="Credit Card Number"/>
+                <Frame HeightRequest="50">
+                    <Entry Placeholder="xxxx xxxx xxxx xxxx" VerticalOptions="Center" HeightRequest="50" Text="{Binding CreditCardNumber}"></Entry>
+                </Frame>
+            </VerticalStackLayout>
+
+            <Grid HorizontalOptions="FillAndExpand">
+                <VerticalStackLayout HorizontalOptions="Start">
+                    <Label Text="Expire Date"/>
+                    <Frame HeightRequest="50" WidthRequest="160">
+                        <Entry Placeholder="MM/YY" VerticalOptions="Center" HeightRequest="50" Text="{Binding ExpireDate}"></Entry>
+                    </Frame>
+                </VerticalStackLayout>
+                
+                <VerticalStackLayout HorizontalOptions="End">
+                    <Label Text="Security Code"/>
+                    <Frame HeightRequest="50" WidthRequest="160">
+                        <Entry Placeholder="xxx" VerticalOptions="Center" HeightRequest="50" Text="{Binding SecurityCode}"></Entry>
+                    </Frame>
+
+                </VerticalStackLayout>
+            </Grid>
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Grid.Row="2" Spacing="20" Margin="20,20,0,0">
+            <HorizontalStackLayout Spacing="5">
+                <CheckBox WidthRequest="24" HeightRequest="24" IsChecked="{Binding SaveInformation}"/>
+                <Label Text="Save for future Purchases"></Label>
+            </HorizontalStackLayout>
+            <HorizontalStackLayout Spacing="5">
+                <CheckBox WidthRequest="24" HeightRequest="24" VerticalOptions="Start" IsChecked="{Binding AgreeToTerms}"/>
+                <Label Text="By clicking this box, you agree to abide by our Terms of Service and acknowledge that you have read our Privacy Policy."
+                       LineBreakMode="WordWrap" WidthRequest="300" VerticalOptions="Start"></Label>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+        
+        
+        <VerticalStackLayout Grid.Row="3" Margin="20,0,20,0" HorizontalOptions="FillAndExpand">
+            <BoxView HeightRequest="1" Color="Black" HorizontalOptions="FillAndExpand" Margin="0,10,0,10" />
+            <Grid ColumnDefinitions="*,Auto" HorizontalOptions="FillAndExpand" Margin="0,10,0,0">
+                <Label Text="Total" FontSize="20" Grid.Column="0" HorizontalOptions="Start" />
+                <Label Text="{Binding Source={RelativeSource AncestorType={x:Type vm:CheckoutViewModel}}, Path=TotalCartCost, StringFormat='{0} :-'}" FontSize="22" FontAttributes="Bold" Grid.Column="1" HorizontalOptions="End" />
+            </Grid>
+        </VerticalStackLayout>
+
+        <Grid Grid.Row="4" HorizontalOptions="FillAndExpand" Padding="20,20,20,40">
+            <Button WidthRequest="160" Text="Back" FontSize="Medium" TextColor="Black" BackgroundColor="Transparent" 
+              BorderColor="{StaticResource Primary}" BorderWidth="2" HorizontalOptions="Start"/>
+            <Button WidthRequest="160" Text="Next" FontSize="Medium" HorizontalOptions="End" Command="{Binding PayCommand}"/>
+        </Grid>
+        
+        
+    </Grid>
 </ContentPage>

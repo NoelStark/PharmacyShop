@@ -45,16 +45,37 @@ namespace PharmacyShop.ViewModels
 
 		[ObservableProperty]
 		private string phone = string.Empty;
+
+		private bool isUpdatingPhone = false;
 		partial void OnPhoneChanged(string value)
 		{
-			if (NumbersOnly.IsMatch(value) && Phone.Length != 11)
+			if (isUpdatingPhone) return;
+			string numericValue = value.Replace(" ", "");
+			if (NumbersOnly.IsMatch(value.Replace(" ", "")) && numericValue.Length <= 10)
 			{
-				_lastValidPhone = value;
+				isUpdatingPhone = true;
+				if (numericValue.Length > _lastValidPhone.Replace(" ", "").Length)
+				{
+					if (numericValue.Length == 3 || numericValue.Length == 6 || numericValue.Length == 8)
+					{
+						Phone = value + " ";
+					}
+					else
+					{
+						Phone = value;
+					}
+
+				}
+				else
+					Phone = value;
+
+				_lastValidPhone = Phone;
 			}
-			else
-			{
-				Phone = _lastValidPhone;
-			}
+
+			Phone = _lastValidPhone;
+			isUpdatingPhone = false;
+			
+
 			ValidateForm();
 		}
 
@@ -79,16 +100,30 @@ namespace PharmacyShop.ViewModels
 
 		partial void OnPostalCodeChanged(string value)
 		{
-			if (NumbersOnly.IsMatch(value) && PostalCode.Length != 6)
+			if (NumbersOnly.IsMatch(value.Replace(" ", "")) && value.Replace(" ", "").Length <= 5)
 			{
-				_lastValidPostalCode = value;
+				if (value.Length == 3 && !value.Contains(" "))
+				{
+					PostalCode = value + " ";
+				}
+				else
+				{
+					PostalCode = value;
+				}
+
+				_lastValidPostalCode = PostalCode;
 			}
 			else
 			{
 				PostalCode = _lastValidPostalCode;
 			}
+
 			ValidateForm();
 		}
+
+
+		[ObservableProperty]
+		private int cursorPosition;
 
 		private bool isFormValid;
 
@@ -101,6 +136,7 @@ namespace PharmacyShop.ViewModels
 				SavePersonCommand.NotifyCanExecuteChanged();
 			}
 		}
+
 
 		private void ValidateForm()
 		{

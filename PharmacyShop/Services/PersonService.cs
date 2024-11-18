@@ -10,5 +10,6 @@ namespace PharmacyShop.Services
 	public class PersonService
 	{
 		public Person CurrentPerson { get; set; }
+		public List<Cart> ItemsCart { get; set; } = new();
 	}
 }

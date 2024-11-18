@@ -9,4 +9,13 @@ public partial class CheckoutPage : ContentPage
 		InitializeComponent();
 		BindingContext = checkoutViewModel;
 	}
+
+	protected override void OnAppearing()
+	{
+		base.OnAppearing();
+		if(BindingContext is CheckoutViewModel viewModel)
+		{
+			viewModel.Reinitialize();
+		}
+	}
 }

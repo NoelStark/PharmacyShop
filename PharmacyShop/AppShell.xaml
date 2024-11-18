@@ -10,7 +10,7 @@
 
     <ShellContent Title="Overview" ContentTemplate="{DataTemplate local:MedicationOverviewPage}" Route="MedicationOverviewPage" />
     <ShellContent Title="Details" ContentTemplate="{DataTemplate local:MedicationDetailsPage}" Route="MedicationDetailsPage" />
-    <ShellContent Title="Checkout" ContentTemplate="{DataTemplate checkout:CheckoutPage}" Route="CheckoutPage" />
+    <ShellContent Title="Checkout" ContentTemplate="{DataTemplate checkout:CheckoutPage}" Route="CheckoutPage"/>
     <ShellContent Title="Checkout V2" ContentTemplate="{DataTemplate checkout:PersonalInfoPage}" Route="PersonalInfoPage" />
     <ShellContent Title="Checkout V3" ContentTemplate="{DataTemplate checkout:PaymentInfoPage}" Route="PaymentInfoPage" />
 </Shell>

@@ -33,7 +33,7 @@ namespace PharmacyShop
             builder.Services.AddSingleton<MedicationOverviewPageViewModel>();
             builder.Services.AddSingleton<MedicationOverviewPage>();
 
-			builder.Services.AddSingleton<CheckoutViewModel>();
+			builder.Services.AddTransient<CheckoutViewModel>();
 			builder.Services.AddTransient<CheckoutPage>();
 
 			builder.Services.AddSingleton<PersonalInfoViewModel>();
@@ -43,6 +43,7 @@ namespace PharmacyShop
 			builder.Services.AddTransient<PaymentInfoPage>();
 
 			builder.Services.AddSingleton<PersonService>();
+			builder.Services.AddSingleton<MedicineService>();
 
 			Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("NoUnderline", (h, v) =>
 			{

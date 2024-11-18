@@ -7,28 +7,28 @@
              x:DataType="vm:CheckoutViewModel"
              Title="CheckoutPage">
     <Grid ColumnDefinitions="*,*" RowDefinitions="450, Auto, Auto">
-        <CollectionView Grid.ColumnSpan="2" ItemsSource="{Binding MedicineList}" SelectionMode="None" HeightRequest="450" VerticalOptions="Start">
+        <CollectionView Grid.ColumnSpan="2" ItemsSource="{Binding CartList}" SelectionMode="None" HeightRequest="450" VerticalOptions="Start">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Cart">
-                    <Frame HeightRequest="150">
+                    <Frame HeightRequest="160" Margin="10,0,10,0">
                         <HorizontalStackLayout>
-                            <Image Source="alvedon.png" HeightRequest="100" WidthRequest="70" VerticalOptions="Start"/>
+                            <Image Source="{Binding Information.ImageUrl}" HeightRequest="100" WidthRequest="70" VerticalOptions="Start"/>
 
                             <VerticalStackLayout Margin="20,0,0,0">
                                 <Label Text="{Binding Medicine.Name}" FontSize="Large"></Label>
                                 <Label Text="{Binding Medicine.Description}" FontSize="Small"/>
 
-                                <Grid Margin="0,20,0,0" ColumnDefinitions="Auto,*,Auto" MinimumWidthRequest="130">
+                                <Grid Margin="0,20,0,0" RowDefinitions="Auto, Auto" MinimumWidthRequest="120">
                                     <Label Text="{Binding TotalItemsPrice, StringFormat='{0}:-'}" 
                                            FontSize="Medium" TextColor="Green" VerticalOptions="Center"
-                                           Grid.Column="0" />
-                                    <Label Text="{Binding ItemPrice, StringFormat='{0}:- per unit'}" 
+                                           Grid.Row="0" />
+                                    <Label Text="{Binding Information.ItemPrice, StringFormat='{0} kr per unit'}" 
                                            FontSize="Small" TextColor="DimGrey" VerticalOptions="Center"
-                                           Grid.Column="2" />
+                                           Grid.Row="1" />
                                 </Grid>
                             </VerticalStackLayout>
 
-                            <Frame HeightRequest="40" WidthRequest="120" Padding="0" Margin="10,0,0,0" BorderColor="DimGray">
+                            <Frame HeightRequest="40" WidthRequest="120" Padding="0" Margin="0,0,0,0" BorderColor="DimGray">
                                 <HorizontalStackLayout VerticalOptions="Center" HorizontalOptions="CenterAndExpand" Padding="0" Spacing="15">
                                     <ImageButton Source="minus.png" HeightRequest="24" WidthRequest="24" HorizontalOptions="Center" VerticalOptions="Center"
                                                  Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CheckoutViewModel}}, Path=DecreaseQuantityCommand}"
@@ -67,7 +67,7 @@
 
             <Button WidthRequest="150" Text="Back" FontSize="Medium" TextColor="Black" BackgroundColor="Transparent" 
                     BorderColor="{StaticResource Primary}" BorderWidth="2"/>
-            <Button WidthRequest="150" Text="Next" FontSize="Medium"/>
+            <Button WidthRequest="150" Text="Next" FontSize="Medium" Command="{Binding ContinueCommand}"/>
         </HorizontalStackLayout>
     </Grid>
 </ContentPage>

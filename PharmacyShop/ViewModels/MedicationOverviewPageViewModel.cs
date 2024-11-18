@@ -7,12 +7,14 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using PharmacyShop.Models;
+using PharmacyShop.Services;
 
 namespace PharmacyShop.ViewModels
 {
     public partial class MedicationOverviewPageViewModel : ObservableObject
     {
-        private readonly MedicineConfiguration _medication;
+        private readonly MedicineService _medication;
+        private readonly PersonService _personService;
         
         private List<Medicine> medicationList;
         public ObservableCollection<Medicine> Medicine { get; set; } = new();
@@ -21,9 +23,10 @@ namespace PharmacyShop.ViewModels
         private string searchText;
 
 
-        public MedicationOverviewPageViewModel(MedicineConfiguration medication)
+        public MedicationOverviewPageViewModel(MedicineService medication, PersonService personService)
         {
             _medication = medication;
+            _personService = personService;
             Task await = LoadMedicines();
         }
 
@@ -126,7 +129,7 @@ namespace PharmacyShop.ViewModels
         [RelayCommand]
         public async Task GoToCheckout()
         {
-            await Shell.Current.GoToAsync("//MedicationDetailsPage");
+            await Shell.Current.GoToAsync("//Checkout/CheckoutPage");
         }
 
 
@@ -144,7 +147,22 @@ namespace PharmacyShop.ViewModels
         {
             if (BuySelectedMedicine != null)
             {
-                
+                Cart? cart = _personService.ItemsCart.FirstOrDefault(x => x.Medicine == BuySelectedMedicine);
+
+				if (cart == null)
+                {
+					_personService.ItemsCart.Add(new Cart
+					{
+						Medicine = BuySelectedMedicine,
+						Quantity = 1,
+						Information = BuySelectedMedicine.Information
+					});
+				}
+                else
+                {
+                    _personService.ItemsCart.Find(a => a == cart).Quantity++;
+                }
+               
             }
         }
     }

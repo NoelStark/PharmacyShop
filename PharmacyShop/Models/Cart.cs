@@ -12,8 +12,8 @@ namespace PharmacyShop.Models
         public Medicine Medicine { get; set; }
         [ObservableProperty]
         public int quantity;
-        public int ItemPrice { get; set; }
+        public ItemInformation Information { get; set; }
 		[ObservableProperty]
-		public int totalItemsPrice;
+		public decimal totalItemsPrice;
     }
 }

@@ -144,9 +144,9 @@ namespace PharmacyShop.ViewModels
 				!string.IsNullOrWhiteSpace(LastName) &&
 				!string.IsNullOrWhiteSpace(Email) &&
 				EmailRegex.IsMatch(Email) &&
-				PostalCode.Length == 5 &&
+				PostalCode.Replace(" ","").Length == 5 &&
 				!string.IsNullOrWhiteSpace(Phone) &&
-				Phone.Length == 10 &&
+				Phone.Replace(" ","").Length == 10 &&
 				!string.IsNullOrWhiteSpace(Street) &&
 				!string.IsNullOrWhiteSpace(City) &&
 				!string.IsNullOrWhiteSpace(PostalCode);

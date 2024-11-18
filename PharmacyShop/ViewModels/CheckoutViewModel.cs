@@ -1,10 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using PharmacyShop.Models;
+using PharmacyShop.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,18 +14,25 @@ namespace PharmacyShop.ViewModels
 {
 	public partial class CheckoutViewModel : ObservableObject
 	{
-		public ObservableCollection<Cart> MedicineList { get; set; }
+		public ObservableCollection<Cart> CartList { get; set; } = new();
+		private Task<List<Medicine>> medicineList { get; set; }
+		private readonly MedicineService _medicineService;
+		private readonly PersonService _personService;
 
 		[ObservableProperty]
-		private int totalPrice;
+		private bool canExecute;
+		
+
 		[ObservableProperty]
-		private int shippingCost = 29;
-		public int TotalCartCost
+		private decimal totalPrice;
+		[ObservableProperty]
+		private int shippingCost = 0;
+		public decimal TotalCartCost
 		{
 			get
 			{
-				int totalCost = 0;
-				foreach(Cart cart in MedicineList)
+				decimal totalCost = 0;
+				foreach(Cart cart in CartList)
 				{
 					totalCost += cart.TotalItemsPrice;
 				}
@@ -31,64 +40,48 @@ namespace PharmacyShop.ViewModels
 			}
 		}
 
-		public int TotalPriceWithoutShipping
+		public decimal TotalPriceWithoutShipping
 		{
 			get
 			{
-				int totalCost = 0;
-				foreach (Cart cart in MedicineList)
+				decimal totalCost = 0;
+				foreach (Cart cart in CartList)
 				{
 					totalCost += cart.TotalItemsPrice;
 				}
 				return totalCost;
 			}
 		}
-		public CheckoutViewModel()
-        {
-			MedicineList = new ObservableCollection<Cart>
+
+		public void Reinitialize()
+		{
+
+			CartList = new ObservableCollection<Cart>(_personService.ItemsCart);
+			OnPropertyChanged(nameof(CartList));
+			if (CartList.Any())
 			{
-				new Cart
-				{
-					Medicine =  new Medicine { Name = "Alvedon", Description = "500mg" },
-					Quantity = 1,
-					ItemPrice = 32,
-					TotalItemsPrice = 32 
-				},
-				new Cart
-				{
-					Medicine =  new Medicine { Name = "Ipren", Description = "200mg" },
-					Quantity = 1,
-					ItemPrice = 45,
-					TotalItemsPrice = 45
-				},
-				new Cart
-				{
-					Medicine =  new Medicine { Name = "Lalala", Description = "100ml" },
-					Quantity = 1,
-					ItemPrice = 63,
-					TotalItemsPrice = 63
-				},
-				new Cart
-				{
-					Medicine =  new Medicine { Name = "Lalala", Description = "100ml" },
-					Quantity = 1,
-					ItemPrice = 63,
-					TotalItemsPrice = 63
-				}
-			};
+				CanExecute = true;
+			}
 			UpdateTotalPrice();
+		}
 
-
+		public CheckoutViewModel(MedicineService medicineService, PersonService personService)
+        {
+			_personService = personService;
+			_medicineService = medicineService;
+			Reinitialize();
 		}
 
 		async void UpdateTotalPrice()
 		{
 			TotalPrice = 0;
-			foreach(Cart cart in MedicineList)
+			foreach(Cart cart in CartList)
 			{
-				cart.TotalItemsPrice = cart.Quantity * cart.ItemPrice;
+				cart.TotalItemsPrice = cart.Quantity * cart.Information.ItemPrice;
 				TotalPrice += cart.TotalItemsPrice;
 			}
+			ShippingCost = TotalPrice > 0 ? 29 : 0;
+
 			OnPropertyChanged(nameof(TotalPriceWithoutShipping));
 			OnPropertyChanged(nameof(TotalCartCost));
 		}
@@ -106,10 +99,29 @@ namespace PharmacyShop.ViewModels
 			if(cartItem.Quantity > 0)
 			{
 				cartItem.Quantity--;
+				if(cartItem.Quantity == 0)
+				{
+					CartList.Remove(cartItem);
+					_personService.ItemsCart.Remove(cartItem);
+					if(!CartList.Any())
+					{
+						CanExecute = false;
+
+					}
+					else
+					{
+						CanExecute = true;
+						ContinueCommand.NotifyCanExecuteChanged();
+					}
+				}
 				UpdateTotalPrice();
 			}
+		}
 
-
+		[RelayCommand(CanExecute = nameof(CanExecute))]
+		async Task Continue()
+		{
+			_= Shell.Current.GoToAsync("//PersonalInfoPage");
 		}
 
 	}

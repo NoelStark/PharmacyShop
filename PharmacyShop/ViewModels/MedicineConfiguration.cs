@@ -112,7 +112,7 @@ namespace PharmacyShop.ViewModels
             var Panodil3 = new Medicine
             {
                 Name = "Panodil",
-                Dose = "24 mg/ml",
+                Dose = "500mg",
                 Substance = "Paracetamol",
                 Description = "Brustablett",
                 Price = 49.90M,

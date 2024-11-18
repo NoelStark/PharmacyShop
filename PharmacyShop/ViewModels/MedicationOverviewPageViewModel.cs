@@ -36,7 +36,45 @@ namespace PharmacyShop.ViewModels
             {
                 Medicine.Clear();
             }
+            //string filtName = "";
+            //string filtDose = "";
+            //string filtDescription = "Oral";
 
+            //string userInputMinValue = "40.00";
+            //string userInputMaxValue = "50.00";
+            //decimal minprice = decimal.MinValue;
+            //decimal maxprice = decimal.MaxValue;
+
+            //if (userInputMinValue.Any())
+            //{
+            //    try
+            //    {
+            //        decimal.TryParse(userInputMinValue, out decimal minValue);
+            //        minprice = minValue;
+            //    }
+            //    catch
+            //    {
+            //        Console.WriteLine("Worng");
+            //    }
+            //}
+
+            //if (userInputMaxValue.Any())
+            //{
+            //    try
+            //    {
+            //        decimal.TryParse(userInputMaxValue, out decimal maxValue);
+            //        maxprice = maxValue;
+            //    }
+            //    catch
+            //    {
+            //        Console.WriteLine("Worng");
+            //    }
+            //}
+
+
+
+            //var filter = medicationList.Where(a => a.Name.Contains(filtName) && a.Dose.Contains(filtDose) && a.Description.Contains(filtDescription)).Where(b => b.Price >= minprice && b.Price <= maxprice).ToList();
+            //await Filter(filter);
             if (medicationList.Any())
             {
                 foreach (var medicine in medicationList)
@@ -50,6 +88,17 @@ namespace PharmacyShop.ViewModels
         {
             SearchProduct();
         }
+
+        [RelayCommand]
+        public async Task Filter(List<Medicine> filter)
+        {
+            Medicine.Clear();
+            foreach (var medicine in filter)
+            {
+                Medicine.Add(medicine);
+            }
+        }
+
 
         [RelayCommand]
         public void SearchProduct()
@@ -72,6 +121,14 @@ namespace PharmacyShop.ViewModels
                 }
             }
         }
+
+
+        [RelayCommand]
+        public async Task GoToCheckout()
+        {
+            await Shell.Current.GoToAsync("//MedicationDetailsPage");
+        }
+
 
         [RelayCommand]
         public async Task InspectChosenMedicine(Medicine InspectSelectedMedicine)

@@ -19,9 +19,8 @@
                                 <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:MedicationOverviewPageViewModel}}, Path=InspectChosenMedicineCommand}" CommandParameter="{Binding}" />
                             </Frame.GestureRecognizers>
 
-
                             <Grid ColumnDefinitions="Auto, *, Auto" VerticalOptions="Center" HorizontalOptions="FillAndExpand">
-
+                                
                                 <Image Source="{Binding ImageUrl}" WidthRequest="50" HeightRequest="50" VerticalOptions="Center" Grid.Column="0" />
 
                                 <VerticalStackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand" Grid.Column="1" Margin="10,0,0,0">

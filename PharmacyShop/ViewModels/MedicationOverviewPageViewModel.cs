@@ -28,7 +28,12 @@ namespace PharmacyShop.ViewModels
             _medication = medication;
             _personService = personService;
             Task await = LoadMedicines();
-        }
+			MessagingCenter.Subscribe<MedicationDetailsViewModel, string>(this, "SearchTextChanged", (sender, SearchText) =>
+			{
+                this.SearchText = SearchText;
+				SearchProduct();
+			});
+		}
 
         [RelayCommand]
         public async Task LoadMedicines()
@@ -89,7 +94,7 @@ namespace PharmacyShop.ViewModels
 
         partial void OnSearchTextChanged(string value)
         {
-            SearchProduct();
+			SearchProduct();
         }
 
         [RelayCommand]
@@ -114,6 +119,8 @@ namespace PharmacyShop.ViewModels
                 {
                     Medicine.Add(medicine);
                 }
+
+                MessagingCenter.Send(this, "FilteredMedicineList", filterBySearchResult);
             }
             else
             {
@@ -138,7 +145,8 @@ namespace PharmacyShop.ViewModels
         {
             if(InspectSelectedMedicine != null)
             {
-                await Shell.Current.GoToAsync("//MedicationDetailsPage");
+				_medication.CurrentMedicine = InspectSelectedMedicine;
+				await Shell.Current.GoToAsync("//MedicationDetailsPage");
             }
         }
 

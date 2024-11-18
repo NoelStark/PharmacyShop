@@ -48,7 +48,7 @@
         <VerticalStackLayout Grid.Row="1" Grid.ColumnSpan="2" Margin="40,20,40,0" HorizontalOptions="FillAndExpand">
 
             <Grid ColumnDefinitions="*,Auto" HorizontalOptions="FillAndExpand">
-                <Label Text="4 item(s)" Grid.Column="0" HorizontalOptions="Start" />
+                <Label Text="{Binding TotalAmountOfItems, StringFormat='{0} item(s)'}" Grid.Column="0" HorizontalOptions="Start" />
                 <Label Text="{Binding TotalPriceWithoutShipping, StringFormat='{0} :-'}" FontSize="18" FontAttributes="Bold"  Grid.Column="1" HorizontalOptions="End" />
             </Grid>
 

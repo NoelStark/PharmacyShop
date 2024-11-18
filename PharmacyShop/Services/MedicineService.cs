@@ -10,6 +10,7 @@ namespace PharmacyShop.Services
 	public class MedicineService
 	{
 		private List<Medicine> medicineList = new List<Medicine>();
+		public Medicine CurrentMedicine {  get; set; }
 
 		public async Task<List<Medicine>> Medicines()
 		{

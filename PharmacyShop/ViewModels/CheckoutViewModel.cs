@@ -21,7 +21,9 @@ namespace PharmacyShop.ViewModels
 
 		[ObservableProperty]
 		private bool canExecute;
-		
+
+		[ObservableProperty]
+		private int totalAmountOfItems;
 
 		[ObservableProperty]
 		private decimal totalPrice;
@@ -75,13 +77,16 @@ namespace PharmacyShop.ViewModels
 		async void UpdateTotalPrice()
 		{
 			TotalPrice = 0;
-			foreach(Cart cart in CartList)
+			int amountOfItems = 0;
+
+			foreach (Cart cart in CartList)
 			{
 				cart.TotalItemsPrice = cart.Quantity * cart.Information.ItemPrice;
 				TotalPrice += cart.TotalItemsPrice;
+				amountOfItems += cart.Quantity;
 			}
+			TotalAmountOfItems = amountOfItems;
 			ShippingCost = TotalPrice > 0 ? 29 : 0;
-
 			OnPropertyChanged(nameof(TotalPriceWithoutShipping));
 			OnPropertyChanged(nameof(TotalCartCost));
 		}

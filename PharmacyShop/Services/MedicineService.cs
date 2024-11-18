@@ -25,6 +25,7 @@ namespace PharmacyShop.Services
 					ImageUrl = "https://www.kronansapotek.se/k2/images/156341/large/0.jpg",
 					ItemPrice = 39.90M
 				},
+				Amount = "20pc",
 				Useage = "Alvedon 500 mg brustabletter innehåller paracetamol som är smärtlindrande och febernedsättande. Den aktiva substansen och den smärtlindrande effekten upplevs efter cirka 30 minuter samt minskar feber upp till 6-8 timmar. Alvedon används vid feber, t.ex. vid förkylningar. Kan även användas mot värk och smärta av olika slag: t.ex. huvudvärk, tandvärk, menstruationssmärtor och muskelvärk. Alvedon brustabletter har en frisk smak av citrus och löses enkelt upp i ett halvt glas vatten. Brustabletter är ett bra alternativ för personer som har svårt att svälja tabletter och kan användas av personer med känslig mage eller personer med ökad blödningsbenägenhet. Från 12 år. Rekommenderas inte till personer som ordinerats saltfattig kost. Läs alltid bipacksedeln noga före användning."
 			};
 			medicineList.Add(Alvedon);
@@ -40,6 +41,7 @@ namespace PharmacyShop.Services
 					ImageUrl = "https://www.kronansapotek.se/k2/images/097610/large/0.jpg",
 					ItemPrice = 32.00M
 				},
+				Amount = "20pc",
 				Useage = "Alvedon 500 mg filmdragerad tablett innehåller paracetamol som är smärtlindrande och febernedsättande. Att tabletten är filmdragerad gör att den blir lättare att svälja. Den aktiva substansen börjar verka efter ungefär 30 minuter och lindrar smärtan i upp till 4-5 timmar. Alvedon lindrar feber, t.ex. vid förkylningar. Kan även användas för lindring av värk och smärta av olika slag: t.ex. huvudvärk, tandvärk, menstruationssmärtor och muskelvärk. Läs alltid bipacksedeln noga före användning."
 			};
 			medicineList.Add(Alvedon2);
@@ -55,6 +57,7 @@ namespace PharmacyShop.Services
 					ImageUrl = "https://www.kronansapotek.se/k2/images/007487/large/0.jpg",
 					ItemPrice = 42.90M
 				},
+				Amount = "12pc",
 				Useage = "Alvedon 250 mg brustabletter innehåller paracetamol som är smärtlindrande och febernedsättande. Den aktiva substansen och den smärtlindrande effekten upplevs efter cirka 30 minuter samt minskar feber upp till 6-8 timmar. Alvedon används vid feber, t.ex. vid förkylningar. Kan även användas mot värk och smärta av olika slag: t.ex. huvudvärk, tandvärk, menstruationssmärtor och muskelvärk. Alvedon brustabletter har en frisk smak av citrus och löses enkelt upp i ett halvt glas vatten. Brustabletter är ett bra alternativ för personer som har svårt att svälja tabletter och kan användas av personer med känslig mage eller personer med ökad blödningsbenägenhet. Från 12 år. Rekommenderas inte till personer som ordinerats saltfattig kost. Läs alltid bipacksedeln noga före användning."
 			};
 			medicineList.Add(Alvedon3);
@@ -70,6 +73,7 @@ namespace PharmacyShop.Services
 					ImageUrl = "https://www.kronansapotek.se/k2/images/126168/large/0.jpg",
 					ItemPrice = 52.00M
 				},
+				Amount = "100ml",
 				Useage = "Alvedon 24 mg/ml oral suspension, nu med en förbättrad formulering. Den nya versionen av Alvedon oral suspension har en behaglig, mjuk konsistens med en mild jordgubbssmak. Det är inte nödvändigt att skaka flaskan före användning. Flytande Alvedon är ett utmärkt val för barn som har svårt att svälja tabletter eller inte kan använda stolpiller. Dessutom är det lätt att dosera med den medföljande doseringssprutan. Alvedon hjälper till att lindra symtom vid feber samt värk och smärta av olika slag, såsom huvudvärk, tandvärk och muskelvärk. Den aktiva substansen paracetamol är både smärtlindrande och febernedsättande. Produkten är särskilt anpassad för barn från 3 månader till cirka 12 år (5-40 kg). Effektivt mot feber i upp till 8 timmar och mot värk i 4-5 timmar. Snabb verkan, börjar minska febern redan efter 15 minuter. Enkel att dosera med medföljande doseringsspruta. Mild jordgubbssmak. För barn som väger mellan 5-40 kg (ca. 3 mån - 12 år)"
 			};
 			medicineList.Add(Alvedon4);
@@ -85,6 +89,7 @@ namespace PharmacyShop.Services
 					ImageUrl = "https://www.kronansapotek.se/k2/images/088542/large/0.jpg",
 					ItemPrice = 66.14M
 				},
+				Amount = "10pc",
 				Useage = "Används vid tillfälliga lätta till måttliga smärttillstånd, t ex huvudvärk, muskel- och ledvärk samt feber vid förkylning."
 			};
 			medicineList.Add(Ipren);
@@ -100,6 +105,7 @@ namespace PharmacyShop.Services
 					ImageUrl = "https://www.kronansapotek.se/k2/images/460949/large/0.jpg",
 					ItemPrice = 58.90M
 				},
+				Amount = "30pc",
 				Useage = "Används vid tillfälliga lätta till måttliga smärttillstånd, t ex huvudvärk, muskel- och ledvärk samt feber vid förkylning."
 			};
 			medicineList.Add(Bufren2);
@@ -115,6 +121,7 @@ namespace PharmacyShop.Services
 					ImageUrl = "https://www.kronansapotek.se/k2/images/196456/large/0.jpg",
 					ItemPrice = 45.90M
 				},
+				Amount = "20pc",
 				Useage = "Panodil Zapp används för behandling av tillfälliga feber- och smärttillstånd av lindrig art, t ex feber vid förkylning, huvudvärk, tandvärk, menstruationssmärtor, muskel- och ledvärk. Panodil Zapp kan användas av personer med känslig mage eller magsår och personer med ökad blödningsbenägenhet. Du måste tala med läkare om symtomen försämras eller inte förbättras inom 3 dagar vid feber och 5 dagar vid smärta."
 			};
 			medicineList.Add(Panodil);
@@ -130,6 +137,7 @@ namespace PharmacyShop.Services
 					ImageUrl = "https://www.kronansapotek.se/k2/images/014498/large/0.jpg",
 					ItemPrice = 49.00M
 				},
+				Amount = "100ml",
 				Useage = "Panodil Zapp används för behandling av tillfälliga feber- och smärttillstånd av lindrig art, t ex feber vid förkylning, huvudvärk, tandvärk, menstruationssmärtor, muskel- och ledvärk. Panodil Zapp kan användas av personer med känslig mage eller magsår och personer med ökad blödningsbenägenhet. Du måste tala med läkare om symtomen försämras eller inte förbättras inom 3 dagar vid feber och 5 dagar vid smärta."
 			};
 			medicineList.Add(Panodil2);
@@ -145,6 +153,7 @@ namespace PharmacyShop.Services
 					ImageUrl = "https://www.kronansapotek.se/k2/images/165273/large/0.jpg",
 					ItemPrice = 49.90M
 				},
+				Amount = "20pc",
 				Useage = "Panodil Zapp används för behandling av tillfälliga feber- och smärttillstånd av lindrig art, t ex feber vid förkylning, huvudvärk, tandvärk, menstruationssmärtor, muskel- och ledvärk. Panodil Zapp kan användas av personer med känslig mage eller magsår och personer med ökad blödningsbenägenhet. Du måste tala med läkare om symtomen försämras eller inte förbättras inom 3 dagar vid feber och 5 dagar vid smärta."
 			};
 			medicineList.Add(Panodil3);
@@ -160,6 +169,7 @@ namespace PharmacyShop.Services
 					ImageUrl = "https://www.kronansapotek.se/k2/images/507504/large/0.jpg",
 					ItemPrice = 49.90M
 				},
+				Amount = "20pc",
 				Useage = "Inflammationsdämpande och smärtstillande vid tillfällig till måttlig akut smärta, t.ex. huvudvärk, tandvärk, muskel- och ledvärk, ryggvärk samt vid menstruationssmärtor hos vuxna och ungdomar från 12 år över 50 kg."
 			};
 			medicineList.Add(Naxopren);
@@ -175,6 +185,7 @@ namespace PharmacyShop.Services
 					ImageUrl = "https://www.kronansapotek.se/k2/images/156375/large/0.jpg",
 					ItemPrice = 154.00M
 				},
+				Amount = "28pc",
 				Useage = "Sedix® är ett traditionellt växtbaserat läkemedel använt vid lindriga symtom på nervös anspänning såsom oro, irritabilitet och tillfälliga insomningsbesvär. Det är inte rapporterat om beroendeframkallande effekt vid användning av Sedix."
 			};
 			medicineList.Add(Sedix);
@@ -190,6 +201,7 @@ namespace PharmacyShop.Services
 					ImageUrl = "https://www.kronansapotek.se/k2/images/451044/large/0.jpg",
 					ItemPrice = 79.00M
 				},
+				Amount = "10pc",
 				Useage = "Melatan innehåller den aktiva substansen melatonin, som tillhör en grupp av naturliga hormoner som tillverkas av kroppen. Melatan används vid korttidsbehandling av jetlag hos vuxna från 18 år. Med jetlag avses de symtom såsom t ex sömnbesvär, som orsakas av tidsskillnaden när man passerar flera tidszoner när man reser öster- eller västerut."
 			};
 			medicineList.Add(Melatan);
@@ -205,6 +217,7 @@ namespace PharmacyShop.Services
 					ImageUrl = "https://www.kronansapotek.se/k2/images/061426/large/0.jpg",
 					ItemPrice = 95.00M
 				},
+				Amount = "30pc",
 				Useage = "Ebastin Orifarm, filmdragerad tablett 10 mg 30 st, är ett receptfritt antihistamin som motverkar effekten av histamin. Histamin är ett ämne i kroppens vävnader som utlöses när man utsätts för allergiframkallande ämnen och som bland annat utlöser rinnsnuva, nästäppa och nysningar samt ögonbesvär såsom röda, rinnande och kliande ögon. Hos känsliga personer kan histamin även orsaka besvärande klåda och hudutslag efter myggbett. Ebastin Orifarm används vid tillfälliga allergiska besvär såsom röda, rinnande och kliande ögon samt rinnsnuva, nästäppa och nysningar. De allergiska besvären kan orsakas av bland annat pollen, pälsdjur, kvalster eller damm. Ebastin Orifarm kan också användas av personer som är känsliga för myggbett, vid tillfällig vistelse i myggrika områden."
 			};
 			medicineList.Add(Ebastin);
@@ -220,6 +233,7 @@ namespace PharmacyShop.Services
 					ImageUrl = "https://www.kronansapotek.se/k2/images/588341/large/0.jpg",
 					ItemPrice = 95.00M
 				},
+				Amount = "30pc",
 				Useage = "Ebastin Orifarm, filmdragerad tablett 10 mg 30 st, är ett receptfritt antihistamin som motverkar effekten av histamin. Histamin är ett ämne i kroppens vävnader som utlöses när man utsätts för allergiframkallande ämnen och som bland annat utlöser rinnsnuva, nästäppa och nysningar samt ögonbesvär såsom röda, rinnande och kliande ögon. Hos känsliga personer kan histamin även orsaka besvärande klåda och hudutslag efter myggbett. Ebastin Orifarm används vid tillfälliga allergiska besvär såsom röda, rinnande och kliande ögon samt rinnsnuva, nästäppa och nysningar. De allergiska besvären kan orsakas av bland annat pollen, pälsdjur, kvalster eller damm. Ebastin Orifarm kan också användas av personer som är känsliga för myggbett, vid tillfällig vistelse i myggrika områden."
 			};
 			medicineList.Add(Ebastin1);
@@ -235,6 +249,7 @@ namespace PharmacyShop.Services
 					ImageUrl = "https://www.kronansapotek.se/k2/images/592931/large/0.jpg",
 					ItemPrice = 45.00M
 				},
+				Amount = "30ml",
 				Useage = "Laxoberal orala droppar används vid tillfällig förstoppning. Laxoberal ger mjukare avföring och underlättar tarmpassagen. Verkar lokalt i tjocktarmen. Effekten kommer efter 6-12 timmar. Kan användas från 12 års ålder. Individuell dosering. Dropparna gör det lätt att anpassa dosen efter individuellt behov. Kan blandas med mat eller dryck. Laxoberal är ett receptfritt läkemedel, som innehåller det aktiva ämnet natriumpikosulfat. Läs bipacksedeln noga före användning."
 			};
 			medicineList.Add(Laxoberal);

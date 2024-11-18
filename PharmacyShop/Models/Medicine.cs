@@ -13,6 +13,7 @@ namespace PharmacyShop.Models
 		public string Substance { get; set; }
 		public string Description { get; set; }
 		public string Useage { get; set; }
+		public string Amount { get; set; }
 		public ItemInformation Information {  get; set; }
     }
 }

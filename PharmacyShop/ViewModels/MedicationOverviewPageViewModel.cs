@@ -15,8 +15,9 @@ namespace PharmacyShop.ViewModels
     {
         private readonly MedicineService _medication;
         private readonly PersonService _personService;
-        
-        private List<Medicine> medicationList;
+        private int quantity = 1;
+
+		private List<Medicine> medicationList;
         public ObservableCollection<Medicine> Medicine { get; set; } = new();
 
         [ObservableProperty]
@@ -32,6 +33,18 @@ namespace PharmacyShop.ViewModels
 			{
                 this.SearchText = SearchText;
 				SearchProduct();
+			});
+
+            MessagingCenter.Subscribe<MedicationDetailsViewModel, Medicine>(this, "MedicineClicked", (sender, medicine) =>
+            {
+                _= InspectChosenMedicine(medicine);
+            });
+
+			MessagingCenter.Subscribe<MedicationDetailsViewModel, Dictionary<Medicine, int>> (this, "AddToCart", (sender, myDict) =>
+			{
+                var item = myDict.First();
+                quantity = item.Value;
+                _= BuyChosenMedicine(item.Key);
 			});
 		}
 
@@ -146,9 +159,11 @@ namespace PharmacyShop.ViewModels
             if(InspectSelectedMedicine != null)
             {
 				_medication.CurrentMedicine = InspectSelectedMedicine;
+                MessagingCenter.Send(this, "RefreshPage");
 				await Shell.Current.GoToAsync("//MedicationDetailsPage");
             }
         }
+
 
         [RelayCommand]
         public async Task BuyChosenMedicine(Medicine BuySelectedMedicine)
@@ -162,15 +177,15 @@ namespace PharmacyShop.ViewModels
 					_personService.ItemsCart.Add(new Cart
 					{
 						Medicine = BuySelectedMedicine,
-						Quantity = 1,
+						Quantity = quantity,
 						Information = BuySelectedMedicine.Information
 					});
 				}
                 else
                 {
-                    _personService.ItemsCart.Find(a => a == cart).Quantity++;
+                    _personService.ItemsCart.Find(a => a == cart).Quantity += quantity;
                 }
-               
+                quantity = 1;
             }
         }
     }

@@ -8,9 +8,11 @@
              Title="MedicationDetailsPage">
     <!--<ScrollView>-->
         <VerticalStackLayout>
-        <SearchBar Placeholder="Search" Text="{Binding SearchText, Mode=TwoWay}"></SearchBar>
+        <SearchBar Placeholder="Search" 
+                   Text="{Binding SearchText, Mode=TwoWay}" 
+                   x:Name="SearchBarControl"/>
 
-            <Grid RowDefinitions="Auto, Auto, Auto, Auto" Margin="0,20,0,0">
+        <Grid RowDefinitions="Auto, Auto, Auto, Auto" Margin="0,20,0,0">
           
             <Grid Grid.Row="0" RowDefinitions="Auto, Auto, Auto, Auto" Margin="20,0,20,0" RowSpacing="10">
                     <Label Text="{Binding Title}" Grid.Row="0" FontAttributes="Bold" FontSize="Large"/>
@@ -41,23 +43,51 @@
                         <Label Text="{Binding Amount}" HorizontalOptions="End"/>
                     </Grid>
                 </VerticalStackLayout>
+            <!---Description Dropdown-->
             <Frame Grid.Row="2" HeightRequest="40" Margin="20,20,20,0">
                 <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" HeightRequest="20">
-                    <Picker Title="Description" FontAttributes="Bold" IsEnabled="True" ItemsSource="{Binding Options}" SelectedIndexChanged="Picker_SelectedIndexChanged" VerticalOptions="Center"
-              HorizontalOptions="FillAndExpand" HeightRequest="40"/>
+                    <Picker x:Name="DescriptionPicker" Title="Description" FontAttributes="Bold" IsEnabled="True" ItemsSource="{Binding Options}" SelectedIndexChanged="Picker_SelectedIndexChanged" VerticalOptions="Center"
+              HorizontalOptions="FillAndExpand" HeightRequest="40" Focused="OnPicker"/>
                     <Image Source="detailsplus.png" HorizontalOptions="End"/>
                 </Grid>
-
-
             </Frame>
-            <AbsoluteLayout BackgroundColor="White" Grid.Row="0" AbsoluteLayout.LayoutBounds="1,0,-1,-1" AbsoluteLayout.LayoutFlags="PositionProportional" Margin="20,0,20,0" MaximumHeightRequest="400">
+
+            <Grid Grid.Row="3" HorizontalOptions="FillAndExpand" Margin="20,30,20,0" VerticalOptions="FillAndExpand">
+                <Frame WidthRequest="190" HeightRequest="40" HorizontalOptions="Start" VerticalOptions="FillAndExpand" CornerRadius="4">
+                    <Grid ColumnDefinitions="Auto, Auto" HeightRequest="40" VerticalOptions="Center">
+                        <Label Text="Quantity: " Grid.Column="0" FontSize="16" VerticalOptions="Center"/>
+                        <HorizontalStackLayout VerticalOptions="Center" HorizontalOptions="CenterAndExpand" Padding="0" Spacing="10" Grid.Column="1">
+                            <ImageButton Source="minus.png" HeightRequest="24" WidthRequest="24" HorizontalOptions="Center" VerticalOptions="Center"
+                                    Command="{Binding DecreaseQuantityCommand}"
+                                    CommandParameter="{Binding}"/>
+                            <Label Text="{Binding Quantity}" FontSize="18" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+                            <ImageButton Source="plus.png" HeightRequest="24" WidthRequest="24" BackgroundColor="Transparent" 
+                                    HorizontalOptions="Center" VerticalOptions="Center"
+                                    Command="{Binding IncreaseQuantityCommand}"
+                                    CommandParameter="{Binding}"/>
+                        </HorizontalStackLayout>
+                    </Grid>
+
+                </Frame>
+                    <Button Text="Add to Cart" WidthRequest="150" HeightRequest="40" HorizontalOptions="End" Command="{Binding AddToCartCommand}"/>
+            </Grid>
+            <BoxView BackgroundColor="Transparent" 
+                     IsVisible="{Binding IsSearchVisible}"
+                      >
+                <BoxView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnTap"/>
+                </BoxView.GestureRecognizers>
+                
+            </BoxView>
+
+            <AbsoluteLayout BackgroundColor="White" Grid.Row="0" AbsoluteLayout.LayoutBounds="1,0,-1,-1" AbsoluteLayout.LayoutFlags="PositionProportional" Margin="20,0,20,0" MaximumHeightRequest="400" IsVisible="{Binding IsSearchVisible}">
                 <CollectionView ItemsSource="{Binding Medicines}" SelectionMode="None" MaximumHeightRequest="400">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="model:Medicine">
                             <Frame HeightRequest="90" BorderColor="LightGray" Margin="5,0,5,10" Padding="10" WidthRequest="350">
 
                                 <Frame.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MedicationOverviewPageViewModel}}, Path=InspectChosenMedicineCommand}" CommandParameter="{Binding}" />
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MedicationDetailsViewModel}}, Path=MedicineClickCommand}" CommandParameter="{Binding}" />
                                 </Frame.GestureRecognizers>
 
                                 <Grid ColumnDefinitions="Auto, *, Auto" VerticalOptions="Center" HorizontalOptions="FillAndExpand">

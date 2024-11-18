@@ -22,6 +22,12 @@ namespace PharmacyShop
 					fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 					fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 				});
+
+            builder.ConfigureFonts(fonts =>
+            {
+                fonts.AddFont("FontAwesome.ttf", "Cart");
+            });
+
             builder.Services.AddSingleton<MedicineConfiguration>();
 
             builder.Services.AddSingleton<MedicationOverviewPageViewModel>();

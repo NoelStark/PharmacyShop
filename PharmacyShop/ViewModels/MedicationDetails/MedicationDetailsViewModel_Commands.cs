@@ -41,5 +41,11 @@ namespace PharmacyShop.ViewModels.MedicationDetails
 
 			WeakReferenceMessenger.Default.Send(new ValueChangedMessage<Dictionary<Medicine, int>>(medicineQuantity));
 		}
-	}
+
+        [RelayCommand]
+        public void GoToCheckout()
+        {
+            Shell.Current.GoToAsync("//CheckoutPage");
+        }
+    }
 }

@@ -8,11 +8,12 @@ namespace PharmacyShop.Models
 {
 	public class PaymentInfo
 	{
-		public required Person Person { get; set; }
+		public Person Person { get; set; }
 		public required string CreditCardName { get; set; }
-		public required long CreditCardNumber { get; set; }
-		public required DateTime ExpireDate { get; set; }
-		public required int SecurityCode { get; set; }
+		public required string CreditCardNumber { get; set; }
+		public required string CreditCardType { get; set; }
+		public required string ExpireDate { get; set; }
+		public required string SecurityCode { get; set; }
 
 	}
 }

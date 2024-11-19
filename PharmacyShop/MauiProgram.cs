@@ -6,6 +6,7 @@ using PharmacyShop.Services;
 using PharmacyShop.ViewModels;
 using PharmacyShop.Views;
 using PharmacyShop.Views.Checkout;
+using CommunityToolkit.Maui;
 
 
 namespace PharmacyShop
@@ -17,16 +18,8 @@ namespace PharmacyShop
 			var builder = MauiApp.CreateBuilder();
 			builder
 				.UseMauiApp<App>()
-				.ConfigureFonts(fonts =>
-				{
-					fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-					fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-				});
-
-            builder.ConfigureFonts(fonts =>
-            {
-                fonts.AddFont("FontAwesome.ttf", "Cart");
-            });
+				.UseMauiCommunityToolkit();
+           
 
             builder.Services.AddSingleton<MedicineConfiguration>();
 
@@ -42,11 +35,18 @@ namespace PharmacyShop
 			builder.Services.AddSingleton<PersonalInfoViewModel>();
 			builder.Services.AddTransient<PersonalInfoPage>();
 
-			builder.Services.AddSingleton<PaymentInfoViewModel>();
+			builder.Services.AddTransient<PaymentInfoViewModel>();
 			builder.Services.AddTransient<PaymentInfoPage>();
+
+			builder.Services.AddTransient<ConfirmationViewModel>();
+			builder.Services.AddTransient<ConfirmationPage>();
 
 			builder.Services.AddSingleton<PersonService>();
 			builder.Services.AddSingleton<MedicineService>();
+
+			builder.Services.AddTransient<PopupView>();
+			builder.Services.AddTransient<PopupViewModel>();
+			Preferences.Clear();
 
 			Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("NoUnderline", (h, v) =>
 			{

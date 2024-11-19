@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace PharmacyShop.ViewModels
 {
+	[QueryProperty(nameof(TotalCartCost), "totalCartCost")]
 	public partial class PersonalInfoViewModel : ObservableObject
 	{
 		private static readonly Regex NumbersOnly = new Regex("^[0-9]*$");
@@ -21,6 +22,9 @@ namespace PharmacyShop.ViewModels
 
 		[ObservableProperty]
 		private string firstName;
+
+		[ObservableProperty]
+		private decimal totalCartCost; 	
 
 		partial void OnFirstNameChanged(string value)
 		{
@@ -151,6 +155,8 @@ namespace PharmacyShop.ViewModels
 				!string.IsNullOrWhiteSpace(City) &&
 				!string.IsNullOrWhiteSpace(PostalCode);
 		}
+
+		
 
 
 		private readonly PersonService _personService;

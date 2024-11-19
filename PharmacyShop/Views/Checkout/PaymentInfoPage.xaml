@@ -61,7 +61,7 @@
                 <Label Text="Save for future Purchases"></Label>
             </HorizontalStackLayout>
             <HorizontalStackLayout Spacing="5">
-                <CheckBox WidthRequest="24" HeightRequest="24" VerticalOptions="Start" IsChecked="{Binding AgreeToTerms}"/>
+                <CheckBox WidthRequest="24" HeightRequest="24" VerticalOptions="Start" IsChecked="{Binding AgreeToTerms, Mode=TwoWay}"/>
                 <Label Text="By clicking this box, you agree to abide by our Terms of Service and acknowledge that you have read our Privacy Policy."
                        LineBreakMode="WordWrap" WidthRequest="300" VerticalOptions="Start"></Label>
             </HorizontalStackLayout>

@@ -4,10 +4,12 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using PharmacyShop.Models;
 using PharmacyShop.Services;
+using PharmacyShop.Views;
 
 namespace PharmacyShop.ViewModels
 {
@@ -43,6 +45,15 @@ namespace PharmacyShop.ViewModels
 
         [ObservableProperty]
         private string userInputMaxValue;
+
+        private readonly Dictionary<string, bool> filterDictionary = new()
+        {
+            {"Filmdragerad", false },
+            {"Brustablett", false },
+            {"Oral", false },
+            {"Flytande", false },
+            {"Dragerad", false },
+		};
 
 
 
@@ -110,77 +121,97 @@ namespace PharmacyShop.ViewModels
 
         partial void OnFilmdrageradChanged(bool checkedBox)
         {
-            if (checkedBox)
-                filterFilmdragerad = "Filmdragerad";
-            else
-                filterFilmdragerad = string.Empty;
+            //if (checkedBox)
+            //    filterFilmdragerad = "Filmdragerad";
+            //else
+            //    filterFilmdragerad = string.Empty;
+            filterDictionary["Filmdragerad"] = checkedBox;
         }
 
         partial void OnBrustablettChanged(bool checkedBox)
         {
-            if (checkedBox)
-                filterBrustablett = "Brustablett";
-            else
-                filterBrustablett = string.Empty;
-        }
+			//if (checkedBox)
+			//    filterBrustablett = "Brustablett";
+			//else
+			//    filterBrustablett = string.Empty;
+			filterDictionary["Brustablett"] = checkedBox;
 
-        partial void OnOralChanged(bool checkedBox)
+		}
+
+		partial void OnOralChanged(bool checkedBox)
         {
-            if (checkedBox)
-                filterOral = "Oral";
-            else
-                filterOral = string.Empty;
-        }
+			//if (checkedBox)
+			//    filterOral = "Oral";
+			//else
+			//    filterOral = string.Empty;
+			filterDictionary["Oral"] = checkedBox;
 
-        partial void OnFlytandeChanged(bool checkedBox)
+		}
+
+		partial void OnFlytandeChanged(bool checkedBox)
         {
-            if (checkedBox)
-                filterFlyTande = "Flytande";
-            else
-                filterFlyTande = string.Empty;
-        }
+			//    if (checkedBox)
+			//        filterFlyTande = "Flytande";
+			//    else
+			//        filterFlyTande = string.Empty;
+			filterDictionary["Flytande"] = checkedBox;
 
-        partial void OnDrageradChanged(bool checkedBox)
+		}
+
+		partial void OnDrageradChanged(bool checkedBox)
         {
-            if (checkedBox)
-                filterDragerad = "Dragerad";
-            else
-                filterDragerad = string.Empty;
-        }
+			//if (checkedBox)
+			//    filterDragerad = "Dragerad";
+			//else
+			//    filterDragerad = string.Empty;
+			filterDictionary["Dragerad"] = checkedBox;
+
+		}
 
 
-        [RelayCommand]
-        public void FilterMedicines()
+		[RelayCommand]
+        public async Task FilterMedicines()
         {
-            decimal minprice = decimal.MinValue;
+          
+			decimal minprice = decimal.MinValue;
             decimal maxprice = decimal.MaxValue;
 
-            //if (UserInputMinValue.Any())
-            //{
-            //    try
-            //    {
-            //        decimal.TryParse(UserInputMinValue, out decimal minValue);
-            //        minprice = minValue;
-            //    }
-            //    catch { }
-            //}
+            if (!string.IsNullOrEmpty(UserInputMinValue))
+            {
+                try
+                {
+                    decimal.TryParse(UserInputMinValue, out decimal minValue);
+                    minprice = minValue;
+                }
+                catch { }
+            }
 
-            //if (UserInputMaxValue.Any())
-            //{
-            //    try
-            //    {
-            //        decimal.TryParse(UserInputMaxValue, out decimal maxValue);
-            //        maxprice = maxValue;
-            //    }
-            //    catch { }
-            //}
+            if (!string.IsNullOrEmpty(UserInputMaxValue))
+            {
+                try
+                {
+                    decimal.TryParse(UserInputMaxValue, out decimal maxValue);
+                    maxprice = maxValue;
+                }
+                catch { }
+            }
 
-            var filter = medicationList.Where(a => a.Description.ToLower().Contains(filterFilmdragerad.ToLower()) || a.Description.ToLower().Contains(filterBrustablett.ToLower()) || a.Description.ToLower().Contains(filterFlyTande.ToLower()) || a.Description.ToLower().Contains(filterDragerad.ToLower()) || a.Description.ToLower().Contains(filterOral.ToLower())).Where(b => b.Information.ItemPrice >= minprice && b.Information.ItemPrice <= maxprice).ToList();
-            _ = Filter(filter);
+            List<string> active = filterDictionary.Where(x => x.Value).Select(x => x.Key.ToLower()).ToList();
+
+            var filter = medicationList.Where(a => active.Any(y => a.Description.ToLower().Contains(y)))
+                 .Where(b => b.Information.ItemPrice >= minprice && b.Information.ItemPrice <= maxprice).ToList();
+
+
+			//var filter = medicationList.Where(a => a.Description.ToLower().Contains(filterFilmdragerad.ToLower()) 
+			//|| a.Description.ToLower().Contains(filterBrustablett.ToLower()) 
+			//|| a.Description.ToLower().Contains(filterFlyTande.ToLower()) 
+			//|| a.Description.ToLower().Contains(filterDragerad.ToLower()) 
+			//|| a.Description.ToLower().Contains(filterOral.ToLower()))
+			//    .Where(b => b.Information.ItemPrice >= minprice && b.Information.ItemPrice <= maxprice).ToList();
+			_ = Filter(filter);
         }
 
-        [RelayCommand]
-        public async Task Filter(List<Medicine> filter)
+        private async Task Filter(List<Medicine> filter)
         {
             Medicine.Clear();
             foreach (var medicine in filter)
@@ -218,7 +249,7 @@ namespace PharmacyShop.ViewModels
         [RelayCommand]
         public async Task GoToCheckout()
         {
-            await Shell.Current.GoToAsync("//Checkout/CheckoutPage");
+            await Shell.Current.GoToAsync("//CheckoutPage");
         }
 
 
@@ -255,6 +286,8 @@ namespace PharmacyShop.ViewModels
                     _personService.ItemsCart.Find(a => a == cart).Quantity += quantity;
                 }
                 quantity = 1;
+                var popup = new PopupView();
+                Application.Current.MainPage.ShowPopup(popup);
             }
         }
     }

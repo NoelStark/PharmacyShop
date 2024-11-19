@@ -86,9 +86,13 @@ namespace PharmacyShop.ViewModels
 				amountOfItems += cart.Quantity;
 			}
 			TotalAmountOfItems = amountOfItems;
-			ShippingCost = TotalPrice > 0 ? 29 : 0;
+
+			ShippingCost = TotalCartCost > 500 ? 0 : 29;
+
 			OnPropertyChanged(nameof(TotalPriceWithoutShipping));
 			OnPropertyChanged(nameof(TotalCartCost));
+			_personService.ShippingCost = ShippingCost;
+			_personService.TotalCartCost = TotalCartCost;
 		}
 
 		[RelayCommand]
@@ -126,7 +130,7 @@ namespace PharmacyShop.ViewModels
 		[RelayCommand(CanExecute = nameof(CanExecute))]
 		async Task Continue()
 		{
-			_= Shell.Current.GoToAsync("//PersonalInfoPage");
+			_= Shell.Current.GoToAsync($"//PersonalInfoPage?totalCartCost={TotalCartCost}");
 		}
 
 	}

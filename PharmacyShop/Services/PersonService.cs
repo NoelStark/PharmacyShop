@@ -12,5 +12,7 @@ namespace PharmacyShop.Services
 		public Person CurrentPerson { get; set; }
 		public PaymentInfo PaymentInfo { get; set; }
 		public List<Cart> ItemsCart { get; set; } = new();
+		public decimal TotalCartCost { get; set; }
+		public decimal ShippingCost { get; set; }
 	}
 }

@@ -43,19 +43,19 @@ namespace PharmacyShop.ViewModels.MedicationDetails
 					}
 				});
 			}
-
-			if (!WeakReferenceMessenger.Default.IsRegistered<ValueChangedMessage<List<Medicine>>>(this))
+			if (!WeakReferenceMessenger.Default.IsRegistered<ValueChangedMessage<string>>(this))
 			{
-				// Register for the message only if not already registered
-				WeakReferenceMessenger.Default.Register<ValueChangedMessage<List<Medicine>>>(this, (recipient, message) =>
+				WeakReferenceMessenger.Default.Register<ValueChangedMessage<string>>(this, (recipient, message) =>
 				{
-					Medicines.Clear();
-					foreach (Medicine medicine in message.Value)
+					if (message.Value == "RefreshPage")
 					{
-						Medicines.Add(medicine);
+						// Logic to handle the message
+						IsSearchVisible = false;
+						FillFields();
 					}
 				});
 			}
+	
 			//MessagingCenter.Subscribe<MedicationOverviewPageViewModel, List<Medicine>>(this, "FilteredMedicineList", (sender, Result) =>
 			//{
 			//	Medicines.Clear();

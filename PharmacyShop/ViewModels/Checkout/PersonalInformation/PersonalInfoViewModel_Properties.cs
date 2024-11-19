@@ -1,30 +1,34 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using PharmacyShop.Models;
 using PharmacyShop.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using static Microsoft.Maui.ApplicationModel.Permissions;
 
-namespace PharmacyShop.ViewModels
+namespace PharmacyShop.ViewModels.Checkout.PersonalInformation
 {
-	[QueryProperty(nameof(TotalCartCost), "totalCartCost")]
 	public partial class PersonalInfoViewModel : ObservableObject
 	{
-		private static readonly Regex NumbersOnly = new Regex("^[0-9]*$");
-		private static readonly Regex EmailRegex = new Regex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$");
 		private string _lastValidPhone = string.Empty;
 		private string _lastValidPostalCode = string.Empty;
+		private static readonly Regex NumbersOnly = new Regex("^[0-9]*$");
+		private static readonly Regex EmailRegex = new Regex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$");
 
 		[ObservableProperty]
-		private string firstName;
+		private string firstName = string.Empty;
 
 		[ObservableProperty]
-		private decimal totalCartCost; 	
+		private decimal totalCartCost = 0;
+
+
+
+		[ObservableProperty]
+		private int cursorPosition = 0;
+
+		private bool isFormValid = false;
 
 		partial void OnFirstNameChanged(string value)
 		{
@@ -32,7 +36,7 @@ namespace PharmacyShop.ViewModels
 		}
 
 		[ObservableProperty]
-		private string lastName;
+		private string lastName = string.Empty;
 
 		partial void OnLastNameChanged(string value)
 		{
@@ -40,7 +44,7 @@ namespace PharmacyShop.ViewModels
 		}
 
 		[ObservableProperty]
-		private string email;
+		private string email = string.Empty;
 
 		partial void OnEmailChanged(string value)
 		{
@@ -78,13 +82,13 @@ namespace PharmacyShop.ViewModels
 
 			Phone = _lastValidPhone;
 			isUpdatingPhone = false;
-			
+
 
 			ValidateForm();
 		}
 
 		[ObservableProperty]
-		private string street;
+		private string street = string.Empty;
 
 		partial void OnStreetChanged(string value)
 		{
@@ -92,7 +96,7 @@ namespace PharmacyShop.ViewModels
 		}
 
 		[ObservableProperty]
-		private string city;
+		private string city = string.Empty;
 
 		partial void OnCityChanged(string value)
 		{
@@ -125,68 +129,5 @@ namespace PharmacyShop.ViewModels
 			ValidateForm();
 		}
 
-
-		[ObservableProperty]
-		private int cursorPosition;
-
-		private bool isFormValid;
-
-		public bool IsFormValid
-		{
-			get => isFormValid;
-			private set
-			{
-				SetProperty(ref isFormValid, value);
-				SavePersonCommand.NotifyCanExecuteChanged();
-			}
-		}
-
-
-		private void ValidateForm()
-		{
-			IsFormValid = !string.IsNullOrWhiteSpace(FirstName) &&
-				!string.IsNullOrWhiteSpace(LastName) &&
-				!string.IsNullOrWhiteSpace(Email) &&
-				EmailRegex.IsMatch(Email) &&
-				PostalCode.Replace(" ","").Length == 5 &&
-				!string.IsNullOrWhiteSpace(Phone) &&
-				Phone.Replace(" ","").Length == 10 &&
-				!string.IsNullOrWhiteSpace(Street) &&
-				!string.IsNullOrWhiteSpace(City) &&
-				!string.IsNullOrWhiteSpace(PostalCode);
-		}
-
-		
-
-
-		private readonly PersonService _personService;
-
-        public PersonalInfoViewModel(PersonService personService)
-        {
-            _personService = personService;
-        }
-
-
-        [RelayCommand(CanExecute = nameof(IsFormValid))]
-		async Task SavePerson()
-		{
-			Person person = new Person
-			{
-				FirstName = FirstName,
-				LastName = LastName,
-				Email = Email,
-				Phone = Phone,
-				Street = Street,
-				City = City,
-				PostalCode = PostalCode
-			};
-
-			if (person != null) {
-				_personService.CurrentPerson = person;
-				await Shell.Current.GoToAsync("///PaymentInfoPage");
-			}
-		}
-
-   
-    }
+	}
 }

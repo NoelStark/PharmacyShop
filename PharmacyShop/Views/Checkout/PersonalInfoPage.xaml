@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PharmacyShop.Views.Checkout.PersonalInfoPage"
-             xmlns:vm ="clr-namespace:PharmacyShop.ViewModels"
+             xmlns:vm ="clr-namespace:PharmacyShop.ViewModels.Checkout.PersonalInformation"
              x:DataType="vm:PersonalInfoViewModel"
              Title="PersonalInfoPage">
     <Grid ColumnDefinitions="*,*" RowDefinitions="*, Auto, Auto">
@@ -75,7 +75,7 @@
             <BoxView HeightRequest="1" Color="Black" HorizontalOptions="FillAndExpand" Margin="0,10,0,10" />
             <Grid ColumnDefinitions="*,Auto" HorizontalOptions="FillAndExpand" Margin="0,10,0,0">
                 <Label Text="Total" FontSize="20" Grid.Column="0" HorizontalOptions="Start" />
-                <Label Text="{Binding Source={RelativeSource AncestorType={x:Type vm:CheckoutViewModel}}, Path=TotalCartCost, StringFormat='{0} :-'}" FontSize="22" FontAttributes="Bold" Grid.Column="1" HorizontalOptions="End" />
+                <Label Text="{Binding TotalCartCost, StringFormat='{0} kr'}" FontSize="22" FontAttributes="Bold" Grid.Column="1" HorizontalOptions="End" />
             </Grid>
         </VerticalStackLayout>
 

@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PharmacyShop.Views.MedicationOverviewPage"
              xmlns:models="clr-namespace:PharmacyShop.Models"
-             xmlns:viewmodels="clr-namespace:PharmacyShop.ViewModels"
+             xmlns:viewmodels="clr-namespace:PharmacyShop.ViewModels.MedicationOverview"
              x:DataType="viewmodels:MedicationOverviewPageViewModel"
              Title="Products">
     <ContentPage.ToolbarItems>

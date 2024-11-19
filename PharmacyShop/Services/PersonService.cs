@@ -9,8 +9,8 @@ namespace PharmacyShop.Services
 {
 	public class PersonService
 	{
-		public Person CurrentPerson { get; set; }
-		public PaymentInfo PaymentInfo { get; set; }
+		public Person CurrentPerson { get; set; } = new Person();
+		public PaymentInfo? PaymentInfo { get; set; }
 		public List<Cart> ItemsCart { get; set; } = new();
 		public decimal TotalCartCost { get; set; }
 		public decimal ShippingCost { get; set; }

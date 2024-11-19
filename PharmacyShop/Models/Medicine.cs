@@ -8,12 +8,12 @@ namespace PharmacyShop.Models
 {
 	public class Medicine
 	{
-		public string Name { get; set; }
-		public string Dose { get; set; }
-		public string Substance { get; set; }
-		public string Description { get; set; }
-		public string Useage { get; set; }
-		public string Amount { get; set; }
-		public ItemInformation Information {  get; set; }
+		public string Name { get; set; } = string.Empty;
+		public string Dose { get; set; } = string.Empty;
+		public string Substance { get; set; } = string.Empty;
+		public string Description { get; set; } = string.Empty;
+		public string Useage { get; set; } = string.Empty;
+		public string Amount { get; set; } = string.Empty;
+		public ItemInformation? Information {  get; set; }
     }
 }

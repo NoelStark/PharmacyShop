@@ -1,4 +1,5 @@
 using PharmacyShop.ViewModels;
+using PharmacyShop.ViewModels.Checkout.PersonalInformation;
 
 namespace PharmacyShop.Views.Checkout;
 
@@ -14,8 +15,7 @@ public partial class PersonalInfoPage : ContentPage
 		}
 
 	}
-
-	private void PostalCode_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+	private void PostalCode_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
 	{
 		if (e.PropertyName == nameof(PersonalInfoViewModel.PostalCode))
 		{

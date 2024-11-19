@@ -1,4 +1,5 @@
 using PharmacyShop.ViewModels;
+using PharmacyShop.ViewModels.Checkout.CheckoutViewModels;
 
 namespace PharmacyShop.Views.Checkout;
 

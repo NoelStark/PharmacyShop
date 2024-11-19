@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PharmacyShop.Views.Checkout.CheckoutPage"
              xmlns:model ="clr-namespace:PharmacyShop.Models"
-             xmlns:vm ="clr-namespace:PharmacyShop.ViewModels"
+             xmlns:vm ="clr-namespace:PharmacyShop.ViewModels.Checkout.CheckoutViewModels"
              x:DataType="vm:CheckoutViewModel"
              Title="CheckoutPage">
     <Grid ColumnDefinitions="*,*" RowDefinitions="450, Auto, Auto">

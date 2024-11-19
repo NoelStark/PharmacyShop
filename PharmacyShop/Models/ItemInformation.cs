@@ -8,8 +8,8 @@ namespace PharmacyShop.Models
 {
 	public class ItemInformation
 	{
-		public decimal ItemPrice { get; set; }
-		public string ImageUrl { get; set; }
+		public decimal ItemPrice { get; set; } = 0;
+		public string ImageUrl { get; set; } = string.Empty;
 
 	}
 }

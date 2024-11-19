@@ -1,4 +1,5 @@
 using PharmacyShop.ViewModels;
+using PharmacyShop.ViewModels.MedicationDetails;
 
 namespace PharmacyShop.Views;
 

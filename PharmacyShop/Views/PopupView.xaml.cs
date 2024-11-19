@@ -12,11 +12,11 @@ namespace PharmacyShop.Views
 			PopupViewModel viewModel = new PopupViewModel();
 			_viewModel = viewModel;
 			BindingContext = _viewModel;
-			_viewModel.PropertyChanged += PropertyChanged;
+			_viewModel.PropertyChanged += ClosePopup;
 		}
-		private void PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+		
+		private void ClosePopup(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
-
 			if(e.PropertyName == nameof(PopupViewModel.ShouldClose) && _viewModel.ShouldClose)
 			{
 				Close();

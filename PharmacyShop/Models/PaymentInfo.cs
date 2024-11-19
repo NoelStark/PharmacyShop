@@ -8,7 +8,7 @@ namespace PharmacyShop.Models
 {
 	public class PaymentInfo
 	{
-		public Person Person { get; set; }
+		public Person Person { get; set; } = new Person();
 		public required string CreditCardName { get; set; }
 		public required string CreditCardNumber { get; set; }
 		public required string CreditCardType { get; set; }

@@ -7,6 +7,12 @@ using PharmacyShop.ViewModels;
 using PharmacyShop.Views;
 using PharmacyShop.Views.Checkout;
 using CommunityToolkit.Maui;
+using PharmacyShop.ViewModels.Checkout.PersonalInformation;
+using PharmacyShop.ViewModels.MedicationDetails;
+using PharmacyShop.ViewModels.Checkout.CheckoutViewModels;
+using PharmacyShop.ViewModels.Checkout.PaymentInfoViewModels;
+using PharmacyShop.ViewModels.Checkout.ConfirmationViewModels;
+using PharmacyShop.ViewModels.MedicationOverview;
 
 
 namespace PharmacyShop

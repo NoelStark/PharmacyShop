@@ -30,6 +30,12 @@ namespace PharmacyShop.ViewModels
 		[ObservableProperty]
 		private bool agreeToTerms;
 
+		partial void OnAgreeToTermsChanged(bool value)
+		{
+			if(value)
+				PayCommand.NotifyCanExecuteChanged();
+		}
+
 		private PersonService _personService;
 
         public PaymentInfoViewModel(PersonService personService)
@@ -47,10 +53,12 @@ namespace PharmacyShop.ViewModels
 				ExpireDate = ExpireDate,
 				SecurityCode = SecurityCode
 			};
+
+			_personService.PaymentInfo = paymentInfo;
 		}
 
 
-		[RelayCommand]
+		[RelayCommand(CanExecute = nameof(AgreeToTerms))]
 		async Task Pay()
 		{
 			if (SaveInformation)

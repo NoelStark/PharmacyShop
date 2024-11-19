@@ -6,10 +6,17 @@
              xmlns:viewmodels="clr-namespace:PharmacyShop.ViewModels"
              x:DataType="viewmodels:MedicationOverviewPageViewModel"
              Title="Products">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="cart.png" Command="{Binding GoToCheckoutCommand}"/>
+    </ContentPage.ToolbarItems>
 
     <ScrollView>
         <VerticalStackLayout>
-            <SearchBar Placeholder="Search product" Margin="0,0,0,10" Text="{Binding SearchText, Mode=TwoWay}" />
+            <Grid HorizontalOptions="FillAndExpand">
+                
+                <SearchBar Placeholder="Search product" Margin="0,0,40,10" Text="{Binding SearchText, Mode=TwoWay}" />
+                <ImageButton Source="filter.png" HorizontalOptions="End" WidthRequest="24" VerticalOptions="Center" Margin="0,0,15,10" Command="{Binding FilterItems}"/>
+            </Grid>
             <CollectionView ItemsSource="{Binding Medicine}" SelectionMode="None">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:Medicine">

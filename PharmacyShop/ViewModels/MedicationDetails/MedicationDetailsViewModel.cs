@@ -31,24 +31,31 @@ namespace PharmacyShop.ViewModels.MedicationDetails
 			FillFields();
 			IsSearchVisible = false;
 
-			WeakReferenceMessenger.Default.Register<ValueChangedMessage<List<Medicine>>>(this, (recipient, message) =>
+			if (!WeakReferenceMessenger.Default.IsRegistered<ValueChangedMessage<List<Medicine>>>(this))
 			{
-				Medicines.Clear();
-				foreach (Medicine medicine in message.Value)
+				// Register for the message only if not already registered
+				WeakReferenceMessenger.Default.Register<ValueChangedMessage<List<Medicine>>>(this, (recipient, message) =>
 				{
-					Medicines.Add(medicine);
-				}
-			});
+					Medicines.Clear();
+					foreach (Medicine medicine in message.Value)
+					{
+						Medicines.Add(medicine);
+					}
+				});
+			}
 
-			WeakReferenceMessenger.Default.Register<ValueChangedMessage<string>>(this, (recipient, message) =>
+			if (!WeakReferenceMessenger.Default.IsRegistered<ValueChangedMessage<List<Medicine>>>(this))
 			{
-				if (message.Value == "RefreshPage")
+				// Register for the message only if not already registered
+				WeakReferenceMessenger.Default.Register<ValueChangedMessage<List<Medicine>>>(this, (recipient, message) =>
 				{
-					// Logic to handle the message
-					IsSearchVisible = false;
-					FillFields();
-				}
-			});
+					Medicines.Clear();
+					foreach (Medicine medicine in message.Value)
+					{
+						Medicines.Add(medicine);
+					}
+				});
+			}
 			//MessagingCenter.Subscribe<MedicationOverviewPageViewModel, List<Medicine>>(this, "FilteredMedicineList", (sender, Result) =>
 			//{
 			//	Medicines.Clear();

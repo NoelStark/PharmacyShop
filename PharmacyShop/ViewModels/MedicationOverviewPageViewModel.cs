@@ -23,6 +23,42 @@ namespace PharmacyShop.ViewModels
         [ObservableProperty]
         private string searchText;
 
+        [ObservableProperty]
+        public bool filmdragerad;
+
+        [ObservableProperty]
+        public bool brustablett;
+
+        [ObservableProperty]
+        public bool flytande;
+
+        [ObservableProperty]
+        public bool oral;
+
+        [ObservableProperty]
+        public bool dragerad;
+
+        [ObservableProperty]
+        private string userInputMinValue;
+
+        [ObservableProperty]
+        private string userInputMaxValue;
+
+
+
+        //[ObservableProperty]
+        //private string filtDose;
+
+        //[ObservableProperty]
+        //private string filtDescription;
+
+
+        private string? filterFilmdragerad;
+        private string? filterBrustablett;
+        private string? filterFlyTande;
+        private string? filterOral;
+        private string? filterDragerad;
+
 
         public MedicationOverviewPageViewModel(MedicineService medication, PersonService personService)
         {
@@ -57,45 +93,7 @@ namespace PharmacyShop.ViewModels
             {
                 Medicine.Clear();
             }
-            //string filtName = "";
-            //string filtDose = "";
-            //string filtDescription = "Oral";
-
-            //string userInputMinValue = "40.00";
-            //string userInputMaxValue = "50.00";
-            //decimal minprice = decimal.MinValue;
-            //decimal maxprice = decimal.MaxValue;
-
-            //if (userInputMinValue.Any())
-            //{
-            //    try
-            //    {
-            //        decimal.TryParse(userInputMinValue, out decimal minValue);
-            //        minprice = minValue;
-            //    }
-            //    catch
-            //    {
-            //        Console.WriteLine("Worng");
-            //    }
-            //}
-
-            //if (userInputMaxValue.Any())
-            //{
-            //    try
-            //    {
-            //        decimal.TryParse(userInputMaxValue, out decimal maxValue);
-            //        maxprice = maxValue;
-            //    }
-            //    catch
-            //    {
-            //        Console.WriteLine("Worng");
-            //    }
-            //}
-
-
-
-            //var filter = medicationList.Where(a => a.Name.Contains(filtName) && a.Dose.Contains(filtDose) && a.Description.Contains(filtDescription)).Where(b => b.Price >= minprice && b.Price <= maxprice).ToList();
-            //await Filter(filter);
+            
             if (medicationList.Any())
             {
                 foreach (var medicine in medicationList)
@@ -108,6 +106,77 @@ namespace PharmacyShop.ViewModels
         partial void OnSearchTextChanged(string value)
         {
 			SearchProduct();
+        }
+
+        partial void OnFilmdrageradChanged(bool checkedBox)
+        {
+            if (checkedBox)
+                filterFilmdragerad = "Filmdragerad";
+            else
+                filterFilmdragerad = string.Empty;
+        }
+
+        partial void OnBrustablettChanged(bool checkedBox)
+        {
+            if (checkedBox)
+                filterBrustablett = "Brustablett";
+            else
+                filterBrustablett = string.Empty;
+        }
+
+        partial void OnOralChanged(bool checkedBox)
+        {
+            if (checkedBox)
+                filterOral = "Oral";
+            else
+                filterOral = string.Empty;
+        }
+
+        partial void OnFlytandeChanged(bool checkedBox)
+        {
+            if (checkedBox)
+                filterFlyTande = "Flytande";
+            else
+                filterFlyTande = string.Empty;
+        }
+
+        partial void OnDrageradChanged(bool checkedBox)
+        {
+            if (checkedBox)
+                filterDragerad = "Dragerad";
+            else
+                filterDragerad = string.Empty;
+        }
+
+
+        [RelayCommand]
+        public void FilterMedicines()
+        {
+            decimal minprice = decimal.MinValue;
+            decimal maxprice = decimal.MaxValue;
+
+            //if (UserInputMinValue.Any())
+            //{
+            //    try
+            //    {
+            //        decimal.TryParse(UserInputMinValue, out decimal minValue);
+            //        minprice = minValue;
+            //    }
+            //    catch { }
+            //}
+
+            //if (UserInputMaxValue.Any())
+            //{
+            //    try
+            //    {
+            //        decimal.TryParse(UserInputMaxValue, out decimal maxValue);
+            //        maxprice = maxValue;
+            //    }
+            //    catch { }
+            //}
+
+            var filter = medicationList.Where(a => a.Description.ToLower().Contains(filterFilmdragerad.ToLower()) || a.Description.ToLower().Contains(filterBrustablett.ToLower()) || a.Description.ToLower().Contains(filterFlyTande.ToLower()) || a.Description.ToLower().Contains(filterDragerad.ToLower()) || a.Description.ToLower().Contains(filterOral.ToLower())).Where(b => b.Information.ItemPrice >= minprice && b.Information.ItemPrice <= maxprice).ToList();
+            _ = Filter(filter);
         }
 
         [RelayCommand]

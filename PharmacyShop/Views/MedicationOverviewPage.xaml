@@ -16,7 +16,7 @@
             <VerticalStackLayout IsVisible="{Binding SearchAndFilterIsVisible}">
                 <Grid HorizontalOptions="FillAndExpand">
                     <SearchBar Placeholder="Search product" Margin="0,0,40,10" Text="{Binding SearchText, Mode=TwoWay}" />
-                    <ImageButton Source="filter.png" HorizontalOptions="End" WidthRequest="24" VerticalOptions="Center" Margin="0,0,15,10" Command="{Binding ShowFilterCommand}"/>
+                    <ImageButton Source="filter.png" HorizontalOptions="End" WidthRequest="24" VerticalOptions="Center" Margin="0,0,15,10" Command="{Binding ShowFilterCommand}" CommandParameter="{Binding}"/>
                 </Grid>
                 <CollectionView ItemsSource="{Binding Medicine}" SelectionMode="None">
                     <CollectionView.ItemTemplate>
@@ -49,13 +49,13 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <AbsoluteLayout AbsoluteLayout.LayoutBounds="1,0,-1,-1" AbsoluteLayout.LayoutFlags="PositionProportional" Margin="0" MaximumHeightRequest="600" Background="White" IsVisible="{Binding IsVisible}">
-            <Frame WidthRequest="395" HeightRequest="800" Margin="0,-60,0,0">
+        <StackLayout VerticalOptions="Start" IsVisible="{Binding IsVisible}">
+            <Frame WidthRequest="395">
                 <VerticalStackLayout Margin="10,0,0,0" Spacing="2">
                     
-                    <Grid HorizontalOptions="FillAndExpand"> 
+                    <Grid HorizontalOptions="FillAndExpand" HeightRequest="35"> 
                         <Label Text="Filter" HorizontalOptions="Start" FontSize="18" FontAttributes="Bold" Margin="10,0,0,10"></Label>
-                        <ImageButton BackgroundColor="Red" Source="close1.png" HorizontalOptions="End" WidthRequest="30" HeightRequest="30" VerticalOptions="Center"  Command="{Binding ShowFilterCommand}"/>
+                        <ImageButton BackgroundColor="Red" Source="close.png" HorizontalOptions="End" WidthRequest="24" HeightRequest="24" Command="{Binding ShowFilterCommand}"/>
                     </Grid>
                     
                     <Grid HorizontalOptions="FillAndExpand">
@@ -109,6 +109,6 @@
                         </Frame>-->
                 </VerticalStackLayout>
             </Frame>
-        </AbsoluteLayout>
+        </StackLayout>
     </Grid>
 </ContentPage>

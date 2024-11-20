@@ -8,11 +8,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace PharmacyShop.ViewModels.MedicationDetails
 {
 	public partial class MedicationDetailsViewModel : ObservableObject
 	{
+		private ObservableCollection<Medicine> _medicines;
 		[RelayCommand]
 		void MedicineClick(Medicine medicine)
 		{

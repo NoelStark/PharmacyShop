@@ -27,10 +27,14 @@ namespace PharmacyShop.ViewModels.MedicationOverview
             _medication = medication;
             _personService = personService;
             LoadMedicines();
+            
 			WeakReferenceMessenger.Default.Register<ValueChangedMessage<string>>(this, (recipient, message) =>
 			{
-                this.SearchText = message.Value;
-				SearchProduct();
+                if(message.Value != "RefreshPage")
+                {
+                    this.SearchText = message.Value;
+				    SearchProduct();
+                }
 			});
 
 			WeakReferenceMessenger.Default.Register<ValueChangedMessage<Medicine>>(this, (recipient, message) =>
@@ -43,22 +47,28 @@ namespace PharmacyShop.ViewModels.MedicationOverview
                 quantity = item.Value;
                 BuyChosenMedicine(item.Key);
             });
-			//MessagingCenter.Subscribe<MedicationDetailsViewModel, Dictionary<Medicine, int>> (this, "AddToCart", (sender, myDict) =>
-			//{
-   //             var item = myDict.First();
-   //             quantity = item.Value;
-   //             BuyChosenMedicine(item.Key);
-			//});
+			
 		}
-
-     
+        [RelayCommand]
+        public async Task<ObservableCollection<Medicine>> ReturnMedicineToDetails()
+        {
+            return Medicine;
+        }
         private void Filter(List<Medicine> filter)
         {
-            Medicine.Clear();
-            foreach (var medicine in filter)
+            
+            var remove = Medicine.Except(filter).ToList();
+            var add = filter.Except(Medicine).ToList();
+
+            foreach (var item in remove)
             {
-                Medicine.Add(medicine);
+                Medicine.Remove(item);
             }
+			foreach (var item in add)
+			{
+				Medicine.Add(item);
+			}
+		    
         }
 
 

@@ -14,7 +14,7 @@ namespace PharmacyShop.ViewModels.MedicationOverview
 		private int quantity = 1;
 
 		private List<Medicine> medicationList = new();
-		public ObservableCollection<Medicine> Medicine { get; set; } = new();
+		public ObservableCollection<Medicine> Medicine { get; private set; } = new();
 
 		[ObservableProperty]
 		private string searchText = string.Empty;

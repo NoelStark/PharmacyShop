@@ -27,14 +27,16 @@ namespace PharmacyShop.ViewModels.MedicationOverview
 
 			if (medicationList.Any())
 			{
-				foreach (var medicine in medicationList)
+				foreach (Medicine? medicine in medicationList)
 				{
 					Medicine.Add(medicine);
 				}
 			}
+			FillSearch();
 		}
 
-        [RelayCommand]
+	
+		[RelayCommand]
         public void ShowFilter()
 		{
 			if (IsVisible == false)
@@ -51,7 +53,7 @@ namespace PharmacyShop.ViewModels.MedicationOverview
 
 
         [RelayCommand]
-		public async Task FilterMedicines()
+		public void FilterMedicines()
 		{
             decimal minprice = decimal.MinValue;
 			decimal maxprice = decimal.MaxValue;
@@ -78,40 +80,76 @@ namespace PharmacyShop.ViewModels.MedicationOverview
 
 			List<string> active = filterDictionary.Where(x => x.Value).Select(x => x.Key.ToLower()).ToList();
 
-			var filter = await Task.Run(() =>
-			{
-				return medicationList.Where(a => !active.Any() || active.Any(y => a.Description.ToLower().Contains(y)))
+			var filter = medicationList.Where(a => !active.Any() || active.Any(y => a.Description.ToLower().Contains(y)))
 				 .Where(b => b.Information?.ItemPrice >= minprice && b.Information.ItemPrice <= maxprice).ToList();
-			});
 
             Filter(filter);
             IsVisible = false;
             SearchAndFilterIsVisible = true;
         }
 
+		private Dictionary<string, List<Medicine>> search = new();
+
+		private void FillSearch()
+		{
+			foreach(Medicine? item in medicationList)
+			{
+				AddToSearch(item.Name, item);
+				AddToSearch(item.Dose, item);
+				AddToSearch(item.Description, item);
+			}
+		}
+
+		private void AddToSearch(string text, Medicine medicine)
+		{
+
+			if (!search.ContainsKey(text))
+			{
+				search[text] = new List<Medicine>();
+			}
+			search[text].Add(medicine);
+			
+		}
+
 		[RelayCommand]
 		public void SearchProduct()
 		{
-			if (SearchText != string.Empty)
+			List<Medicine> foundMedicines = new List<Medicine>();
+			if (SearchText == string.Empty)
 			{
-				var filterBySearchResult = medicationList.Where(a => a.Name.ToLower().Contains(SearchText.ToLower()) || a.Dose.ToLower().Contains(SearchText.ToLower()) || a.Description.ToLower().Contains(SearchText.ToLower())).ToList();
-				Medicine.Clear();
-				foreach (var medicine in filterBySearchResult)
-				{
-					Medicine.Add(medicine);
-				}
-
-				//MessagingCenter.Send(this, "FilteredMedicineList", filterBySearchResult);
-				WeakReferenceMessenger.Default.Send(new ValueChangedMessage<List<Medicine>>(filterBySearchResult));
+				Filter(medicationList);
 			}
 			else
 			{
-				Medicine.Clear();
-				foreach (var medicine in medicationList)
+				bool foundMatch = false;
+				HashSet<Medicine> result = new HashSet<Medicine>();
+				foreach(string key in search.Keys)
 				{
-					Medicine.Add(medicine);
+					if (key.ToLower().Contains(SearchText.ToLower()))
+					{
+						if (search.TryGetValue(key, out List<Medicine>? medicines))
+						{
+							foundMedicines.AddRange(medicines);
+							foundMatch = true;
+						}
+					}
 				}
+				Filter(foundMatch ? foundMedicines : new List<Medicine>());
 			}
+			
+
+			//if (SearchText != string.Empty)
+			//{
+			//	var filterBySearchResult = medicationList.Where(a => a.Name.ToLower().Contains(SearchText.ToLower()) || a.Dose.ToLower().Contains(SearchText.ToLower()) || a.Description.ToLower().Contains(SearchText.ToLower())).ToList();
+
+			//	Filter(filterBySearchResult);
+
+			//	WeakReferenceMessenger.Default.Send(new ValueChangedMessage<List<Medicine>>(filterBySearchResult));
+			//}
+			//else
+			//{
+			//	Filter(medicationList);
+			//}
 		}
 
 
@@ -128,7 +166,7 @@ namespace PharmacyShop.ViewModels.MedicationOverview
 			if (InspectSelectedMedicine != null)
 			{
 				_medication.CurrentMedicine = InspectSelectedMedicine;
-				WeakReferenceMessenger.Default.Send(this, "RefreshPage");
+				WeakReferenceMessenger.Default.Send(new ValueChangedMessage<string>("RefreshPage"));
 				Shell.Current.GoToAsync("//MedicationDetailsPage");
 			}
 		}
@@ -152,12 +190,12 @@ namespace PharmacyShop.ViewModels.MedicationOverview
 				}
 				else
 				{
-					var item = _personService.ItemsCart.Find(a => a == cart);
+					Cart? item = _personService.ItemsCart.Find(a => a == cart);
 					if(item != null)
 						item.Quantity += quantity;
 				}
 				quantity = 1;
-				var popup = new PopupView();
+				PopupView? popup = new PopupView();
 				if(Application.Current != null)
 					if(Application.Current.MainPage != null)
 						Application.Current.MainPage.ShowPopup(popup);

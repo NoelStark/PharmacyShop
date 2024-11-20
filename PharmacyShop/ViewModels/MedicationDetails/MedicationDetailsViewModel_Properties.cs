@@ -47,6 +47,8 @@ namespace PharmacyShop.ViewModels.MedicationDetails
 		partial void OnSearchTextChanged(string value)
 		{
 			WeakReferenceMessenger.Default.Send(new ValueChangedMessage<string>(value));
+			Medicines = _medicationOverview.Medicine;
+			OnPropertyChanged(nameof(Medicines));
 			//MessagingCenter.Send(this, "SearchTextChanged", value);
 			IsSearchVisible = true;
 		}

@@ -17,60 +17,39 @@ namespace PharmacyShop.ViewModels.MedicationDetails
 	public partial class MedicationDetailsViewModel : ObservableObject
 	{
 		private readonly MedicineService _medicineService;
+		private readonly MedicationOverviewPageViewModel _medicationOverview;
 
-
-		public MedicationDetailsViewModel(MedicineService medicineService)
+		public MedicationDetailsViewModel(MedicineService medicineService, MedicationOverviewPageViewModel medicationOverview)
         {
 			_medicineService = medicineService;
-			Reinitialize();
-
+			_medicationOverview = medicationOverview;
 		}
+
 		public void Reinitialize()
 		{
 
 			FillFields();
 			IsSearchVisible = false;
-
-			if (!WeakReferenceMessenger.Default.IsRegistered<ValueChangedMessage<List<Medicine>>>(this))
+			// Register for the message only if not already registered
+			WeakReferenceMessenger.Default.Register<ValueChangedMessage<List<Medicine>>>(this, (recipient, message) =>
 			{
-				// Register for the message only if not already registered
-				WeakReferenceMessenger.Default.Register<ValueChangedMessage<List<Medicine>>>(this, (recipient, message) =>
+				Medicines.Clear();
+				foreach (Medicine medicine in message.Value)
 				{
-					Medicines.Clear();
-					foreach (Medicine medicine in message.Value)
-					{
-						Medicines.Add(medicine);
-					}
-				});
-			}
-			if (!WeakReferenceMessenger.Default.IsRegistered<ValueChangedMessage<string>>(this))
+					Medicines.Add(medicine);
+				}
+			});
+			
+			WeakReferenceMessenger.Default.Register<ValueChangedMessage<string>>(this, (recipient, message) =>
 			{
-				WeakReferenceMessenger.Default.Register<ValueChangedMessage<string>>(this, (recipient, message) =>
+				if (message.Value == "RefreshPage")
 				{
-					if (message.Value == "RefreshPage")
-					{
-						// Logic to handle the message
-						IsSearchVisible = false;
-						FillFields();
-					}
-				});
-			}
-	
-			//MessagingCenter.Subscribe<MedicationOverviewPageViewModel, List<Medicine>>(this, "FilteredMedicineList", (sender, Result) =>
-			//{
-			//	Medicines.Clear();
-			//	foreach (Medicine medicine in Result)
-			//	{
-			//		Medicines.Add(medicine);
-			//	}
-			//});
-
-			//MessagingCenter.Subscribe<MedicationOverviewPageViewModel>(this, "RefreshPage", (sender) =>
-			//{
-			//	IsSearchVisible = false;
-			//	FillFields();
-
-			//});
+					// Logic to handle the message
+					IsSearchVisible = false;
+					FillFields();
+				}
+			});
+			
 		}
 
 		private void FillFields()

@@ -23,6 +23,7 @@ namespace PharmacyShop.ViewModels.MedicationDetails
         {
 			_medicineService = medicineService;
 			_medicationOverview = medicationOverview;
+			_medicines = new ObservableCollection<Medicine>();
 		}
 
 		public void Reinitialize()

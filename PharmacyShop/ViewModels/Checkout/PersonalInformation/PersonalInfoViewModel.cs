@@ -15,11 +15,12 @@ namespace PharmacyShop.ViewModels.Checkout.PersonalInformation
 
 	[QueryProperty(nameof(TotalCartCost), "totalCartCost")]
 	
+
 	public partial class PersonalInfoViewModel : ObservableObject
 	{
 		private readonly PersonService _personService;
 
-
+		//Property to check if all the fields are valid and if so, update the Command that has a CanExecute 
 		public bool IsFormValid
 		{
 			get => isFormValid;
@@ -35,7 +36,9 @@ namespace PharmacyShop.ViewModels.Checkout.PersonalInformation
             _personService = personService;
 			TotalCartCost = _personService.TotalCartCost;
         }
-
+		/// <summary>
+		/// The method that checks whether all fields are valid or not
+		/// </summary>
 		private void ValidateForm()
 		{
 			IsFormValid = !string.IsNullOrWhiteSpace(FirstName) &&

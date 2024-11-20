@@ -11,6 +11,7 @@ namespace PharmacyShop.ViewModels.Checkout.ConfirmationViewModels
 {
 	public partial class ConfirmationViewModel : ObservableObject
 	{
+		//Properties to display in the confirmation message
 		[ObservableProperty]
 		private decimal totalCartCost = 0;
 
@@ -32,6 +33,7 @@ namespace PharmacyShop.ViewModels.Checkout.ConfirmationViewModels
 		[ObservableProperty]
 		private string expectedDelivery = DateTime.Now.AddDays(5).ToString("yyyy-MM-dd");
 
+		//A list to show the user in the confirmation page what items were bought
 		public ObservableCollection<Cart> ItemsCart { get; set; } = new();
 	}
 }

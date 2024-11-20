@@ -13,6 +13,11 @@ namespace PharmacyShop.ViewModels.Checkout.PersonalInformation
 {
 	public partial class PersonalInfoViewModel : ObservableObject
 	{
+		/// <summary>
+		/// Method that saves the person to be accessed throughout other
+		/// parts of the program
+		/// </summary>
+		/// <returns></returns>
 		[RelayCommand(CanExecute = nameof(IsFormValid))]
 		async Task SavePerson()
 		{
@@ -26,7 +31,7 @@ namespace PharmacyShop.ViewModels.Checkout.PersonalInformation
 				City = City,
 				PostalCode = PostalCode
 			};
-
+			//Saves the Person instance into the PersonService
 			if (person != null)
 			{
 				_personService.CurrentPerson = person;

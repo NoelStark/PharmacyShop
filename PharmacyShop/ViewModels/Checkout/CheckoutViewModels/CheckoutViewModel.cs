@@ -17,12 +17,16 @@ namespace PharmacyShop.ViewModels.Checkout.CheckoutViewModels
 		private readonly MedicineService _medicineService;
 		private readonly PersonService _personService;
 		
-
+		/// <summary>
+		/// A method that is run every time the View is shown to update
+		/// when new items and such are added
+		/// </summary>
 		public void Reinitialize()
 		{
 
 			CartList = new ObservableCollection<Cart>(_personService.ItemsCart);
 			OnPropertyChanged(nameof(CartList));
+			//If the cart isnt empty, one can move on to the next step through the 'Next' button
 			if (CartList.Any())
 			{
 				CanExecute = true;
@@ -36,14 +40,18 @@ namespace PharmacyShop.ViewModels.Checkout.CheckoutViewModels
 			_medicineService = medicineService;
 			Reinitialize();
 		}
-
+		/// <summary>
+		/// The method that calculates the total price for all the items
+		/// </summary>
 		void UpdateTotalPrice()
 		{
 			TotalPrice = 0;
 			int amountOfItems = 0;
 
+			//For loop for each and every item in the cart
 			foreach (Cart cart in CartList)
 			{
+				//If-statement that calculates total price and also how many items that exists to display to UI
 				if(cart.Information != null)
 				{
 					cart.TotalItemsPrice = cart.Quantity * cart.Information.ItemPrice;
@@ -51,6 +59,7 @@ namespace PharmacyShop.ViewModels.Checkout.CheckoutViewModels
 					amountOfItems += cart.Quantity;
 				}
 			}
+			//Updates the UI and saves the shipping cost and total cost for all the items
 			TotalAmountOfItems = amountOfItems;
 
 			ShippingCost = TotalCartCost > 500 ? 0 : 29;

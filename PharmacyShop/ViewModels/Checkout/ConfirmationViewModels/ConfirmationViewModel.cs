@@ -15,8 +15,6 @@ namespace PharmacyShop.ViewModels.Checkout.ConfirmationViewModels
 	{
        
         private readonly PersonService _personService;
-
-
 		public ConfirmationViewModel(PersonService personService)
         {
             _personService = personService;
@@ -24,14 +22,19 @@ namespace PharmacyShop.ViewModels.Checkout.ConfirmationViewModels
 			GenerateOrderNumber();
 		}
 
+		/// <summary>
+		/// Method to re-initialize everything when the View appears
+		/// </summary>
 		public void Reinitialize()
 		{
+			//Clears the cart and updates the items
 			this.ItemsCart.Clear();
 			foreach (Cart item in _personService.ItemsCart)
 			{
 				this.ItemsCart.Add(item);
 			}
 
+			//Makes sure to update all the fields in the UI to the new data
 			Name = _personService.CurrentPerson.FirstName;
 			TotalCartCost = _personService.TotalCartCost;
 			ShippingCost = _personService.ShippingCost;
@@ -41,7 +44,10 @@ namespace PharmacyShop.ViewModels.Checkout.ConfirmationViewModels
 				CreditCard = _personService.PaymentInfo.CreditCardType + " **** " + creditCardNumber.Substring(creditCardNumber.Length - 4);
 			}
 		}
-
+		
+		/// <summary>
+		/// Method to generate a random ordernumber being 12 characters long
+		/// </summary>
 		private void GenerateOrderNumber()
 		{
 			Random random = new Random();

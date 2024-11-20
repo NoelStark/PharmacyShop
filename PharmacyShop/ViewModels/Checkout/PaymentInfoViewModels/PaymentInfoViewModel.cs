@@ -15,10 +15,6 @@ namespace PharmacyShop.ViewModels.Checkout.PaymentInfoViewModels
 	public partial class PaymentInfoViewModel : ObservableObject
 	{
 	
-
-
-	
-
 		private PersonService _personService;
 
         public PaymentInfoViewModel(PersonService personService)
@@ -28,12 +24,17 @@ namespace PharmacyShop.ViewModels.Checkout.PaymentInfoViewModels
 			TotalCartCost = _personService.TotalCartCost;
 		}
 
-
+		/// <summary>
+		/// The method that checks whether the inputted CreditCard number is valid or not
+		/// </summary>
+		/// <param name="creditCardNumber">The number that the user input</param>
+		/// <returns>Returns what kind of card that the credit card is</returns>
 		private string GetCardNumber(string creditCardNumber)
 		{
 			string type = string.Empty;
 			foreach(var pattern in cards)
 			{
+				//If the number is valid (A match to the dictionary's Regex filters)
 				if (pattern.Value.IsMatch(creditCardNumber))
 				{
 					type = pattern.Key;
@@ -42,10 +43,15 @@ namespace PharmacyShop.ViewModels.Checkout.PaymentInfoViewModels
 			}
 			return type;
 		}
-
+		/// <summary>
+		/// Method that is run each time the View is being shown
+		/// </summary>
 		public void Reinitialize()
 		{
+			//TODO Remove this since it doesnt do anything?
 			bool paymentSaved = Preferences.Get("ShouldSavePayment", false);
+			
+			//Fills in the fields with values. If the user didnt save, these fields are empty
 			if(_personService.PaymentInfo != null)
 			{
 				CreditCardNumber = _personService.PaymentInfo.CreditCardNumber;

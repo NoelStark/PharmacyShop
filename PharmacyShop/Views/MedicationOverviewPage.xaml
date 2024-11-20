@@ -10,106 +10,105 @@
         <ToolbarItem IconImageSource="cart.png" Command="{Binding GoToCheckoutCommand}"/>
     </ContentPage.ToolbarItems>
 
-    <ScrollView>
-        <VerticalStackLayout>
-            <Grid HorizontalOptions="FillAndExpand">
-                
-                <SearchBar Placeholder="Search product" Margin="0,0,40,10" Text="{Binding SearchText, Mode=TwoWay}" />
-                <ImageButton Source="filter.png" HorizontalOptions="End" WidthRequest="24" VerticalOptions="Center" Margin="0,0,15,10" Command="{Binding FilterMedicinesCommand}"/>
-            </Grid>
-            <CollectionView ItemsSource="{Binding Medicine}" SelectionMode="None">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:Medicine">
-                        <Frame HeightRequest="90" BorderColor="LightGray" Margin="5,0,5,10" Padding="10">
 
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:MedicationOverviewPageViewModel}}, Path=InspectChosenMedicineCommand}" CommandParameter="{Binding}" />
-                            </Frame.GestureRecognizers>
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout IsVisible="{Binding SearchAndFilterIsVisible}">
+                <Grid HorizontalOptions="FillAndExpand">
+                    <SearchBar Placeholder="Search product" Margin="0,0,40,10" Text="{Binding SearchText, Mode=TwoWay}" />
+                    <ImageButton Source="filter.png" HorizontalOptions="End" WidthRequest="24" VerticalOptions="Center" Margin="0,0,15,10" Command="{Binding ShowFilterCommand}"/>
+                </Grid>
+                <CollectionView ItemsSource="{Binding Medicine}" SelectionMode="None">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Medicine">
+                            <Frame HeightRequest="90" BorderColor="LightGray" Margin="5,0,5,10" Padding="10">
 
-                            <Grid ColumnDefinitions="Auto, *, Auto" VerticalOptions="Center" HorizontalOptions="FillAndExpand">
-                                
-                                <Image Source="{Binding Information.ImageUrl}" WidthRequest="50" HeightRequest="50" VerticalOptions="Center" Grid.Column="0" />
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:MedicationOverviewPageViewModel}}, Path=InspectChosenMedicineCommand}" CommandParameter="{Binding}" />
+                                </Frame.GestureRecognizers>
 
-                                <VerticalStackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand" Grid.Column="1" Margin="10,0,0,0">
-                                    <Label Text="{Binding Name}" FontSize="Medium" FontAttributes="Bold" />
-                                    <HorizontalStackLayout Spacing="5">
-                                        <Label Text="{Binding Dose}" FontSize="Small" VerticalOptions="Center" />
-                                        <Label Text="{Binding Description}" FontSize="Small" VerticalOptions="Center" />
-                                    </HorizontalStackLayout>
-                                </VerticalStackLayout>
+                                <Grid ColumnDefinitions="Auto, *, Auto" VerticalOptions="Center" HorizontalOptions="FillAndExpand">
 
-                                <Label Text="{Binding Information.ItemPrice, StringFormat='{0} kr'}" FontSize="Medium" TextColor="Green" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="2" Margin="0,0,80,0" />
-                                <Button Text="Buy" TextColor="White" CornerRadius="10" WidthRequest="60" HeightRequest="40" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="End" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:MedicationOverviewPageViewModel}}, Path=BuyChosenMedicineCommand}" CommandParameter="{Binding}"/>
-                            </Grid>
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-            
-            <Grid RowDefinitions="Auto, Auto, Auto, Auto">
-                <AbsoluteLayout BackgroundColor="White" Grid.Row="0" AbsoluteLayout.LayoutBounds="1,0,-1,-1" AbsoluteLayout.LayoutFlags="PositionProportional" Margin="0,0,20,0" MaximumHeightRequest="800" Background="White">
-                    <Frame WidthRequest="395" HeightRequest="1000">
-                        <VerticalStackLayout Grid.Row="1" Margin="10,0,0,0" Spacing="2">
-                            
-                            <Grid HorizontalOptions="FillAndExpand">
-                                <CheckBox Color="Black" IsChecked="{Binding Filmdragerad, Mode=TwoWay}" HorizontalOptions="Start"></CheckBox>
-                                <Label Text="Filmdragerad" FontSize="16" FontAttributes="Bold" Margin="40,10,0,0"/>
-                            </Grid>
+                                    <Image Source="{Binding Information.ImageUrl}" WidthRequest="50" HeightRequest="50" VerticalOptions="Center" Grid.Column="0" />
 
-                            <Grid HorizontalOptions="FillAndExpand">
-                                <CheckBox Color="Black" IsChecked="{Binding Brustablett, Mode=TwoWay}" HorizontalOptions="Start"></CheckBox>
-                                <Label Text="Brustablett" FontSize="16" FontAttributes="Bold" Margin="40,10,0,0"/>
-                            </Grid>
+                                    <VerticalStackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand" Grid.Column="1" Margin="10,0,0,0">
+                                        <Label Text="{Binding Name}" FontSize="Medium" FontAttributes="Bold" />
+                                        <HorizontalStackLayout Spacing="5">
+                                            <Label Text="{Binding Dose}" FontSize="Small" VerticalOptions="Center" />
+                                            <Label Text="{Binding Description}" FontSize="Small" VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                    </VerticalStackLayout>
 
-                            <Grid HorizontalOptions="FillAndExpand">
-                                <CheckBox Color="Black" IsChecked="{Binding Flytande, Mode=TwoWay}" HorizontalOptions="Start"></CheckBox>
-                                <Label Text="Flytande" FontSize="16" FontAttributes="Bold" Margin="40,10,0,0"/>
-                            </Grid>
-
-                            <Grid HorizontalOptions="FillAndExpand">
-                                <CheckBox Color="Black" IsChecked="{Binding Oral, Mode=TwoWay}" HorizontalOptions="Start"></CheckBox>
-                                <Label Text="Oral" FontSize="16" FontAttributes="Bold" Margin="40,10,0,0"/>
-                            </Grid>
-
-                            <Grid HorizontalOptions="FillAndExpand">
-                                <CheckBox Color="Black" IsChecked="{Binding Dragerad, Mode=TwoWay}" HorizontalOptions="Start"></CheckBox>
-                                <Label Text="Dragerad" FontSize="16" FontAttributes="Bold" Margin="40,10,0,0"/>
-                            </Grid>
-
-
-                            <Grid ColumnDefinitions="*,*" VerticalOptions="Center" HorizontalOptions="Center" ColumnSpacing="20" Margin="0,40,0,0">
-                                <Frame HeightRequest="45" WidthRequest="150" BorderColor="LightGray" Padding="0" Grid.Column="0">
-                                    <Entry Placeholder="min (kr)" Text="{Binding UserInputMinValue, Mode=TwoWay}" FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold"/>
-                                </Frame>
-
-                                <Frame HeightRequest="45" WidthRequest="150" BorderColor="LightGray"  Padding="0" Grid.Column="1">
-                                    <Entry Placeholder="max (kr)" Text="{Binding UserInputMaxValue, Mode=TwoWay}" FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold"/>
-                                </Frame>
-                            </Grid>
-
-                            <Button Text="Apply filter" TextColor="White" CornerRadius="10" WidthRequest="320" HeightRequest="40" Grid.Column="2" VerticalOptions="Center" Margin="0,30,0,0" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:MedicationOverviewPageViewModel}}, Path=FilterMedicinesCommand}" CommandParameter="{Binding}"/>
-
-
-
-                            <Frame HeightRequest="45" WidthRequest="200" BorderColor="LightGray" Margin="0,30,0,10" Padding="0">
-                                <Grid VerticalOptions="Center" HorizontalOptions="Center">
-                                    <Entry Placeholder="Dose.." FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="0" FontAttributes="Bold"/>
+                                    <Label Text="{Binding Information.ItemPrice, StringFormat='{0} kr'}" FontSize="Medium" TextColor="Green" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="2" Margin="0,0,80,0" />
+                                    <Button Text="Buy" TextColor="White" CornerRadius="10" WidthRequest="60" HeightRequest="40" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="End" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:MedicationOverviewPageViewModel}}, Path=BuyChosenMedicineCommand}" CommandParameter="{Binding}"/>
                                 </Grid>
                             </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
 
-                            <!--<Frame HeightRequest="45" WidthRequest="200" BorderColor="LightGray" Margin="0,30,0,10" Padding="0">
-                                <Grid VerticalOptions="Center" HorizontalOptions="Center">
-                                    <Entry Placeholder="Description.." FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="0" FontAttributes="Bold"/>
-                                </Grid>
-                            </Frame>-->
+        <AbsoluteLayout AbsoluteLayout.LayoutBounds="1,0,-1,-1" AbsoluteLayout.LayoutFlags="PositionProportional" Margin="0" MaximumHeightRequest="600" Background="White" IsVisible="{Binding IsVisible}">
+            <Frame WidthRequest="395" HeightRequest="800" Margin="0,-60,0,0">
+                <VerticalStackLayout Margin="10,0,0,0" Spacing="2">
+                    
+                    <Grid HorizontalOptions="FillAndExpand"> 
+                        <Label Text="Filter" HorizontalOptions="Start" FontSize="18" FontAttributes="Bold" Margin="10,0,0,10"></Label>
+                        <ImageButton BackgroundColor="Red" Source="close1.png" HorizontalOptions="End" WidthRequest="30" HeightRequest="30" VerticalOptions="Center"  Command="{Binding ShowFilterCommand}"/>
+                    </Grid>
+                    
+                    <Grid HorizontalOptions="FillAndExpand">
+                        <CheckBox Color="Black" IsChecked="{Binding Filmdragerad, Mode=TwoWay}" HorizontalOptions="Start"></CheckBox>
+                        <Label Text="Filmdragerad" FontSize="16" FontAttributes="Bold" Margin="40,10,0,0"/>
+                    </Grid>
 
-                            
+                    <Grid HorizontalOptions="FillAndExpand">
+                        <CheckBox Color="Black" IsChecked="{Binding Brustablett, Mode=TwoWay}" HorizontalOptions="Start"></CheckBox>
+                        <Label Text="Brustablett" FontSize="16" FontAttributes="Bold" Margin="40,10,0,0"/>
+                    </Grid>
+
+                    <Grid HorizontalOptions="FillAndExpand">
+                        <CheckBox Color="Black" IsChecked="{Binding Flytande, Mode=TwoWay}" HorizontalOptions="Start"></CheckBox>
+                        <Label Text="Flytande" FontSize="16" FontAttributes="Bold" Margin="40,10,0,0"/>
+                    </Grid>
+
+                    <Grid HorizontalOptions="FillAndExpand">
+                        <CheckBox Color="Black" IsChecked="{Binding Oral, Mode=TwoWay}" HorizontalOptions="Start"></CheckBox>
+                        <Label Text="Oral" FontSize="16" FontAttributes="Bold" Margin="40,10,0,0"/>
+                    </Grid>
+
+                    <Grid HorizontalOptions="FillAndExpand">
+                        <CheckBox Color="Black" IsChecked="{Binding Dragerad, Mode=TwoWay}" HorizontalOptions="Start"></CheckBox>
+                        <Label Text="Dragerad" FontSize="16" FontAttributes="Bold" Margin="40,10,0,0"/>
+                    </Grid>
 
 
-                        </VerticalStackLayout>
-                    </Frame>
-                </AbsoluteLayout>
-            </Grid>
-        </VerticalStackLayout>
-    </ScrollView>
+                    <Grid ColumnDefinitions="*,*" VerticalOptions="Center" HorizontalOptions="Center" ColumnSpacing="20" Margin="0,40,0,0">
+                        <Frame HeightRequest="45" WidthRequest="150" BorderColor="LightGray" Padding="0" Grid.Column="0">
+                            <Entry Placeholder="min (kr)" Text="{Binding UserInputMinValue, Mode=TwoWay}" FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold"/>
+                        </Frame>
+
+                        <Frame HeightRequest="45" WidthRequest="150" BorderColor="LightGray"  Padding="0" Grid.Column="1">
+                            <Entry Placeholder="max (kr)" Text="{Binding UserInputMaxValue, Mode=TwoWay}" FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold"/>
+                        </Frame>
+                    </Grid>
+
+                    <Button Text="Apply filter" TextColor="White" CornerRadius="10" WidthRequest="320" HeightRequest="40" Grid.Column="2" VerticalOptions="Center" Margin="0,30,0,0" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:MedicationOverviewPageViewModel}}, Path=FilterMedicinesCommand}" CommandParameter="{Binding}"/>
+
+                    <!--<Frame HeightRequest="45" WidthRequest="200" BorderColor="LightGray" Margin="0,30,0,10" Padding="0">
+                            <Grid VerticalOptions="Center" HorizontalOptions="Center">
+                                <Entry Placeholder="Dose.." FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="0" FontAttributes="Bold"/>
+                            </Grid>
+                        </Frame>-->
+
+                    <!--<Frame HeightRequest="45" WidthRequest="200" BorderColor="LightGray" Margin="0,30,0,10" Padding="0">
+                            <Grid VerticalOptions="Center" HorizontalOptions="Center">
+                                <Entry Placeholder="Description.." FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="0" FontAttributes="Bold"/>
+                            </Grid>
+                        </Frame>-->
+                </VerticalStackLayout>
+            </Frame>
+        </AbsoluteLayout>
+    </Grid>
 </ContentPage>

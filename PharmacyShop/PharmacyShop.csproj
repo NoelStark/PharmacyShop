@@ -59,6 +59,8 @@
 	<ItemGroup>
 	  <None Remove="Resources\Images\alvedon.png" />
 	  <None Remove="Resources\Images\cart.png" />
+	  <None Remove="Resources\Images\close.png" />
+	  <None Remove="Resources\Images\close1.png" />
 	  <None Remove="Resources\Images\detailsPlus.png" />
 	  <None Remove="Resources\Images\filter.png" />
 	  <None Remove="Resources\Images\maestro.png" />

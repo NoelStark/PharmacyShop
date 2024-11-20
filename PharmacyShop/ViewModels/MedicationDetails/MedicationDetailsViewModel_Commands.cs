@@ -17,7 +17,6 @@ namespace PharmacyShop.ViewModels.MedicationDetails
 		void MedicineClick(Medicine medicine)
 		{
 			WeakReferenceMessenger.Default.Send(new ValueChangedMessage<Medicine>(medicine));
-
 		}
 
 		[RelayCommand]

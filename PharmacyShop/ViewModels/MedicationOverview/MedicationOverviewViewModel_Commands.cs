@@ -34,10 +34,26 @@ namespace PharmacyShop.ViewModels.MedicationOverview
 			}
 		}
 
-		[RelayCommand]
+        [RelayCommand]
+        public void ShowFilter()
+		{
+			if (IsVisible == false)
+			{ 
+				IsVisible = true;
+				SearchAndFilterIsVisible = false;
+            }
+			else
+			{
+                IsVisible = false;
+                SearchAndFilterIsVisible = true;
+            }
+        }
+
+
+        [RelayCommand]
 		public async Task FilterMedicines()
 		{
-			decimal minprice = decimal.MinValue;
+            decimal minprice = decimal.MinValue;
 			decimal maxprice = decimal.MaxValue;
 
 			if (!string.IsNullOrEmpty(UserInputMinValue))
@@ -64,12 +80,14 @@ namespace PharmacyShop.ViewModels.MedicationOverview
 
 			var filter = await Task.Run(() =>
 			{
-				return medicationList.Where(a => active.Any(y => a.Description.ToLower().Contains(y)))
+				return medicationList.Where(a => !active.Any() || active.Any(y => a.Description.ToLower().Contains(y)))
 				 .Where(b => b.Information?.ItemPrice >= minprice && b.Information.ItemPrice <= maxprice).ToList();
 			});
 
-			Filter(filter);
-		}
+            Filter(filter);
+            IsVisible = false;
+            SearchAndFilterIsVisible = true;
+        }
 
 		[RelayCommand]
 		public void SearchProduct()

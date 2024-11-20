@@ -6,6 +6,11 @@
              x:DataType="vm:MedicationDetailsViewModel"
              x:Class="PharmacyShop.Views.MedicationDetailsPage"
              Title="MedicationDetailsPage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="cart.png" Command="{Binding GoToCheckoutCommand}"/>
+    </ContentPage.ToolbarItems>
+
     <VerticalStackLayout>
         <SearchBar Placeholder="Search" 
                    Text="{Binding SearchText, Mode=TwoWay}" 

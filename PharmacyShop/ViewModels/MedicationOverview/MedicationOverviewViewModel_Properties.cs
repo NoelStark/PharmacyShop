@@ -19,7 +19,13 @@ namespace PharmacyShop.ViewModels.MedicationOverview
 		[ObservableProperty]
 		private string searchText = string.Empty;
 
-		[ObservableProperty]
+        [ObservableProperty]
+        private bool isVisible = false;
+
+        [ObservableProperty]
+        private bool searchAndFilterIsVisible = true;
+
+        [ObservableProperty]
 		public bool filmdragerad = false;
 
 		[ObservableProperty]

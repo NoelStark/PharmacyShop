@@ -50,10 +50,15 @@ namespace PharmacyShop.ViewModels.Checkout.CheckoutViewModels
 					TotalPrice += cart.TotalItemsPrice;
 					amountOfItems += cart.Quantity;
 				}
-			}
+
+				if (CartList.Any())
+					ShippingCost = TotalPriceWithoutShipping > 500 ? 0 : 29;
+				else
+					ShippingCost = 0;
+            }
 			TotalAmountOfItems = amountOfItems;
 
-			ShippingCost = TotalCartCost > 500 ? 0 : 29;
+			//ShippingCost = TotalCartCost > 500 ? 0 : 29;
 
 			OnPropertyChanged(nameof(TotalPriceWithoutShipping));
 			OnPropertyChanged(nameof(TotalCartCost));

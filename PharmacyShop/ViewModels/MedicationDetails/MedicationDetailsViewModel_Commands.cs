@@ -17,7 +17,6 @@ namespace PharmacyShop.ViewModels.MedicationDetails
 		void MedicineClick(Medicine medicine)
 		{
 			WeakReferenceMessenger.Default.Send(new ValueChangedMessage<Medicine>(medicine));
-
 		}
 
 		[RelayCommand]
@@ -41,5 +40,11 @@ namespace PharmacyShop.ViewModels.MedicationDetails
 
 			WeakReferenceMessenger.Default.Send(new ValueChangedMessage<Dictionary<Medicine, int>>(medicineQuantity));
 		}
-	}
+
+        [RelayCommand]
+        public void GoToCheckout()
+        {
+            Shell.Current.GoToAsync("//CheckoutPage");
+        }
+    }
 }

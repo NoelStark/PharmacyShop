@@ -11,13 +11,14 @@
     </ContentPage.ToolbarItems>
 
 
-    <Grid>
-        <ScrollView>
-            <VerticalStackLayout IsVisible="{Binding SearchAndFilterIsVisible}">
-                <Grid HorizontalOptions="FillAndExpand" >
-                    <SearchBar Placeholder="Search product" Margin="0,0,40,10" Text="{Binding SearchText, Mode=TwoWay}" />
-                    <ImageButton Source="filter.png" HorizontalOptions="End" WidthRequest="24" VerticalOptions="Center" Margin="0,0,15,10" Command="{Binding ShowFilterCommand}" CommandParameter="{Binding}"/>
-                </Grid>
+    <Grid RowDefinitions="Auto, *">
+        <Grid HorizontalOptions="FillAndExpand" Grid.Row="0">
+            <SearchBar Placeholder="Search product" Margin="0,0,40,10" Text="{Binding SearchText, Mode=TwoWay}" />
+            <ImageButton Source="filter.png" HorizontalOptions="End" WidthRequest="24" VerticalOptions="Center" Margin="0,0,15,10" Command="{Binding ShowFilterCommand}" CommandParameter="{Binding}"/>
+        </Grid>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout IsVisible="{Binding SearchAndFilterIsVisible}" >
+                
                 <CollectionView ItemsSource="{Binding Medicine}" SelectionMode="None">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:Medicine">
@@ -55,7 +56,7 @@
                     
                     <Grid HorizontalOptions="FillAndExpand" HeightRequest="35"> 
                         <Label Text="Filter" HorizontalOptions="Start" FontSize="18" FontAttributes="Bold" Margin="10,0,0,10"></Label>
-                        <ImageButton BackgroundColor="Red" Source="close.png" HorizontalOptions="End" WidthRequest="24" HeightRequest="24" Command="{Binding ShowFilterCommand}"/>
+                        <ImageButton Source="close.png" HorizontalOptions="End" WidthRequest="24" HeightRequest="24" Command="{Binding ShowFilterCommand}"/>
                     </Grid>
                     
                     <Grid HorizontalOptions="FillAndExpand">

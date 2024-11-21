@@ -9,20 +9,32 @@
                >
     <AbsoluteLayout>
         <Border BackgroundColor="{StaticResource Primary}" 
-                HeightRequest="50" 
-                WidthRequest="300" 
+                HeightRequest="{Binding PopupHeight}" 
+                WidthRequest="300"
                 StrokeShape="{RoundRectangle CornerRadius=8}" 
-                StrokeThickness="0"
->
-            <!-- Adjusted LayoutFlags -->
-            <Label 
-                Text="Item added to Cart!"
-                TextColor="White"
-                FontSize="Medium"
-                VerticalOptions="Center"
-                HorizontalOptions="Center"
-                BackgroundColor="Transparent"
-                HeightRequest="25" />
+                StrokeThickness="0">
+            
+            <Grid RowDefinitions="*, Auto">
+                <Grid HorizontalOptions="FillAndExpand">
+
+                    <Label 
+                        Text="{Binding Text}"
+                        TextColor="White"
+                        FontSize="16"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center"
+                        BackgroundColor="Transparent"
+                        HeightRequest="25" 
+                        Grid.Row="0"
+                        Padding="0,0,20,0"
+                        />
+                <ImageButton Source="undo.png" IsVisible="{Binding ShouldShowUndo}" 
+                             Grid.Row="1" HorizontalOptions="End"
+                             HeightRequest="24"/>
+                </Grid>
+                <Button Text="Confirm"  IsVisible="{Binding ShouldRemoveCart}" Grid.Row="1" BackgroundColor="#BC194F" 
+                        WidthRequest="200" HeightRequest="40" Margin="0,0,0,10"/>
+            </Grid>
         </Border>
     </AbsoluteLayout>
 </toolkit:Popup>

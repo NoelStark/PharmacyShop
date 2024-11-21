@@ -191,7 +191,7 @@ namespace PharmacyShop.ViewModels.MedicationOverview
 						item.Quantity += quantity;
 				}
 				quantity = 1;
-				PopupView? popup = new PopupView();
+				PopupView? popup = new PopupView(this);
 				if(Application.Current != null)
 					if(Application.Current.MainPage != null)
 						Application.Current.MainPage.ShowPopup(popup);

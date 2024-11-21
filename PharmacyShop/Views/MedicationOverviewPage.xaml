@@ -14,7 +14,7 @@
     <Grid>
         <ScrollView>
             <VerticalStackLayout IsVisible="{Binding SearchAndFilterIsVisible}">
-                <Grid HorizontalOptions="FillAndExpand">
+                <Grid HorizontalOptions="FillAndExpand" >
                     <SearchBar Placeholder="Search product" Margin="0,0,40,10" Text="{Binding SearchText, Mode=TwoWay}" />
                     <ImageButton Source="filter.png" HorizontalOptions="End" WidthRequest="24" VerticalOptions="Center" Margin="0,0,15,10" Command="{Binding ShowFilterCommand}" CommandParameter="{Binding}"/>
                 </Grid>

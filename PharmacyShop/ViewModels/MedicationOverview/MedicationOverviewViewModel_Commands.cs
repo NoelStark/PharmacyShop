@@ -17,25 +17,17 @@ namespace PharmacyShop.ViewModels.MedicationOverview
 {
 	public partial class MedicationOverviewPageViewModel : ObservableObject
 	{
+
 		[RelayCommand]
 		public async Task LoadMedicines()
 		{
 			medicationList = _medication.Medicines();
-
-			if (Medicine.Any())
-			{
-				Medicine.Clear();
-			}
-
+			
 			if (medicationList.Any())
-			{
-				foreach (Medicine? medicine in medicationList)
-				{
-					Medicine.Add(medicine);
-				}
-			}
-			
-			
+			{		
+				Medicine = new System.Collections.ObjectModel.ObservableCollection<Medicine>(medicationList);
+				OnPropertyChanged(nameof(Medicine));
+			}	
 			FillSearch();
 		}
 
@@ -87,7 +79,7 @@ namespace PharmacyShop.ViewModels.MedicationOverview
 			var filter = medicationList.Where(a => !active.Any() || active.Any(y => a.Description.ToLower().Contains(y)))
 				 .Where(b => b.Information?.ItemPrice >= minprice && b.Information.ItemPrice <= maxprice).ToList();
 
-            Filter(filter);
+            _= Filter(filter);
             IsVisible = false;
             SearchAndFilterIsVisible = true;
         }
@@ -121,7 +113,7 @@ namespace PharmacyShop.ViewModels.MedicationOverview
 			List<Medicine> foundMedicines = new List<Medicine>();
 			if (SearchText == string.Empty)
 			{
-				Filter(medicationList);
+				_= Filter(medicationList);
 			}
 			else
 			{
@@ -138,7 +130,7 @@ namespace PharmacyShop.ViewModels.MedicationOverview
 						}
 					}
 				}
-				Filter(foundMatch ? foundMedicines : new List<Medicine>());
+				_= Filter(foundMatch ? foundMedicines : new List<Medicine>());
 			}
 
 

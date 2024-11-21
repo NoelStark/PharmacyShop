@@ -22,45 +22,50 @@ namespace PharmacyShop.ViewModels.MedicationOverview
         private readonly MedicineService _medication;
         private readonly PersonService _personService;
 
-        public async Task Initialize()
+        public void Initialize()
         {
-			await LoadMedicines();
+			if(medicationList.Count > 0)
+				Medicine = new ObservableCollection<Medicine>(medicationList);
+
 		}
 		public MedicationOverviewPageViewModel(MedicineService medication, PersonService personService)
         {
-            
             _medication = medication;
             _personService = personService;
-            WeakReferenceMessenger.Default.Unregister<ValueChangedMessage<string>>(this);
-            WeakReferenceMessenger.Default.Unregister<ValueChangedMessage<Medicine>>(this);
-            WeakReferenceMessenger.Default.Unregister<ValueChangedMessage<Dictionary<Medicine, int>>>(this);
+			_= LoadMedicines();
+            
+			//Initialize();
+
+			WeakReferenceMessenger.Default.Unregister<ValueChangedMessage<string>>(this);
+			WeakReferenceMessenger.Default.Unregister<ValueChangedMessage<Medicine>>(this);
+			WeakReferenceMessenger.Default.Unregister<ValueChangedMessage<Dictionary<Medicine, int>>>(this);
 
 			WeakReferenceMessenger.Default.Register<ValueChangedMessage<string>>(this, (recipient, message) =>
 			{
-                if(message.Value != "RefreshPage")
-                {
-                    this.SearchText = message.Value;
-				    SearchProduct();
-                }
+				if (message.Value != "RefreshPage")
+				{
+					this.SearchText = message.Value;
+					SearchProduct();
+				}
 			});
 
 			WeakReferenceMessenger.Default.Register<ValueChangedMessage<Medicine>>(this, (recipient, message) =>
 			{
-                SearchText = string.Empty;
-                InspectChosenMedicine(message.Value);
-            });
-            WeakReferenceMessenger.Default.Register<ValueChangedMessage<Dictionary<Medicine, int>>>(this, (recipient, message) =>
-            {
-                var item = message.Value.First();
-                quantity = item.Value;
-                BuyChosenMedicine(item.Key);
-            });
-           
+				SearchText = string.Empty;
+				InspectChosenMedicine(message.Value);
+			});
+			WeakReferenceMessenger.Default.Register<ValueChangedMessage<Dictionary<Medicine, int>>>(this, (recipient, message) =>
+			{
+				var item = message.Value.First();
+				quantity = item.Value;
+				BuyChosenMedicine(item.Key);
+			});
 		}
       
-        private void Filter(List<Medicine> filter)
+        private async Task Filter(List<Medicine> filter)
         {
-            var hashFilter = new HashSet<Medicine>(filter);
+
+			var hashFilter = new HashSet<Medicine>(filter);
             for(int i = Medicine.Count - 1; i>= 0; i--)
             {
                 if (!hashFilter.Contains(Medicine[i]))
@@ -75,20 +80,20 @@ namespace PharmacyShop.ViewModels.MedicationOverview
                     Medicine.Add(item);
                 }
             }
-   //         var remove = Medicine.Except(filter).ToList();
-   //         var add = filter.Except(Medicine).ToList();
+			//         var remove = Medicine.Except(filter).ToList();
+			//         var add = filter.Except(Medicine).ToList();
 
-   //         foreach (var item in remove)
-   //         {
-   //             Medicine.Remove(item);
-   //         }
+			//         foreach (var item in remove)
+			//         {
+			//             Medicine.Remove(item);
+			//         }
 			//foreach (var item in add)
 			//{
 			//	Medicine.Add(item);
 			//}
-   //         sw.Stop();
-   //         Console.WriteLine();
-		    
+			//         sw.Stop();
+			//         Console.WriteLine();
+			await Task.Run(()=>OnPropertyChanged(nameof(Medicine)));
         }
 
 

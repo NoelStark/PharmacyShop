@@ -1,6 +1,7 @@
 using PharmacyShop.ViewModels;
 using PharmacyShop.ViewModels.MedicationDetails;
 using PharmacyShop.ViewModels.MedicationOverview;
+using System.Diagnostics;
 
 namespace PharmacyShop.Views;
 
@@ -14,9 +15,9 @@ public partial class MedicationOverviewPage : ContentPage
 	protected override void OnAppearing()
 	{
 		base.OnAppearing();
-		if(BindingContext is MedicationOverviewPageViewModel viewModel)
+		if (BindingContext is MedicationOverviewPageViewModel viewModel)
 		{
-			_= viewModel.Initialize();
+			viewModel.Initialize();
 		}
 	}
 }

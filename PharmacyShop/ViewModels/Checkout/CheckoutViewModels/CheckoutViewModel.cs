@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Views;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using PharmacyShop.Models;
 using PharmacyShop.Services;
@@ -60,7 +61,14 @@ namespace PharmacyShop.ViewModels.Checkout.CheckoutViewModels
 				}
 			}
 			//Updates the UI and saves the shipping cost and total cost for all the items
-			TotalAmountOfItems = amountOfItems;
+			if(CartList.Any())
+                ShippingCost = TotalPriceWithoutShipping > 500 ? 0 : 29;
+			else
+                ShippingCost = 0;
+            
+
+
+            TotalAmountOfItems = amountOfItems;
 
 			//ShippingCost = TotalCartCost > 500 ? 0 : 29;
 

@@ -47,6 +47,7 @@ namespace PharmacyShop.ViewModels.MedicationDetails
         public void GoToCheckout()
         {
             Shell.Current.GoToAsync("//CheckoutPage");
+
         }
     }
 }

@@ -255,7 +255,72 @@ namespace PharmacyShop.Services
 				};
 				medicineList.Add(Laxoberal);
 
-				return medicineList;
+				var Strepsils = new Medicine
+				{
+					Name = "Strepsils",
+					Dose = "2,4 mg",
+					Substance = "Diklorbenzylalkohol",
+					Description = "Sugtablett",
+					Information = new ItemInformation
+					{
+						ImageUrl = "https://www.kronansapotek.se/k2/images/127383/large/0.jpg",
+						ItemPrice = 86.00M
+					},
+					Amount = "36pc",
+					Useage = "Virushämmande & antibakteriell. Smärtlindring på 5 min. Används vid infektioner i munhåla & svalg. Effekt i 2 timmar.Innehåller honung. Från 6 år. Strepsils Honung & Citron är en halstablett som används vid lindriga infektioner i munhåla och svalg, till exempel vid ont i halsen. Strepsils Honung & Citron har en bakteriehämmande och antiviral effekt."
+                };
+			medicineList.Add(Strepsils);
+
+
+                var Alsolsprit = new Medicine
+                {
+                    Name = "Alsolsprit",
+                    Dose = "10 mg/ml",
+                    Substance = "Aluminiumacetotartrat",
+                    Description = "Kutan lösning",
+                    Information = new ItemInformation
+                    {
+                        ImageUrl = "https://www.kronansapotek.se/k2/images/786270/large/0.jpg",
+                        ItemPrice = 45.00M
+                    },
+                    Amount = "250ml",
+                    Useage = "Alsolsprit kutan lösning är en lindrande lösning mot exempelvis klåda vid insektsbett. Rengörande med mild uttorkande och sammandragande effekt. Går bra att använda vid graviditet och under amning men inte för behandling av bröstvårtor. Färdig att använda, baddas på huden med hjälp av exempelvis en bomullsrondell. Undvik kontakt med ögonen."
+                };
+            medicineList.Add(Alsolsprit);
+
+            var Fexofenadin = new Medicine
+            {
+                Name = "Fexofenadin",
+                Dose = "120mg",
+                Substance = "Fexofenadinhydroklorid",
+                Description = "Filmdragerad",
+                Information = new ItemInformation
+                {
+                    ImageUrl = "https://www.kronansapotek.se/k2/images/385632/large/0.jpg",
+                    ItemPrice = 75.00M
+                },
+                Amount = "30pc",
+                Useage = "Tablett för symtomlindring vid säsongsbunden allergisk rinit (hösnuva). Används hos vuxna och ungdomar från 12 års ålder för att lindra symtom som förekommer vid hösnuva (säsongsbunden allergisk rinit) såsom nysningar, kliande, rinnande eller täppt näsa och kliande, röda och vattniga ögon."
+            };
+            medicineList.Add(Fexofenadin);
+
+            var Bisolvon = new Medicine
+            {
+                Name = "Bisolvon",
+                Dose = "8mg",
+                Substance = "Bromhexinhydroklorid",
+                Description = "Tabletter",
+                Information = new ItemInformation
+                {
+                    ImageUrl = "https://www.kronansapotek.se/k2/images/420984/large/0.jpg",
+                    ItemPrice = 86.00M
+                },
+                Amount = "100pc",
+                Useage = "Bisolvon anses lösa upp segt slem så att det blir mer tunnflytande och därmed lättare att hosta upp. Bisolvon används vid tillfällig kortvarig hosta med segt slem."
+            };
+            medicineList.Add(Bisolvon);
+
+            return medicineList;
 			
 		}
 	}

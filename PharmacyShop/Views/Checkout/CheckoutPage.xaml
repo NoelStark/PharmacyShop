@@ -6,6 +6,11 @@
              xmlns:vm ="clr-namespace:PharmacyShop.ViewModels.Checkout.CheckoutViewModels"
              x:DataType="vm:CheckoutViewModel"
              Title="CheckoutPage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="cart.png" Command="{Binding EmptyCartCommand}"/>
+    </ContentPage.ToolbarItems>
+
     <Grid ColumnDefinitions="*,*" RowDefinitions="450, Auto, Auto">
         <CollectionView Grid.ColumnSpan="2" ItemsSource="{Binding CartList}" SelectionMode="None" HeightRequest="450" VerticalOptions="Start">
             <CollectionView.ItemTemplate>

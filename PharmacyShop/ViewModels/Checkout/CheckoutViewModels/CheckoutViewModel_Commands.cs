@@ -1,6 +1,8 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Views;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using PharmacyShop.Models;
+using PharmacyShop.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +46,10 @@ namespace PharmacyShop.ViewModels.Checkout.CheckoutViewModels
 					//If the cart is empty, one shouldnt be able to press the 'Next' button
 					if (!CartList.Any())
 					{
+						PopupView? popup = new PopupView();
+						if (Application.Current != null)
+							if (Application.Current.MainPage != null)
+								Application.Current.MainPage.ShowPopup(popup);
 						CanExecute = false;
 					}
 					else
@@ -55,6 +61,23 @@ namespace PharmacyShop.ViewModels.Checkout.CheckoutViewModels
 				//Whenever something is Added/Removed, the totalprice is updated
 				UpdateTotalPrice();
 			}
+		}
+
+        [RelayCommand]
+        void EmptyCart()
+		{
+            Console.WriteLine();
+			if(CartList.Any())
+			{
+				CartList.Clear();
+				_personService.ItemsCart.Clear();
+				UpdateTotalPrice();
+
+                PopupView? popup = new PopupView();
+                if (Application.Current != null)
+                    if (Application.Current.MainPage != null)
+                        Application.Current.MainPage.ShowPopup(popup);
+            }
 		}
 
 		/// <summary>

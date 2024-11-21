@@ -86,7 +86,7 @@
 
                     <Grid ColumnDefinitions="*,*" VerticalOptions="Center" HorizontalOptions="Center" ColumnSpacing="20" Margin="0,40,0,0">
                         <Frame HeightRequest="45" WidthRequest="150" BorderColor="LightGray" Padding="0" Grid.Column="0">
-                            <Entry Placeholder="min (kr)" Text="{Binding UserInputMinValue, Mode=TwoWay}" FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold"/>
+                            <Entry Placeholder="min (kr)" Keyboard="Numeric" Text="{Binding UserInputMinValue, Mode=TwoWay}" FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold"/>
                         </Frame>
 
                         <Frame HeightRequest="45" WidthRequest="150" BorderColor="LightGray"  Padding="0" Grid.Column="1">

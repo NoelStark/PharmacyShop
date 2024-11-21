@@ -64,14 +64,30 @@ namespace PharmacyShop.ViewModels.Checkout.CheckoutViewModels
 			}
 		}
 
+
         [RelayCommand]
-        void EmptyCart()
-		{
-            Console.WriteLine();
-			if(CartList.Any())
-			{
+        void EmptyCart(Cart cartItem)
+        {
+            if (CartList.Any())
+            {
 				CartList.Clear();
 				_personService.ItemsCart.Clear();
+                UpdateTotalPrice();
+
+                PopupView? popup = new PopupView();
+                if (Application.Current != null)
+                    if (Application.Current.MainPage != null)
+                        Application.Current.MainPage.ShowPopup(popup);
+            }
+        }
+
+        [RelayCommand]
+        void RemoveItemInCart(Cart cartItem)
+		{
+			if(CartList.Any())
+			{
+				CartList.Remove(cartItem);
+				_personService.ItemsCart.Remove(cartItem);
 				UpdateTotalPrice();
 
                 PopupView? popup = new PopupView();

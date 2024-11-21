@@ -59,6 +59,7 @@
 	<ItemGroup>
 	  <None Remove="Resources\Images\alvedon.png" />
 	  <None Remove="Resources\Images\cart.png" />
+	  <None Remove="Resources\Images\cartremove.png" />
 	  <None Remove="Resources\Images\close.png" />
 	  <None Remove="Resources\Images\close1.png" />
 	  <None Remove="Resources\Images\detailsPlus.png" />
@@ -67,6 +68,7 @@
 	  <None Remove="Resources\Images\mastercard.png" />
 	  <None Remove="Resources\Images\minus.png" />
 	  <None Remove="Resources\Images\plus.png" />
+	  <None Remove="Resources\Images\trashcan.png" />
 	  <None Remove="Resources\Images\visa.png" />
 	</ItemGroup>
 

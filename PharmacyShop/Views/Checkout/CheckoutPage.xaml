@@ -8,7 +8,7 @@
              Title="CheckoutPage">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="cart.png" Command="{Binding EmptyCartCommand}"/>
+        <ToolbarItem IconImageSource="cartremove.png" Command="{Binding EmptyCartCommand}"/>
     </ContentPage.ToolbarItems>
 
     <Grid ColumnDefinitions="*,*" RowDefinitions="450, Auto, Auto">
@@ -30,30 +30,29 @@
                                     <Label Text="{Binding Information.ItemPrice, StringFormat='{0} kr per unit'}" 
                                            FontSize="Small" TextColor="DimGrey" VerticalOptions="Center"
                                            Grid.Row="1" />
-                                    <!--<ImageButton Source="cart.png" Command="{Binding EmptyCartCommand}"></ImageButton>-->
-
-                                    <ImageButton Source="plus.png" HeightRequest="24" WidthRequest="24" BackgroundColor="Transparent" 
-HorizontalOptions="Center" VerticalOptions="Center"
-Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CheckoutViewModel}}, Path=EmptyCartCommand}"
-CommandParameter="{Binding}"/>
+                                    
 
                                 </Grid>
                             </VerticalStackLayout>
 
-                            <Frame HeightRequest="40" WidthRequest="120" Padding="0" Margin="0,0,0,0" BorderColor="DimGray">
-                                <HorizontalStackLayout VerticalOptions="Center" HorizontalOptions="CenterAndExpand" Padding="0" Spacing="15">
-                                    <ImageButton Source="minus.png" HeightRequest="24" WidthRequest="24" HorizontalOptions="Center" VerticalOptions="Center"
+                            <Grid  VerticalOptions="FillAndExpand" >
+                                <Frame HeightRequest="40" WidthRequest="120" Padding="0" Margin="0,0,0,0" BorderColor="DimGray" VerticalOptions="Center">
+                                    <HorizontalStackLayout VerticalOptions="Center" HorizontalOptions="CenterAndExpand" Padding="0" Spacing="15">
+                                        <ImageButton Source="minus.png" HeightRequest="24" WidthRequest="24" HorizontalOptions="Center" VerticalOptions="Center"
                                                  Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CheckoutViewModel}}, Path=DecreaseQuantityCommand}"
                                                  CommandParameter="{Binding}"/>
-                                    <Label Text="{Binding Quantity}" FontSize="18" HorizontalOptions="Center" VerticalOptions="Center"></Label>
-                                    <ImageButton Source="plus.png" HeightRequest="24" WidthRequest="24" BackgroundColor="Transparent" 
+                                        <Label Text="{Binding Quantity}" FontSize="18" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+                                        <ImageButton Source="plus.png" HeightRequest="24" WidthRequest="24" BackgroundColor="Transparent" 
                                                  HorizontalOptions="Center" VerticalOptions="Center"
                                                  Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CheckoutViewModel}}, Path=IncreaseQuantityCommand}"
                                                  CommandParameter="{Binding}"/>
-
-                                    
-                                </HorizontalStackLayout>
-                            </Frame>
+                                    </HorizontalStackLayout>
+                                </Frame>
+                                <ImageButton Source="trashcan.png" Grid.Row="2" HeightRequest="24" WidthRequest="24" 
+                                     BackgroundColor="Transparent" HorizontalOptions="End" VerticalOptions="End"
+                                     Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CheckoutViewModel}}, Path=RemoveItemInCartCommand}"
+                                     CommandParameter="{Binding}"/>
+                            </Grid>
                         </HorizontalStackLayout>
                     </Frame>
                 </DataTemplate>

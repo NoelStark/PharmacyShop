@@ -64,13 +64,15 @@ namespace PharmacyShop.ViewModels.Checkout.CheckoutViewModels
 		}
 
         [RelayCommand]
-        void EmptyCart()
+        void EmptyCart(Cart cartItem)
 		{
             Console.WriteLine();
 			if(CartList.Any())
 			{
-				CartList.Clear();
-				_personService.ItemsCart.Clear();
+				CartList.Remove(cartItem);
+				_personService.ItemsCart.Remove(cartItem);
+				//_personService.ItemsCart.Clear();
+
 				UpdateTotalPrice();
 
                 PopupView? popup = new PopupView();

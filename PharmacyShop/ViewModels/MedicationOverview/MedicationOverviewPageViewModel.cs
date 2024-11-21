@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,13 +22,19 @@ namespace PharmacyShop.ViewModels.MedicationOverview
         private readonly MedicineService _medication;
         private readonly PersonService _personService;
 
-
+        public async Task Initialize()
+        {
+			await LoadMedicines();
+		}
 		public MedicationOverviewPageViewModel(MedicineService medication, PersonService personService)
         {
+            
             _medication = medication;
             _personService = personService;
-            LoadMedicines();
-            
+            WeakReferenceMessenger.Default.Unregister<ValueChangedMessage<string>>(this);
+            WeakReferenceMessenger.Default.Unregister<ValueChangedMessage<Medicine>>(this);
+            WeakReferenceMessenger.Default.Unregister<ValueChangedMessage<Dictionary<Medicine, int>>>(this);
+
 			WeakReferenceMessenger.Default.Register<ValueChangedMessage<string>>(this, (recipient, message) =>
 			{
                 if(message.Value != "RefreshPage")
@@ -39,6 +46,7 @@ namespace PharmacyShop.ViewModels.MedicationOverview
 
 			WeakReferenceMessenger.Default.Register<ValueChangedMessage<Medicine>>(this, (recipient, message) =>
 			{
+                SearchText = string.Empty;
                 InspectChosenMedicine(message.Value);
             });
             WeakReferenceMessenger.Default.Register<ValueChangedMessage<Dictionary<Medicine, int>>>(this, (recipient, message) =>
@@ -47,27 +55,39 @@ namespace PharmacyShop.ViewModels.MedicationOverview
                 quantity = item.Value;
                 BuyChosenMedicine(item.Key);
             });
-			
+           
 		}
-        [RelayCommand]
-        public async Task<ObservableCollection<Medicine>> ReturnMedicineToDetails()
-        {
-            return Medicine;
-        }
+      
         private void Filter(List<Medicine> filter)
         {
-            
-            var remove = Medicine.Except(filter).ToList();
-            var add = filter.Except(Medicine).ToList();
-
-            foreach (var item in remove)
+            var hashFilter = new HashSet<Medicine>(filter);
+            for(int i = Medicine.Count - 1; i>= 0; i--)
             {
-                Medicine.Remove(item);
+                if (!hashFilter.Contains(Medicine[i]))
+                {
+                    Medicine.RemoveAt(i);
+                }
             }
-			foreach (var item in add)
-			{
-				Medicine.Add(item);
-			}
+            foreach(Medicine item in filter) 
+            {
+                if (!Medicine.Contains(item))
+                {
+                    Medicine.Add(item);
+                }
+            }
+   //         var remove = Medicine.Except(filter).ToList();
+   //         var add = filter.Except(Medicine).ToList();
+
+   //         foreach (var item in remove)
+   //         {
+   //             Medicine.Remove(item);
+   //         }
+			//foreach (var item in add)
+			//{
+			//	Medicine.Add(item);
+			//}
+   //         sw.Stop();
+   //         Console.WriteLine();
 		    
         }
 

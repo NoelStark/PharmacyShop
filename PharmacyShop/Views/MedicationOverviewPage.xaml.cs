@@ -11,4 +11,12 @@ public partial class MedicationOverviewPage : ContentPage
 		InitializeComponent();
 		BindingContext = medicinViewModel;
 	}
+	protected override void OnAppearing()
+	{
+		base.OnAppearing();
+		if(BindingContext is MedicationOverviewPageViewModel viewModel)
+		{
+			_= viewModel.Initialize();
+		}
+	}
 }

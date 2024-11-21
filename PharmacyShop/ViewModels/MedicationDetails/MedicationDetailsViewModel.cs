@@ -31,30 +31,42 @@ namespace PharmacyShop.ViewModels.MedicationDetails
 
 			FillFields();
 			IsSearchVisible = false;
+			SearchText = string.Empty;
+			if (!WeakReferenceMessenger.Default.IsRegistered<ValueChangedMessage<List<Medicine>>>(this))
+			{
+				WeakReferenceMessenger.Default.Register<ValueChangedMessage<List<Medicine>>>(this, (recipient, message) =>
+				{
+					Medicines.Clear();
+					foreach (Medicine medicine in message.Value)
+					{
+						Medicines.Add(medicine);
+					}
+				});
+			}
+
 			// Register for the message only if not already registered
-			WeakReferenceMessenger.Default.Register<ValueChangedMessage<List<Medicine>>>(this, (recipient, message) =>
+			if (!WeakReferenceMessenger.Default.IsRegistered<ValueChangedMessage<string>>(this))
 			{
-				Medicines.Clear();
-				foreach (Medicine medicine in message.Value)
+				WeakReferenceMessenger.Default.Register<ValueChangedMessage<string>>(this, (recipient, message) =>
 				{
-					Medicines.Add(medicine);
-				}
-			});
+					if (message.Value == "RefreshPage")
+					{
+						// Logic to handle the message
+						IsSearchVisible = false;
+						FillFields();
+					}
+				});
+			}
 			
-			WeakReferenceMessenger.Default.Register<ValueChangedMessage<string>>(this, (recipient, message) =>
-			{
-				if (message.Value == "RefreshPage")
-				{
-					// Logic to handle the message
-					IsSearchVisible = false;
-					FillFields();
-				}
-			});
+			
+			
 			
 		}
 
 		private void FillFields()
 		{
+			SearchText = string.Empty;
+			IsSearchVisible = false;
 			Options.Clear();
 			Medicine medicine = _medicineService.CurrentMedicine;
 			Substance = medicine.Substance;

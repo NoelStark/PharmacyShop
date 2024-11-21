@@ -6,7 +6,9 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 using PharmacyShop.Models;
 using PharmacyShop.Views;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +18,7 @@ namespace PharmacyShop.ViewModels.MedicationOverview
 	public partial class MedicationOverviewPageViewModel : ObservableObject
 	{
 		[RelayCommand]
-		public void LoadMedicines()
+		public async Task LoadMedicines()
 		{
 			medicationList = _medication.Medicines();
 
@@ -32,6 +34,8 @@ namespace PharmacyShop.ViewModels.MedicationOverview
 					Medicine.Add(medicine);
 				}
 			}
+			
+			
 			FillSearch();
 		}
 
@@ -88,32 +92,32 @@ namespace PharmacyShop.ViewModels.MedicationOverview
             SearchAndFilterIsVisible = true;
         }
 
-		private Dictionary<string, List<Medicine>> search = new();
-
+		//private Dictionary<string, List<Medicine>> search = new();
+		private ConcurrentDictionary<string, List<Medicine>> search = new();
 		private void FillSearch()
-		{
-			foreach(Medicine? item in medicationList)
+		{	
+			Parallel.ForEach(medicationList, item =>
 			{
 				AddToSearch(item.Name, item);
 				AddToSearch(item.Dose, item);
 				AddToSearch(item.Description, item);
-			}
+			});		
 		}
 
 		private void AddToSearch(string text, Medicine medicine)
 		{
-
-			if (!search.ContainsKey(text))
+			var list = search.GetOrAdd(text, _ => new List<Medicine>());
+			lock (list)
 			{
-				search[text] = new List<Medicine>();
+				list.Add(medicine);
 			}
-			search[text].Add(medicine);
-			
+	
 		}
 
 		[RelayCommand]
 		public void SearchProduct()
 		{
+
 			List<Medicine> foundMedicines = new List<Medicine>();
 			if (SearchText == string.Empty)
 			{
@@ -136,7 +140,7 @@ namespace PharmacyShop.ViewModels.MedicationOverview
 				}
 				Filter(foundMatch ? foundMedicines : new List<Medicine>());
 			}
-			
+
 
 			//if (SearchText != string.Empty)
 			//{

@@ -5,6 +5,7 @@ using PharmacyShop.Models;
 using PharmacyShop.Views;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -78,6 +79,12 @@ namespace PharmacyShop.ViewModels.Checkout.CheckoutViewModels
                     if (Application.Current.MainPage != null)
                         Application.Current.MainPage.ShowPopup(popup);
             }
+		}
+		[RelayCommand]
+		static async Task GoBack()
+		{
+			await Shell.Current.GoToAsync($"//MedicationOverviewPage");
+
 		}
 
 		/// <summary>

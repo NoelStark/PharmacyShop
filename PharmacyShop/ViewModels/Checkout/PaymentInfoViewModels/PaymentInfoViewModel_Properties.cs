@@ -13,6 +13,11 @@ namespace PharmacyShop.ViewModels.Checkout.PaymentInfoViewModels
 	/// </summary>
 	public partial class PaymentInfoViewModel : ObservableObject
 	{
+		string _lastValidSecurityCode = string.Empty;
+		string _lastValidCreditNumber = string.Empty;
+		string _lastValidName = string.Empty;
+		string _lastValidDate = string.Empty;
+
 		//Properties that is connected to fields in the UI
 		[ObservableProperty]
 		private string name = string.Empty;
@@ -20,11 +25,13 @@ namespace PharmacyShop.ViewModels.Checkout.PaymentInfoViewModels
 		[ObservableProperty]
 		private string creditCardNumber = string.Empty;
 
+	
 		[ObservableProperty]
 		private string expireDate = string.Empty;
 
 		[ObservableProperty]
 		private string securityCode = string.Empty;
+		
 
 		[ObservableProperty]
 		private bool saveInformation = false;
@@ -34,6 +41,132 @@ namespace PharmacyShop.ViewModels.Checkout.PaymentInfoViewModels
 
 		[ObservableProperty]
 		private decimal totalCartCost = 0;
+
+		[ObservableProperty]
+		private bool isValidCard = false;
+		[ObservableProperty]
+		private bool showErrorMessage = false;
+		[ObservableProperty]
+		private string cardImage = string.Empty;
+
+
+		[ObservableProperty]
+		private Color borderColor = Color.FromArgb("C8C8C8");
+
+		partial void OnSecurityCodeChanged(string value)
+		{
+			if (!string.IsNullOrEmpty(value))
+			{
+				if (securiyCodeRegex.IsMatch(value))
+				{
+					SecurityCode = value;
+					_lastValidSecurityCode = value;
+				}
+				else
+				{
+					SecurityCode = _lastValidSecurityCode;
+				}
+			}
+		}
+
+		partial void OnCreditCardNumberChanged(string value)
+		{
+			if (!string.IsNullOrEmpty(value))
+			{
+				var trimValue = value.Replace(" ", "");
+				if (creditCardRegex.IsMatch(trimValue))
+				{
+					CreditCardNumber = Regex.Replace(trimValue, ".{4}", "$0 ").Trim();
+
+					_lastValidCreditNumber = CreditCardNumber;
+
+				}
+				else
+				{
+					CreditCardNumber = _lastValidCreditNumber;
+				}
+				string type = GetCardNumber(CreditCardNumber);
+				if (string.IsNullOrEmpty(type))
+				{
+					IsValidCard = false;
+					ShowErrorMessage = true;
+					BorderColor = Color.FromArgb("D22B2B");
+				}
+				else
+				{
+					if (type == "Maestro")
+						CardImage = "maestro.png";
+					else if (type == "Mastercard")
+						CardImage = "mastercard.png";
+					else
+						CardImage = "visa.png";
+					IsValidCard = true;
+					ShowErrorMessage = false;
+					BorderColor = Color.FromArgb("C8C8C8");
+				}
+			}
+		}
+
+		partial void OnNameChanged(string value)
+		{
+			if (!string.IsNullOrEmpty(value))
+			{
+				if (nameRegex.IsMatch(value))
+				{
+					Name = value;
+					_lastValidName = value;
+				}
+				else
+				{
+					Name = _lastValidName;
+				}
+			}
+		}
+
+		partial void OnExpireDateChanged(string value)
+		{
+			if (!string.IsNullOrEmpty(value))
+			{
+				string dateToday = DateTime.Now.ToString("MM/yy");
+				DateTime parsedDate;
+				if (DateTime.TryParseExact(value, "MM/yy", null, System.Globalization.DateTimeStyles.None, out parsedDate))
+				{
+					// Parse the current date for comparison
+					DateTime currentDate = DateTime.ParseExact(dateToday, "MM/yy", null);
+
+					if (parsedDate >= currentDate)
+					{
+						Console.WriteLine();
+					}
+					else
+					{
+							
+					}
+				}
+					
+				
+				
+				//if(ExpireDate.Length == 3)
+				//{
+				//	if (expireRegex.IsMatch(value))
+				//	{
+				//		ExpireDate= value;
+				//		_lastValidDate = value;
+				//	}
+				//	else
+				//	{
+				//		ExpireDate = _lastValidDate;
+				//	}
+				//}
+				//else
+				//{
+				//	//string split = ExpireDate
+				//}
+			}
+		}
+
+
+
 		/// <summary>
 		/// Whenever the user clicks on the Checkbox, the 'Next' button is enabled/disabled
 		/// </summary>
@@ -51,5 +184,10 @@ namespace PharmacyShop.ViewModels.Checkout.PaymentInfoViewModels
 			{"Mastercard", new Regex(@"^(5[1-5])\d{14}$") },
 			{"Visa", new Regex(@"^(4)\d{11,17}$") },
 		};
+
+		private Regex securiyCodeRegex = new Regex(@"^([0-9])\d{0,2}$");
+		private Regex creditCardRegex = new Regex(@"^([0-9])\d{0,15}$");
+		private Regex nameRegex = new Regex(@"^[a-z\s]{0,20}$", RegexOptions.IgnoreCase);
+		private Regex expireRegex = new Regex(@"^(0[1-9]|1[0-2])/\/d{2}$");
 	}
 }

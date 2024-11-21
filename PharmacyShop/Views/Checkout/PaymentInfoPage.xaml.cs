@@ -1,5 +1,6 @@
 using PharmacyShop.ViewModels;
 using PharmacyShop.ViewModels.Checkout.PaymentInfoViewModels;
+using static Microsoft.Maui.ApplicationModel.Permissions;
 
 namespace PharmacyShop.Views.Checkout
 {
@@ -16,6 +17,24 @@ namespace PharmacyShop.Views.Checkout
 			if (BindingContext is PaymentInfoViewModel viewModel)
 			{
 				viewModel.Reinitialize();
+				viewModel.PropertyChanged += CreditCard_PropertyChanged;
+			}
+		}
+
+		private void CreditCard_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+		{
+			if (e.PropertyName == nameof(PaymentInfoViewModel.CreditCardNumber))
+			{
+				Dispatcher.Dispatch(() =>
+				{
+					var entry = CreditCardNumber;
+					int[] positions = { 6, 11, 16 };
+					if (entry != null && positions.Contains(entry.Text.Length) && entry.Text.Contains(" "))
+					{
+						entry.CursorPosition = entry.Text.Length;
+					}
+				});
+
 			}
 		}
 	}

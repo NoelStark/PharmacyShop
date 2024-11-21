@@ -31,9 +31,16 @@
             </VerticalStackLayout>
 
             <VerticalStackLayout>
-                <Label Text="Credit Card Number"/>
-                <Frame HeightRequest="50">
-                    <Entry Placeholder="xxxx xxxx xxxx xxxx" VerticalOptions="Center" HeightRequest="50" Text="{Binding CreditCardNumber}"></Entry>
+                <Grid HorizontalOptions="FillAndExpand">
+                    <Label Text="Credit Card Number"/>
+                    <Label Text="Invalid Card Type" TextColor="Red" IsVisible="{Binding ShowErrorMessage}" HorizontalOptions="End"/>
+                </Grid>
+                <Frame HeightRequest="50" BorderColor="{Binding BorderColor}">
+                    <Grid ColumnDefinitions="Auto, Auto,*" HeightRequest="50">
+                        <Image Source="{Binding CardImage}" IsVisible="{Binding IsValidCard}" HorizontalOptions="Start" VerticalOptions="Center" HeightRequest="16" Grid.Column="0"/>
+                        <BoxView BackgroundColor="Transparent" WidthRequest="10" Grid.Column="1" IsVisible="{Binding IsValidCard}"/>
+                        <Entry x:Name="CreditCardNumber" Placeholder="xxxx xxxx xxxx xxxx" VerticalOptions="Center" HorizontalOptions="Start" HeightRequest="50" Text="{Binding CreditCardNumber}" Grid.Column="2"/>
+                    </Grid>
                 </Frame>
             </VerticalStackLayout>
 

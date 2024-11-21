@@ -32,15 +32,17 @@ namespace PharmacyShop.ViewModels.Checkout.PaymentInfoViewModels
 		private string GetCardNumber(string creditCardNumber)
 		{
 			string type = string.Empty;
+			var formatString = creditCardNumber.Replace(" ", "");
 			foreach(var pattern in cards)
 			{
 				//If the number is valid (A match to the dictionary's Regex filters)
-				if (pattern.Value.IsMatch(creditCardNumber))
+				if (pattern.Value.IsMatch(formatString))
 				{
 					type = pattern.Key;
 					break;
 				}
 			}
+			
 			return type;
 		}
 		/// <summary>

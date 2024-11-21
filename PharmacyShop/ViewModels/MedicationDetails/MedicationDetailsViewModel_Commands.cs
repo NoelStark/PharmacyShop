@@ -16,6 +16,12 @@ namespace PharmacyShop.ViewModels.MedicationDetails
 	{
 		private ObservableCollection<Medicine> _medicines;
 		[RelayCommand]
+		void GoBack()
+		{
+			Shell.Current.GoToAsync($"//MedicationOverviewPage");
+
+		}
+		[RelayCommand]
 		void MedicineClick(Medicine medicine)
 		{
 			WeakReferenceMessenger.Default.Send(new ValueChangedMessage<Medicine>(medicine));

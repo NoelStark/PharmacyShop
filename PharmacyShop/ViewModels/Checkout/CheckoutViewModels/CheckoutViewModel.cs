@@ -22,9 +22,9 @@ namespace PharmacyShop.ViewModels.Checkout.CheckoutViewModels
 		/// A method that is run every time the View is shown to update
 		/// when new items and such are added
 		/// </summary>
-		public void Reinitialize()
+		public async void Reinitialize()
 		{
-
+			
 			CartList = new ObservableCollection<Cart>(_personService.ItemsCart);
 			OnPropertyChanged(nameof(CartList));
 			//If the cart isnt empty, one can move on to the next step through the 'Next' button

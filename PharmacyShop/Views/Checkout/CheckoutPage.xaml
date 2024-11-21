@@ -80,7 +80,7 @@ CommandParameter="{Binding}"/>
         <HorizontalStackLayout Grid.Row="2" Grid.ColumnSpan="2" HorizontalOptions="Center" Padding="20" Spacing="20">
 
             <Button WidthRequest="150" Text="Back" FontSize="Medium" TextColor="Black" BackgroundColor="Transparent" 
-                    BorderColor="{StaticResource Primary}" BorderWidth="2"/>
+                    BorderColor="{StaticResource Primary}" BorderWidth="2" Command="{Binding GoBackCommand}"/>
             <Button WidthRequest="150" Text="Next" FontSize="Medium" Command="{Binding ContinueCommand}"/>
         </HorizontalStackLayout>
     </Grid>

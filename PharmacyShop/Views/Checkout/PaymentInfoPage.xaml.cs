@@ -18,6 +18,22 @@ namespace PharmacyShop.Views.Checkout
 			{
 				viewModel.Reinitialize();
 				viewModel.PropertyChanged += CreditCard_PropertyChanged;
+				viewModel.PropertyChanged += ExpireDate_PropertyChanged;
+			}
+		}
+
+		private void ExpireDate_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+		{
+			if(e.PropertyName == nameof(PaymentInfoViewModel.ExpireDate))
+			{
+				Dispatcher.Dispatch(() =>
+				{
+					var entry = ExpireDateEntry;
+					if (entry != null && (entry.Text.Length == 3 || entry.Text.Length == 4) && entry.Text.Contains("/"))
+					{
+						entry.CursorPosition = entry.Text.Length;
+					}
+				});
 			}
 		}
 

@@ -4,10 +4,12 @@ using PharmacyShop.Models;
 using PharmacyShop.Services;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using static Microsoft.Maui.ApplicationModel.Permissions;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace PharmacyShop.ViewModels.Checkout.PaymentInfoViewModels
@@ -16,8 +18,19 @@ namespace PharmacyShop.ViewModels.Checkout.PaymentInfoViewModels
 	{
 	
 		private PersonService _personService;
+		private bool isFormValid;
+		public bool IsFormValid
+		{
+			get => isFormValid;
+			private set
+			{
+				SetProperty(ref isFormValid, value);
+				PayCommand.NotifyCanExecuteChanged();
+			}
 
-        public PaymentInfoViewModel(PersonService personService)
+		}
+
+		public PaymentInfoViewModel(PersonService personService)
         {
             _personService = personService;
 			Reinitialize();
@@ -59,16 +72,22 @@ namespace PharmacyShop.ViewModels.Checkout.PaymentInfoViewModels
 				CreditCardNumber = _personService.PaymentInfo.CreditCardNumber;
 				Name = _personService.PaymentInfo.CreditCardName;
 				ExpireDate = _personService.PaymentInfo.ExpireDate;
-				SecurityCode = _personService.PaymentInfo.SecurityCode;
+				CVC = _personService.PaymentInfo.SecurityCode;
 				SaveInformation = paymentSaved;
 				AgreeToTerms = false;
 
 			}
-			//MessagingCenter.Subscribe<MedicationOverviewPageViewModel>(this, "RefreshPage", (sender) =>
-			//{
+			
+		}
 
-
-			//});
+		private void ValidateForm()
+		{
+			IsFormValid =	
+				IsValidCard &&
+				IsValidDate &&
+				!string.IsNullOrEmpty(Name) &&
+				IsValidSecurity &&
+				AgreeToTerms;
 		}
 
 	}

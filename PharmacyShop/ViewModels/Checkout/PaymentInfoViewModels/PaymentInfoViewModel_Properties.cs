@@ -30,7 +30,7 @@ namespace PharmacyShop.ViewModels.Checkout.PaymentInfoViewModels
 		private string expireDate = string.Empty;
 
 		[ObservableProperty]
-		private string securityCode = string.Empty;
+		private string cVC = string.Empty;
 		
 
 		[ObservableProperty]
@@ -45,26 +45,59 @@ namespace PharmacyShop.ViewModels.Checkout.PaymentInfoViewModels
 		[ObservableProperty]
 		private bool isValidCard = false;
 		[ObservableProperty]
+
 		private bool showErrorMessage = false;
 		[ObservableProperty]
 		private string cardImage = string.Empty;
 
+		[ObservableProperty]
+		private bool isValidDate = false;
 
 		[ObservableProperty]
-		private Color borderColor = Color.FromArgb("C8C8C8");
+		private bool showDateError = false;
 
-		partial void OnSecurityCodeChanged(string value)
+		[ObservableProperty]
+		private bool showCVCError = false;
+		public bool IsValidSecurity { get; private set; } = false;
+
+		private Color Red = Color.FromArgb("D22B2B");
+		private Color Grey = Color.FromArgb("C8C8C8");
+
+		[ObservableProperty]
+		private Color creditBorderColor = Color.FromArgb("C8C8C8");
+
+		[ObservableProperty]
+		private Color dateBorderColor = Color.FromArgb("C8C8C8");
+
+		[ObservableProperty]
+		private Color securityBorderColor = Color.FromArgb("C8C8C8");
+
+
+	
+		partial void OnCVCChanged(string value)
 		{
 			if (!string.IsNullOrEmpty(value))
 			{
 				if (securiyCodeRegex.IsMatch(value))
 				{
-					SecurityCode = value;
+					if(value.Length == 3)
+					{
+						IsValidSecurity = true;
+						SecurityBorderColor = Grey;
+						ShowCVCError = false;
+					}
+					else
+					{
+						IsValidSecurity = false;
+						SecurityBorderColor = Red;
+						ShowCVCError = true;
+					}
+					CVC = value;
 					_lastValidSecurityCode = value;
 				}
 				else
 				{
-					SecurityCode = _lastValidSecurityCode;
+					CVC = _lastValidSecurityCode;
 				}
 			}
 		}
@@ -90,7 +123,7 @@ namespace PharmacyShop.ViewModels.Checkout.PaymentInfoViewModels
 				{
 					IsValidCard = false;
 					ShowErrorMessage = true;
-					BorderColor = Color.FromArgb("D22B2B");
+					CreditBorderColor = Red;
 				}
 				else
 				{
@@ -102,7 +135,7 @@ namespace PharmacyShop.ViewModels.Checkout.PaymentInfoViewModels
 						CardImage = "visa.png";
 					IsValidCard = true;
 					ShowErrorMessage = false;
-					BorderColor = Color.FromArgb("C8C8C8");
+					CreditBorderColor = Grey;
 				}
 			}
 		}
@@ -122,41 +155,66 @@ namespace PharmacyShop.ViewModels.Checkout.PaymentInfoViewModels
 				}
 			}
 		}
-
 		partial void OnExpireDateChanged(string value)
 		{
 			if (!string.IsNullOrEmpty(value))
 			{
+				
 				string dateToday = DateTime.Now.ToString("MM/yy");
+				int index = 2;
 				DateTime parsedDate;
-				if (DateTime.TryParseExact(value, "MM/yy", null, System.Globalization.DateTimeStyles.None, out parsedDate))
+				string parsedValue = value.Replace("/", "");
+				if (expireRegex.IsMatch(parsedValue))
 				{
-					// Parse the current date for comparison
-					DateTime currentDate = DateTime.ParseExact(dateToday, "MM/yy", null);
+					if(value.Length < _lastValidDate.Length && value.EndsWith("/"))
+					{
+						value = value.Substring(0, value.Length - 1);
+					}
+					else if(value.Length > _lastValidDate.Length && !value.Contains("/"))
+					{
+						if(value.Length == 2)
+							value += "/";
+						else if(value.Length == 3)
+						{
+							value = value.Substring(0, index) + "/" + value.Substring(index);
+						}
 
-					if (parsedDate >= currentDate)
-					{
-						Console.WriteLine();
 					}
-					else
+				
+					if (DateTime.TryParseExact(value, "MM/yy", null, System.Globalization.DateTimeStyles.None, out parsedDate) && value.Length == 5)
 					{
-							
+						// Parse the current date for comparison
+						DateTime currentDate = DateTime.ParseExact(dateToday, "MM/yy", null);
+
+						if (parsedDate >= currentDate && parsedDate <= currentDate.AddYears(10))
+						{
+							IsValidDate = true;
+							DateBorderColor = Grey;
+							ShowDateError = false;
+						}
+						else
+						{
+							IsValidDate = false;
+							DateBorderColor = Red;
+							ShowDateError = true;
+						}
 					}
-				}
 					
+					ExpireDate = value;
+					_lastValidDate = value;
+					
+				}
+				else
+				{
+					ExpireDate = _lastValidDate;
+				}
+				
+		
 				
 				
 				//if(ExpireDate.Length == 3)
 				//{
-				//	if (expireRegex.IsMatch(value))
-				//	{
-				//		ExpireDate= value;
-				//		_lastValidDate = value;
-				//	}
-				//	else
-				//	{
-				//		ExpireDate = _lastValidDate;
-				//	}
+				//
 				//}
 				//else
 				//{
@@ -188,6 +246,6 @@ namespace PharmacyShop.ViewModels.Checkout.PaymentInfoViewModels
 		private Regex securiyCodeRegex = new Regex(@"^([0-9])\d{0,2}$");
 		private Regex creditCardRegex = new Regex(@"^([0-9])\d{0,15}$");
 		private Regex nameRegex = new Regex(@"^[a-z\s]{0,20}$", RegexOptions.IgnoreCase);
-		private Regex expireRegex = new Regex(@"^(0[1-9]|1[0-2])/\/d{2}$");
+		private Regex expireRegex = new Regex(@"^(0[1-9]?|1[0-2]?)\d{0,2}$");
 	}
 }

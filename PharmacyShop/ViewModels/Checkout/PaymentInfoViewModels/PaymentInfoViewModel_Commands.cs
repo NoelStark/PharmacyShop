@@ -15,7 +15,7 @@ namespace PharmacyShop.ViewModels.Checkout.PaymentInfoViewModels
 		/// This method handles what happens when the 'Pay' button is pressed
 		/// </summary>
 		/// <returns></returns>
-		[RelayCommand(CanExecute = nameof(AgreeToTerms))]
+		[RelayCommand(CanExecute = nameof(IsFormValid))]
 		async Task Pay()
 		{
 			string creditCardType = GetCardNumber(CreditCardNumber);
@@ -30,7 +30,7 @@ namespace PharmacyShop.ViewModels.Checkout.PaymentInfoViewModels
 					CreditCardNumber = CreditCardNumber,
 					CreditCardType = creditCardType,
 					ExpireDate = ExpireDate,
-					SecurityCode = SecurityCode
+					SecurityCode = CVC
 				};
 
 

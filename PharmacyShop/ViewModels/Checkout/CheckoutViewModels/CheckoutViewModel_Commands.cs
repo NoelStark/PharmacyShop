@@ -63,22 +63,13 @@ namespace PharmacyShop.ViewModels.Checkout.CheckoutViewModels
 				UpdateTotalPrice();
 			}
 		}
-
-
-        [RelayCommand]
-        void EmptyCart(Cart cartItem)
-        {
-            if (CartList.Any())
-            {
-				CartList.Clear();
-				_personService.ItemsCart.Clear();
-                UpdateTotalPrice();
-
-                PopupView? popup = new PopupView(this);
-                if (Application.Current != null)
-                    if (Application.Current.MainPage != null)
-                        Application.Current.MainPage.ShowPopup(popup);
-            }
+		[RelayCommand]
+		public void ShowPopup()
+		{
+            PopupView? popup = new PopupView(this);
+            if (Application.Current != null)
+                if (Application.Current.MainPage != null)
+                    Application.Current.MainPage.ShowPopup(popup);
         }
 
         [RelayCommand]
@@ -86,16 +77,14 @@ namespace PharmacyShop.ViewModels.Checkout.CheckoutViewModels
 		{
 			if(CartList.Any())
 			{
-				CartList.Remove(cartItem);
-				_personService.ItemsCart.Remove(cartItem);
-				UpdateTotalPrice();
-
-                PopupView? popup = new PopupView(this, true);
-                if (Application.Current != null)
-                    if (Application.Current.MainPage != null)
-                        Application.Current.MainPage.ShowPopup(popup);
-            }
+				currentItem = cartItem;
+				PopupView? popup = new PopupView(this, true);
+				if (Application.Current != null)
+					if (Application.Current.MainPage != null)
+						Application.Current.MainPage.ShowPopup(popup);
+			}
 		}
+
 		[RelayCommand]
 		static async Task GoBack()
 		{

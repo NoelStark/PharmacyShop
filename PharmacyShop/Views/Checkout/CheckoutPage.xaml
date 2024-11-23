@@ -8,7 +8,7 @@
              Title="CheckoutPage">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="cartremove.png" Command="{Binding EmptyCartCommand}"/>
+        <ToolbarItem IconImageSource="cartremove.png" Command="{Binding ShowPopupCommand}"/>
     </ContentPage.ToolbarItems>
 
     <Grid ColumnDefinitions="*,*" RowDefinitions="450, Auto, Auto">

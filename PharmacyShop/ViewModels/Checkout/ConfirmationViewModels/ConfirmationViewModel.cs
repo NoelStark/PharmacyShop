@@ -44,7 +44,7 @@ namespace PharmacyShop.ViewModels.Checkout.ConfirmationViewModels
 				CreditCard = _personService.PaymentInfo.CreditCardType + " **** " + creditCardNumber.Substring(creditCardNumber.Length - 4);
 			}
 
-			var supplierEmail = SupplierEmail();
+			Task supplierEmail = SupplierEmail();
 
         }
 

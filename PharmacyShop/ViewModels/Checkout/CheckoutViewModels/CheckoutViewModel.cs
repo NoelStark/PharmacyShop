@@ -17,6 +17,8 @@ namespace PharmacyShop.ViewModels.Checkout.CheckoutViewModels
 	{
 		private readonly MedicineService _medicineService;
 		private readonly PersonService _personService;
+
+		private Cart? currentItem {  get; set; } = null;
 		
 		/// <summary>
 		/// A method that is run every time the View is shown to update
@@ -35,7 +37,26 @@ namespace PharmacyShop.ViewModels.Checkout.CheckoutViewModels
 			UpdateTotalPrice();
 		}
 
-		public CheckoutViewModel(MedicineService medicineService, PersonService personService)
+        public void EmptyCart()
+        {
+            if (CartList.Any())
+            {
+				if(currentItem != null)
+				{
+                    CartList.Remove(currentItem);
+                    _personService.ItemsCart.Remove(currentItem);
+					currentItem = null;
+                }
+				else
+				{
+					CartList.Clear();
+					_personService.ItemsCart.Clear();
+				}
+				UpdateTotalPrice();
+            }
+        }
+
+        public CheckoutViewModel(MedicineService medicineService, PersonService personService)
         {
 			_personService = personService;
 			_medicineService = medicineService;

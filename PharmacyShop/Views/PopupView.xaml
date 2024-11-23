@@ -28,12 +28,11 @@
                         Grid.Row="0"
                         Padding="0,0,20,0"
                         />
-                <ImageButton Source="undo.png" IsVisible="{Binding ShouldShowUndo}" 
+                <!--<ImageButton Source="undo.png" IsVisible="{Binding ShouldShowUndo}" 
                              Grid.Row="1" HorizontalOptions="End"
-                             HeightRequest="24"/>
+                             HeightRequest="24"/>-->
                 </Grid>
-                <Button Text="Confirm"  IsVisible="{Binding ShouldRemoveCart}" Grid.Row="1" BackgroundColor="#BC194F" 
-                        WidthRequest="200" HeightRequest="40" Margin="0,0,0,10"/>
+                <Button Text="Confirm"  IsVisible="{Binding ShouldRemoveCart}" Command="{Binding RemoveCartCommand}" Grid.Row="1" BackgroundColor="#BC194F" WidthRequest="200" HeightRequest="40" Margin="0,0,0,10"/>
             </Grid>
         </Border>
     </AbsoluteLayout>

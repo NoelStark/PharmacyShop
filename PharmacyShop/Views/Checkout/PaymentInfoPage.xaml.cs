@@ -17,41 +17,27 @@ namespace PharmacyShop.Views.Checkout
 			if (BindingContext is PaymentInfoViewModel viewModel)
 			{
 				viewModel.Reinitialize();
-				viewModel.PropertyChanged += CreditCard_PropertyChanged;
-				viewModel.PropertyChanged += ExpireDate_PropertyChanged;
+				viewModel.PropertyChanged += Field_PropertyChanged;
 			}
 		}
 
-		private void ExpireDate_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+		private void Field_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
+			Entry? entry = null;
 			if(e.PropertyName == nameof(PaymentInfoViewModel.ExpireDate))
-			{
+				entry = ExpireDateEntry;
+			else if (e.PropertyName == nameof(PaymentInfoViewModel.CreditCardNumber))
+				entry = CreditCardNumber;
+			if(entry != null){
+
 				Dispatcher.Dispatch(() =>
 				{
-					var entry = ExpireDateEntry;
-					if (entry != null && (entry.Text.Length == 3 || entry.Text.Length == 4) && entry.Text.Contains("/"))
-					{
-						entry.CursorPosition = entry.Text.Length;
-					}
+					entry.CursorPosition = entry.Text.Length;
+					
 				});
 			}
 		}
 
-		private void CreditCard_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
-		{
-			if (e.PropertyName == nameof(PaymentInfoViewModel.CreditCardNumber))
-			{
-				Dispatcher.Dispatch(() =>
-				{
-					var entry = CreditCardNumber;
-					int[] positions = { 6, 11, 16 };
-					if (entry != null && positions.Contains(entry.Text.Length) && entry.Text.Contains(" "))
-					{
-						entry.CursorPosition = entry.Text.Length;
-					}
-				});
-
-			}
-		}
+	
 	}
 }

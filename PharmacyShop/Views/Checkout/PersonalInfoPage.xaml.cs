@@ -11,35 +11,25 @@ public partial class PersonalInfoPage : ContentPage
 		BindingContext = personalInfoViewModel;
 		if(BindingContext is PersonalInfoViewModel viewModel)
 		{
-			viewModel.PropertyChanged += PostalCode_PropertyChanged;
+			viewModel.PropertyChanged += Field_PropertyChanged;
 		}
 
 	}
-	private void PostalCode_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+	private void Field_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
 	{
+		Entry? entry = null;
 		if (e.PropertyName == nameof(PersonalInfoViewModel.PostalCode))
+			entry = PostalCode;
+		else if (e.PropertyName == nameof(PersonalInfoViewModel.Phone))
+			entry = Phone;
+
+		if(entry != null)
 		{
 			Dispatcher.Dispatch(() =>
 			{
-				var entry = PostalCode;
-				if (entry != null && entry.Text.Length == 4 && entry.Text.Contains(" "))
-				{
-					entry.CursorPosition = 4;
-				}
-			});
-			
-		}
-		else if(e.PropertyName == nameof(PersonalInfoViewModel.Phone))
-		{
-			Dispatcher.Dispatch(() =>
-			{
-				var entry = Phone;
-				int[] positions = { 4, 8, 11 };
-				if (entry != null && positions.Contains(entry.Text.Length) && entry.Text.Contains(" "))
-				{
-					entry.CursorPosition = entry.Text.Length;
-				}
+				entry.CursorPosition = entry.Text.Length;
 			});
 		}
+		
 	}
 }

@@ -48,9 +48,7 @@ namespace PharmacyShop.ViewModels.Checkout.CheckoutViewModels
 					if (!CartList.Any())
 					{
 						PopupView? popup = new PopupView(this);
-						if (Application.Current != null)
-							if (Application.Current.MainPage != null)
-								Application.Current.MainPage.ShowPopup(popup);
+						Application.Current?.MainPage?.ShowPopup(popup);
 						CanExecute = false;
 					}
 					else
@@ -67,21 +65,17 @@ namespace PharmacyShop.ViewModels.Checkout.CheckoutViewModels
 		public void ShowPopup()
 		{
             PopupView? popup = new PopupView(this);
-            if (Application.Current != null)
-                if (Application.Current.MainPage != null)
-                    Application.Current.MainPage.ShowPopup(popup);
+			Application.Current?.MainPage?.ShowPopup(popup);
         }
 
         [RelayCommand]
-        void RemoveItemInCart(Cart cartItem)
+        public void RemoveItemInCart(Cart cartItem)
 		{
 			if(CartList.Any())
 			{
 				currentItem = cartItem;
 				PopupView? popup = new PopupView(this, true);
-				if (Application.Current != null)
-					if (Application.Current.MainPage != null)
-						Application.Current.MainPage.ShowPopup(popup);
+				Application.Current?.MainPage?.ShowPopup(popup);
 			}
 		}
 

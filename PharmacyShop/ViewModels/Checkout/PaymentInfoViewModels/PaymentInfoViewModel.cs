@@ -90,5 +90,14 @@ namespace PharmacyShop.ViewModels.Checkout.PaymentInfoViewModels
 				AgreeToTerms;
 		}
 
+		public int MoveCursor(Entry entry)
+		{
+			if (entry != null && (entry.Text.Length == 3 || entry.Text.Length == 4) && entry.Text.Contains("/"))
+			{
+				return entry.Text.Length;
+			}
+			return 0; 
+		}
+
 	}
 }

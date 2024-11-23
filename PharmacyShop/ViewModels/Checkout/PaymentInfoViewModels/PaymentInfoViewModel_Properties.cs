@@ -199,6 +199,12 @@ namespace PharmacyShop.ViewModels.Checkout.PaymentInfoViewModels
 							ShowDateError = true;
 						}
 					}
+					else
+					{
+						IsValidDate = false;
+						DateBorderColor = Red;
+						ShowDateError = true;
+					}
 					
 					ExpireDate = value;
 					_lastValidDate = value;
@@ -208,18 +214,6 @@ namespace PharmacyShop.ViewModels.Checkout.PaymentInfoViewModels
 				{
 					ExpireDate = _lastValidDate;
 				}
-				
-		
-				
-				
-				//if(ExpireDate.Length == 3)
-				//{
-				//
-				//}
-				//else
-				//{
-				//	//string split = ExpireDate
-				//}
 			}
 		}
 
@@ -246,6 +240,6 @@ namespace PharmacyShop.ViewModels.Checkout.PaymentInfoViewModels
 		private Regex securiyCodeRegex = new Regex(@"^([0-9])\d{0,2}$");
 		private Regex creditCardRegex = new Regex(@"^([0-9])\d{0,15}$");
 		private Regex nameRegex = new Regex(@"^[a-z\s]{0,20}$", RegexOptions.IgnoreCase);
-		private Regex expireRegex = new Regex(@"^(0[1-9]?|1[0-2]?)\d{0,2}$");
+		private Regex expireRegex = new Regex(@"^[0-9]\d{0,3}$");
 	}
 }

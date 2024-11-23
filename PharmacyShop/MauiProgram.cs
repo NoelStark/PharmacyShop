@@ -33,7 +33,7 @@ namespace PharmacyShop
             builder.Services.AddSingleton<MedicationOverviewPage>();
 
 			builder.Services.AddTransient<MedicationDetailsViewModel>();
-			builder.Services.AddTransient<MedicationDetailsPage>();
+			builder.Services.AddSingleton<MedicationDetailsPage>();
 
 			builder.Services.AddTransient<CheckoutViewModel>();
 			builder.Services.AddTransient<CheckoutPage>();

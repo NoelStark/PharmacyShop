@@ -69,6 +69,7 @@
 	  <None Remove="Resources\Images\minus.png" />
 	  <None Remove="Resources\Images\plus.png" />
 	  <None Remove="Resources\Images\trashcan.png" />
+	  <None Remove="Resources\Images\undo.png" />
 	  <None Remove="Resources\Images\visa.png" />
 	</ItemGroup>
 

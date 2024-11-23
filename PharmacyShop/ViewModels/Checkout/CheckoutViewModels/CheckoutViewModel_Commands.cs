@@ -47,7 +47,7 @@ namespace PharmacyShop.ViewModels.Checkout.CheckoutViewModels
 					//If the cart is empty, one shouldnt be able to press the 'Next' button
 					if (!CartList.Any())
 					{
-						PopupView? popup = new PopupView();
+						PopupView? popup = new PopupView(this);
 						if (Application.Current != null)
 							if (Application.Current.MainPage != null)
 								Application.Current.MainPage.ShowPopup(popup);
@@ -74,7 +74,7 @@ namespace PharmacyShop.ViewModels.Checkout.CheckoutViewModels
 				_personService.ItemsCart.Clear();
                 UpdateTotalPrice();
 
-                PopupView? popup = new PopupView();
+                PopupView? popup = new PopupView(this);
                 if (Application.Current != null)
                     if (Application.Current.MainPage != null)
                         Application.Current.MainPage.ShowPopup(popup);
@@ -90,7 +90,7 @@ namespace PharmacyShop.ViewModels.Checkout.CheckoutViewModels
 				_personService.ItemsCart.Remove(cartItem);
 				UpdateTotalPrice();
 
-                PopupView? popup = new PopupView();
+                PopupView? popup = new PopupView(this, true);
                 if (Application.Current != null)
                     if (Application.Current.MainPage != null)
                         Application.Current.MainPage.ShowPopup(popup);

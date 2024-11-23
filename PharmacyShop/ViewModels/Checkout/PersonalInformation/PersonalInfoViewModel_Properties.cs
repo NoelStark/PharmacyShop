@@ -35,33 +35,45 @@ namespace PharmacyShop.ViewModels.Checkout.PersonalInformation
 		private bool isFormValid = false;
 
 		//When the First Name changes its value, a method is entered to check whether all fields are valid or not
-		partial void OnFirstNameChanged(string value)
-		{
-			ValidateForm();
-		}
 
 		[ObservableProperty]
 		private string lastName = string.Empty;
 
 		//When the Last Name changes its value, a method is entered to check whether all fields are valid or not
-		partial void OnLastNameChanged(string value)
-		{
-			ValidateForm();
-		}
 
 		[ObservableProperty]
 		private string email = string.Empty;
 
 		//When the Email changes its value, a method is entered to check whether all fields are valid or not
+		[ObservableProperty]
+		private string phone = string.Empty;
+
+		[ObservableProperty]
+		private string postalCode = string.Empty;
+
+		[ObservableProperty]
+		private string street = string.Empty;
+
+		[ObservableProperty]
+		private string city = string.Empty;
+
+		private bool isUpdatingPhone = false;
+
+		partial void OnFirstNameChanged(string value)
+		{
+			ValidateForm();
+		}
+
+		partial void OnLastNameChanged(string value)
+		{
+			ValidateForm();
+		}
+
 		partial void OnEmailChanged(string value)
 		{
 			ValidateForm();
 		}
 
-		[ObservableProperty]
-		private string phone = string.Empty;
-
-		private bool isUpdatingPhone = false;
 
 		//When the Phone number changes its value, a method is entered to check whether all fields are valid or not
 		partial void OnPhoneChanged(string value)
@@ -101,8 +113,7 @@ namespace PharmacyShop.ViewModels.Checkout.PersonalInformation
 			ValidateForm();
 		}
 
-		[ObservableProperty]
-		private string street = string.Empty;
+		
 
 		//When the Street changes its value, a method is entered to check whether all fields are valid or not
 		partial void OnStreetChanged(string value)
@@ -110,17 +121,13 @@ namespace PharmacyShop.ViewModels.Checkout.PersonalInformation
 			ValidateForm();
 		}
 
-		[ObservableProperty]
-		private string city = string.Empty;
-
+	
 		//When the City changes its value, a method is entered to check whether all fields are valid or not
 		partial void OnCityChanged(string value)
 		{
 			ValidateForm();
 		}
 
-		[ObservableProperty]
-		private string postalCode = string.Empty;
 
 		//When the Postal Code changes its value, a method is entered to check whether all fields are valid or not
 		partial void OnPostalCodeChanged(string value)

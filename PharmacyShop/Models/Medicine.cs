@@ -14,6 +14,7 @@ namespace PharmacyShop.Models
 		public string Description { get; set; } = string.Empty;
 		public string Useage { get; set; } = string.Empty;
 		public string Amount { get; set; } = string.Empty;
+		public int ArticleNumber { get; set; }
 		public ItemInformation? Information {  get; set; }
     }
 }

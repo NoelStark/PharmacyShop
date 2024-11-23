@@ -21,6 +21,7 @@ namespace PharmacyShop.Services
 					Dose = "500mg",
 					Substance = "Paracetamol",
 					Description = "Brustablett",
+					ArticleNumber = 10234,
 					Information = new ItemInformation
 					{
 						ImageUrl = "https://www.kronansapotek.se/k2/images/156341/large/0.jpg",
@@ -37,7 +38,8 @@ namespace PharmacyShop.Services
 					Dose = "500mg",
 					Substance = "Paracetamol",
 					Description = "Filmdragerad",
-					Information = new ItemInformation
+                    ArticleNumber = 14567,
+                    Information = new ItemInformation
 					{
 						ImageUrl = "https://www.kronansapotek.se/k2/images/097610/large/0.jpg",
 						ItemPrice = 32.00M
@@ -53,7 +55,8 @@ namespace PharmacyShop.Services
 					Dose = "250mg",
 					Substance = "Paracetamol",
 					Description = "Brustablett",
-					Information = new ItemInformation
+                    ArticleNumber = 18321,
+                    Information = new ItemInformation
 					{
 						ImageUrl = "https://www.kronansapotek.se/k2/images/007487/large/0.jpg",
 						ItemPrice = 42.90M
@@ -69,7 +72,8 @@ namespace PharmacyShop.Services
 					Dose = "24 mg/ml",
 					Substance = "Paracetamol",
 					Description = "Flytande",
-					Information = new ItemInformation
+                    ArticleNumber = 19203,
+                    Information = new ItemInformation
 					{
 						ImageUrl = "https://www.kronansapotek.se/k2/images/126168/large/0.jpg",
 						ItemPrice = 52.00M
@@ -85,7 +89,8 @@ namespace PharmacyShop.Services
 					Dose = "400mg",
 					Substance = "Ibuprofen",
 					Description = "Filmdragerad",
-					Information = new ItemInformation
+                    ArticleNumber = 20456,
+                    Information = new ItemInformation
 					{
 						ImageUrl = "https://www.kronansapotek.se/k2/images/088542/large/0.jpg",
 						ItemPrice = 66.14M
@@ -101,7 +106,8 @@ namespace PharmacyShop.Services
 					Dose = "200mg",
 					Substance = "Ibuprofen",
 					Description = "Filmdragerad",
-					Information = new ItemInformation
+                    ArticleNumber = 21345,
+                    Information = new ItemInformation
 					{
 						ImageUrl = "https://www.kronansapotek.se/k2/images/460949/large/0.jpg",
 						ItemPrice = 58.90M
@@ -117,7 +123,8 @@ namespace PharmacyShop.Services
 					Dose = "400mg",
 					Substance = "Paracetamol",
 					Description = "Filmdragerad",
-					Information = new ItemInformation
+                    ArticleNumber = 23451,
+                    Information = new ItemInformation
 					{
 						ImageUrl = "https://www.kronansapotek.se/k2/images/196456/large/0.jpg",
 						ItemPrice = 45.90M
@@ -133,7 +140,8 @@ namespace PharmacyShop.Services
 					Dose = "24 mg/ml",
 					Substance = "Paracetamol",
 					Description = "Oral lösning",
-					Information = new ItemInformation
+                    ArticleNumber = 24567,
+                    Information = new ItemInformation
 					{
 						ImageUrl = "https://www.kronansapotek.se/k2/images/014498/large/0.jpg",
 						ItemPrice = 49.00M
@@ -149,7 +157,8 @@ namespace PharmacyShop.Services
 					Dose = "500mg",
 					Substance = "Paracetamol",
 					Description = "Brustablett",
-					Information = new ItemInformation
+                    ArticleNumber = 25678,
+                    Information = new ItemInformation
 					{
 						ImageUrl = "https://www.kronansapotek.se/k2/images/165273/large/0.jpg",
 						ItemPrice = 49.90M
@@ -165,7 +174,8 @@ namespace PharmacyShop.Services
 					Dose = "250mg",
 					Substance = "Laktosmonhydrat & natrium",
 					Description = "Oral tablett",
-					Information = new ItemInformation
+                    ArticleNumber = 27345,
+                    Information = new ItemInformation
 					{
 						ImageUrl = "https://www.kronansapotek.se/k2/images/507504/large/0.jpg",
 						ItemPrice = 49.90M
@@ -181,7 +191,8 @@ namespace PharmacyShop.Services
 					Dose = "200mg",
 					Substance = "Passionsblomma",
 					Description = "Dragerad tablett",
-					Information = new ItemInformation
+                    ArticleNumber = 28912,
+                    Information = new ItemInformation
 					{
 						ImageUrl = "https://www.kronansapotek.se/k2/images/156375/large/0.jpg",
 						ItemPrice = 154.00M
@@ -197,7 +208,8 @@ namespace PharmacyShop.Services
 					Dose = "3mg",
 					Substance = "Kalciumvätefosfatdihydrat",
 					Description = "Tabletter",
-					Information = new ItemInformation
+                    ArticleNumber = 29876,
+                    Information = new ItemInformation
 					{
 						ImageUrl = "https://www.kronansapotek.se/k2/images/451044/large/0.jpg",
 						ItemPrice = 79.00M
@@ -213,7 +225,8 @@ namespace PharmacyShop.Services
 					Dose = "10mg",
 					Substance = "Ebastin",
 					Description = "Filmdragerad",
-					Information = new ItemInformation
+                    ArticleNumber = 30123,
+                    Information = new ItemInformation
 					{
 						ImageUrl = "https://www.kronansapotek.se/k2/images/061426/large/0.jpg",
 						ItemPrice = 95.00M
@@ -229,7 +242,8 @@ namespace PharmacyShop.Services
 					Dose = "10mg",
 					Substance = "Ebastin",
 					Description = "Brustablett",
-					Information = new ItemInformation
+                    ArticleNumber = 31234,
+                    Information = new ItemInformation
 					{
 						ImageUrl = "https://www.kronansapotek.se/k2/images/588341/large/0.jpg",
 						ItemPrice = 95.00M
@@ -245,7 +259,8 @@ namespace PharmacyShop.Services
 					Dose = "7,5 mg/ml",
 					Substance = "Natriumpikosulfat",
 					Description = "Orala droppar",
-					Information = new ItemInformation
+                    ArticleNumber = 34567,
+                    Information = new ItemInformation
 					{
 						ImageUrl = "https://www.kronansapotek.se/k2/images/592931/large/0.jpg",
 						ItemPrice = 45.00M
@@ -261,7 +276,8 @@ namespace PharmacyShop.Services
 					Dose = "2,4 mg",
 					Substance = "Diklorbenzylalkohol",
 					Description = "Sugtablett",
-					Information = new ItemInformation
+                    ArticleNumber = 35678,
+                    Information = new ItemInformation
 					{
 						ImageUrl = "https://www.kronansapotek.se/k2/images/127383/large/0.jpg",
 						ItemPrice = 86.00M
@@ -278,7 +294,8 @@ namespace PharmacyShop.Services
 					Dose = "10 mg/ml",
 					Substance = "Aluminiumacetotartrat",
 					Description = "Kutan lösning",
-					Information = new ItemInformation
+                    ArticleNumber = 36789,
+                    Information = new ItemInformation
 					{
 						ImageUrl = "https://www.kronansapotek.se/k2/images/786270/large/0.jpg",
 						ItemPrice = 45.00M
@@ -294,7 +311,8 @@ namespace PharmacyShop.Services
 					Dose = "120mg",
 					Substance = "Fexofenadinhydroklorid",
 					Description = "Filmdragerad",
-					Information = new ItemInformation
+                    ArticleNumber = 37890,
+                    Information = new ItemInformation
 					{
 						ImageUrl = "https://www.kronansapotek.se/k2/images/385632/large/0.jpg",
 						ItemPrice = 75.00M
@@ -310,7 +328,8 @@ namespace PharmacyShop.Services
 					Dose = "8mg",
 					Substance = "Bromhexinhydroklorid",
 					Description = "Tabletter",
-					Information = new ItemInformation
+                    ArticleNumber = 39012,
+                    Information = new ItemInformation
 					{
 						ImageUrl = "https://www.kronansapotek.se/k2/images/420984/large/0.jpg",
 						ItemPrice = 86.00M

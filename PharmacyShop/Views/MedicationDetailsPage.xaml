@@ -6,7 +6,7 @@
              xmlns:model ="clr-namespace:PharmacyShop.Models"
              x:DataType="vm:MedicationDetailsViewModel"
              x:Class="PharmacyShop.Views.MedicationDetailsPage"
-             Title="MedicationDetailsPage">
+             Title="Details">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="cart.png" Command="{Binding GoToCheckoutCommand}"/>

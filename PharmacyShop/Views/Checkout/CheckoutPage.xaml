@@ -5,7 +5,7 @@
              xmlns:model ="clr-namespace:PharmacyShop.Models"
              xmlns:vm ="clr-namespace:PharmacyShop.ViewModels.Checkout.CheckoutViewModels"
              x:DataType="vm:CheckoutViewModel"
-             Title="CheckoutPage">
+             Title="Checkout">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="cartremove.png" Command="{Binding ShowPopupCommand}"/>

@@ -5,7 +5,7 @@
              xmlns:vm="clr-namespace:PharmacyShop.ViewModels.Checkout.ConfirmationViewModels"
              xmlns:model="clr-namespace:PharmacyShop.Models"
              x:DataType="vm:ConfirmationViewModel"
-             Title="ConfirmationPage">
+             Title="Confirmation">
 
     <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto">
         <Grid Grid.Row="0" Margin="20,20,20,0" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto" RowSpacing="25">

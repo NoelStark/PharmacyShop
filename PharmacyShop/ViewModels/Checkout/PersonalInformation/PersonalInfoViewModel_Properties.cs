@@ -20,6 +20,7 @@ namespace PharmacyShop.ViewModels.Checkout.PersonalInformation
 		private string _lastValidPhone = string.Empty;
 		private string _lastValidPostalCode = string.Empty;
 		private string _lastValidFirstName = string.Empty;
+        private string _lastValidLastName = string.Empty;
         private string _lastValidCity = string.Empty;
         private string _lastValidStreet = string.Empty;
         private static readonly Regex NumbersOnly = new Regex("^[0-9]*$");
@@ -96,7 +97,12 @@ namespace PharmacyShop.ViewModels.Checkout.PersonalInformation
 		{
             string lettersValue = value.Replace(" ", "");
             if (firstNameRegex.IsMatch(value.Replace(" ", "")))
-                _lastValidFirstName = value;
+			{
+				if (!value.EndsWith(" ") && !_lastValidFirstName.EndsWith(" "))
+				{
+                    _lastValidFirstName = value;
+                }
+            }
 
             FirstName = _lastValidFirstName;
 
@@ -107,9 +113,14 @@ namespace PharmacyShop.ViewModels.Checkout.PersonalInformation
 		{
             string lettersValue = value.Replace(" ", "");
             if (lastNameRegex.IsMatch(value.Replace(" ", "")))
-                _lastValidFirstName = value;
+			{
+                if (!value.EndsWith(" ") && !_lastValidLastName.EndsWith(" "))
+                {
+                    _lastValidLastName = value;
+                }
+            }
 
-            LastName = _lastValidFirstName;
+            LastName = _lastValidLastName;
 
             ValidateForm();
         }
@@ -213,7 +224,12 @@ namespace PharmacyShop.ViewModels.Checkout.PersonalInformation
 		{
             string lettersValue = value.Replace(" ", "");
             if (lastNameRegex.IsMatch(value.Replace(" ", "")))
-                _lastValidCity = value;
+			{
+				if (!value.EndsWith(" ") && !_lastValidCity.EndsWith(" "))
+				{
+                    _lastValidCity = value;
+                }
+			}
 
             City = _lastValidCity;
             ValidateForm();

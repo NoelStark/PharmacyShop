@@ -15,7 +15,7 @@
             <!--First Name-->
             <VerticalStackLayout>
                 <Label Text="First Name" FontSize="16" FontAttributes="Bold"></Label>
-                <Frame BorderColor="DimGray" CornerRadius="5" Padding="0">
+                <Frame BorderColor="#C8C8C8" CornerRadius="5" Padding="0">
                     <Entry Placeholder="John" Grid.ColumnSpan="2"  Text="{Binding FirstName}"/>
                 </Frame>
             </VerticalStackLayout>
@@ -23,23 +23,29 @@
             <!--Last Name-->
             <VerticalStackLayout>
                 <Label Text="Last Name" FontSize="16" FontAttributes="Bold"></Label>
-                <Frame BorderColor="DimGray" CornerRadius="5" Padding="0">
+                <Frame BorderColor="#C8C8C8" CornerRadius="5" Padding="0">
                     <Entry Placeholder="Doe" Grid.ColumnSpan="2" Text="{Binding LastName}"/>
                 </Frame>
             </VerticalStackLayout>
             
             <!--Email-->
             <VerticalStackLayout>
-                <Label Text="Email" FontSize="16" FontAttributes="Bold"></Label>
-                <Frame BorderColor="DimGray" CornerRadius="5" Padding="0">
+                <Grid HorizontalOptions="FillAndExpand">
+                    <Label Text="Invalid email" TextColor="Red" IsVisible="{Binding ShowErrorEmail}" HorizontalOptions="End"/>
+                    <Label Text="Email" FontSize="16" FontAttributes="Bold"></Label>
+                </Grid>
+                <Frame BorderColor="{Binding EmailBorderColor}" CornerRadius="5" Padding="0">
                     <Entry Placeholder="example@gmail.com" Grid.ColumnSpan="2"  Text="{Binding Email}"/>
                 </Frame>
             </VerticalStackLayout>
             
             <!--Phone Number-->
             <VerticalStackLayout>
-                <Label Text="Phone Number" FontSize="16" FontAttributes="Bold"></Label>
-                <Frame BorderColor="DimGray" CornerRadius="5" Padding="0">
+                <Grid HorizontalOptions="FillAndExpand">
+                    <Label Text="Invalid phonenumber" TextColor="Red" IsVisible="{Binding ShowErrorPhoneNumber}" HorizontalOptions="End"/>
+                    <Label Text="Phone Number" FontSize="16" FontAttributes="Bold"></Label>
+                </Grid>
+                <Frame BorderColor="{Binding PhoneNumberBorderColor}" CornerRadius="5" Padding="0">
                     <Entry x:Name="Phone" Placeholder="xxx-xxx xx xx" CharacterSpacing="2" Grid.ColumnSpan="2"  Text="{Binding Phone}"/>
                 </Frame>
             </VerticalStackLayout>
@@ -47,7 +53,7 @@
             <!--Street-->
             <VerticalStackLayout>
                 <Label Text="Street" FontSize="16" FontAttributes="Bold"></Label>
-                <Frame BorderColor="DimGray" CornerRadius="5" Padding="0">
+                <Frame BorderColor="#C8C8C8" CornerRadius="5" Padding="0">
                     <Entry Placeholder="Street" Grid.ColumnSpan="2"  Text="{Binding Street}"/>
                 </Frame>
             </VerticalStackLayout>
@@ -57,14 +63,14 @@
             <Grid Grid.ColumnSpan="2" HorizontalOptions="FillAndExpand">
                 <VerticalStackLayout HorizontalOptions="Start" WidthRequest="150">
                     <Label Text="Postal Code" FontSize="16" FontAttributes="Bold"></Label>
-                    <Frame BorderColor="DimGray" CornerRadius="5" Padding="0">
+                    <Frame BorderColor="#C8C8C8" CornerRadius="5" Padding="0">
                         <Entry x:Name="PostalCode" Placeholder="xxx xx" CharacterSpacing="2" Grid.ColumnSpan="1"  Text="{Binding PostalCode}" CursorPosition="{Binding CursorPosition}"/>
                     </Frame>
                 </VerticalStackLayout>
 
                 <VerticalStackLayout HorizontalOptions="End" WidthRequest="160">
                     <Label Text="City" FontSize="16" FontAttributes="Bold"></Label>
-                    <Frame BorderColor="DimGray" CornerRadius="5" Padding="0">
+                    <Frame BorderColor="#C8C8C8" CornerRadius="5" Padding="0">
                         <Entry Placeholder="City" Grid.ColumnSpan="1"  Text="{Binding City}"/>
                     </Frame>
                 </VerticalStackLayout>

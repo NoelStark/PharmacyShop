@@ -3,6 +3,7 @@ using PharmacyShop.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -18,12 +19,17 @@ namespace PharmacyShop.ViewModels.Checkout.PersonalInformation
 		/// </summary>
 		private string _lastValidPhone = string.Empty;
 		private string _lastValidPostalCode = string.Empty;
-		private static readonly Regex NumbersOnly = new Regex("^[0-9]*$");
+		private string _lastValidFirstName = string.Empty;
+        private string _lastValidCity = string.Empty;
+        private string _lastValidStreet = string.Empty;
+        private static readonly Regex NumbersOnly = new Regex("^[0-9]*$");
 		private static readonly Regex EmailRegex = new Regex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$");
+        private static readonly Regex firstNameRegex = new Regex(@"^[a-z\s\-]{0,15}$", RegexOptions.IgnoreCase);
+        private static readonly Regex lastNameRegex = new Regex(@"^[a-z\s]{0,15}$", RegexOptions.IgnoreCase);
 
-		//Properties that contains values that are sent to the UI
+        //Properties that contains values that are sent to the UI
 
-		[ObservableProperty]
+        [ObservableProperty]
 		private string firstName = string.Empty;
 
 		[ObservableProperty]
@@ -34,9 +40,12 @@ namespace PharmacyShop.ViewModels.Checkout.PersonalInformation
 
 		private bool isFormValid = false;
 
-		//When the First Name changes its value, a method is entered to check whether all fields are valid or not
+        private bool isUpdatingStreet = false;
+        private bool isUpdatingPostalCode = false;
 
-		[ObservableProperty]
+        //When the First Name changes its value, a method is entered to check whether all fields are valid or not
+
+        [ObservableProperty]
 		private string lastName = string.Empty;
 
 		//When the Last Name changes its value, a method is entered to check whether all fields are valid or not
@@ -59,19 +68,65 @@ namespace PharmacyShop.ViewModels.Checkout.PersonalInformation
 
 		private bool isUpdatingPhone = false;
 
-		partial void OnFirstNameChanged(string value)
+        private Color Red = Color.FromArgb("D22B2B");
+        private Color Grey = Color.FromArgb("C8C8C8");
+
+        [ObservableProperty]
+        private Color emailBorderColor = Color.FromArgb("C8C8C8");
+
+        [ObservableProperty]
+        private Color phoneNumberBorderColor = Color.FromArgb("C8C8C8");
+
+        [ObservableProperty]
+        private Color streetBorderColor = Color.FromArgb("C8C8C8");
+
+        [ObservableProperty]
+        private Color postalCodeBorderColor = Color.FromArgb("C8C8C8");
+
+        [ObservableProperty]
+        private Color cityBorderColor = Color.FromArgb("C8C8C8");
+
+		[ObservableProperty]
+		private bool showErrorEmail = false;
+
+        [ObservableProperty]
+        private bool showErrorPhoneNumber = false;
+
+        partial void OnFirstNameChanged(string value)
 		{
-			ValidateForm();
-		}
+            string lettersValue = value.Replace(" ", "");
+            if (firstNameRegex.IsMatch(value.Replace(" ", "")))
+                _lastValidFirstName = value;
+
+            FirstName = _lastValidFirstName;
+
+            ValidateForm();
+        }
 
 		partial void OnLastNameChanged(string value)
 		{
-			ValidateForm();
-		}
+            string lettersValue = value.Replace(" ", "");
+            if (lastNameRegex.IsMatch(value.Replace(" ", "")))
+                _lastValidFirstName = value;
+
+            LastName = _lastValidFirstName;
+
+            ValidateForm();
+        }
 
 		partial void OnEmailChanged(string value)
 		{
-			ValidateForm();
+			if (EmailRegex.IsMatch(value))
+			{
+                EmailBorderColor = Grey;
+				ShowErrorEmail = false;
+            }
+			else
+			{
+                EmailBorderColor = Red;
+				ShowErrorEmail = true;
+            }
+            ValidateForm();
 		}
 
 
@@ -87,6 +142,16 @@ namespace PharmacyShop.ViewModels.Checkout.PersonalInformation
 			if (NumbersOnly.IsMatch(value.Replace(" ", "")) && numericValue.Length <= 10)
 			{
 				isUpdatingPhone = true;
+				if (numericValue.Length < 10)
+				{
+					PhoneNumberBorderColor = Red;
+					ShowErrorPhoneNumber = true;
+				}
+                else
+				{
+                    ShowErrorPhoneNumber = false;
+                    PhoneNumberBorderColor = Grey;
+				}
 				//If-statements that adds whitespace ' ' for readability if the length is X long
 				if (numericValue.Length > _lastValidPhone.Replace(" ", "").Length)
 				{
@@ -98,13 +163,15 @@ namespace PharmacyShop.ViewModels.Checkout.PersonalInformation
 					{
 						Phone = value;
 					}
-
 				}
 				else
 					Phone = value;
+
 				//Updates the value since its a valid input (Number)
 				_lastValidPhone = Phone;
 			}
+			else
+                PhoneNumberBorderColor = Red;
 			//If a letter or other character is input, it goes back to previous state that is valid (only numbers)
 			Phone = _lastValidPhone;
 			isUpdatingPhone = false;
@@ -118,43 +185,79 @@ namespace PharmacyShop.ViewModels.Checkout.PersonalInformation
 		//When the Street changes its value, a method is entered to check whether all fields are valid or not
 		partial void OnStreetChanged(string value)
 		{
-			ValidateForm();
+			//Entry entry = new Entry();
+			//string empty = string.Empty;
+   //         if (isUpdatingStreet)
+   //             return;
+
+			//empty = value;
+   //         if (!string.IsNullOrWhiteSpace(empty) && empty.Any(char.IsDigit))
+   //         {
+   //             isUpdatingStreet = true;
+   //             var index = value.IndexOf(value.First(char.IsDigit));
+   //             value = value.Substring(0, index) + " " + value.Substring(index);
+			//	var move = Street.Length + 2;
+   //             entry.CursorPosition = move;
+   //             Street = value;
+
+   //         }
+
+   //         isUpdatingStreet = false;
+
+            ValidateForm();
 		}
 
 	
 		//When the City changes its value, a method is entered to check whether all fields are valid or not
 		partial void OnCityChanged(string value)
 		{
-			ValidateForm();
+            string lettersValue = value.Replace(" ", "");
+            if (lastNameRegex.IsMatch(value.Replace(" ", "")))
+                _lastValidCity = value;
+
+            City = _lastValidCity;
+            ValidateForm();
 		}
 
 
-		//When the Postal Code changes its value, a method is entered to check whether all fields are valid or not
-		partial void OnPostalCodeChanged(string value)
-		{
-			//If the value is a number and the length isnt 5 or more, the field is updated
-			if (NumbersOnly.IsMatch(value.Replace(" ", "")) && value.Replace(" ", "").Length <= 5)
-			{
-				//Adds whitespace ' ' if the length is 3
-				if (value.Length == 3 && !value.Contains(" "))
-				{
-					PostalCode = value + " ";
-				}
-				else
-				{
-					PostalCode = value;
-				}
+        //When the Postal Code changes its value, a method is entered to check whether all fields are valid or not
+        partial void OnPostalCodeChanged(string value)
+        {
+            if (isUpdatingPostalCode)
+                return;
 
-				_lastValidPostalCode = PostalCode;
-			}
-			//If the value isnt a number, it goes back to previous valid value (only numbers)
-			else
-			{
-				PostalCode = _lastValidPostalCode;
-			}
-			//Goes to check if all fields now are valid
-			ValidateForm();
-		}
+                isUpdatingPostalCode = true;
 
-	}
+            if (!string.IsNullOrEmpty(value))
+            {
+                //If the value is a number and the length isnt 5 or more, the field is updated
+                if (NumbersOnly.IsMatch(value.Replace(" ", "")) && value.Replace(" ", "").Length <= 5)
+                {
+                    //Adds whitespace ' ' if the length is 3
+                    if (value.Length == 3 && !value.Contains(" "))
+                    {
+                        PostalCode = value + " ";
+                    }
+                    else if (value.Length < _lastValidPostalCode.Length && value.EndsWith(" "))
+                    {
+                        value = value.Substring(0, value.Length - 1);
+                        PostalCode = value;
+                    }
+
+                    _lastValidPostalCode = PostalCode;
+                }
+                //If the value isnt a number, it goes back to previous valid value (only numbers)
+                else
+                {
+                    PostalCode = _lastValidPostalCode;
+                }
+            }
+
+            isUpdatingPostalCode = false;
+
+            //Goes to check if all fields now are valid
+            ValidateForm();
+        }
+
+    }
 }

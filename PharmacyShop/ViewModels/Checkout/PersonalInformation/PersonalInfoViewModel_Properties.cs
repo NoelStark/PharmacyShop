@@ -197,20 +197,18 @@ namespace PharmacyShop.ViewModels.Checkout.PersonalInformation
 		//When the Street changes its value, a method is entered to check whether all fields are valid or not
 		partial void OnStreetChanged(string value)
 		{
-			
-			string empty = string.Empty;
 			if (isUpdatingStreet)
 				return;
 
-			empty = value;
-			if (!string.IsNullOrWhiteSpace(empty) && empty.Any(char.IsDigit))
+			if (!string.IsNullOrWhiteSpace(value) && value.Any(char.IsDigit))
 			{
 				isUpdatingStreet = true;
 				var index = value.IndexOf(value.First(char.IsDigit));
-				value = value.Substring(0, index) + " " + value.Substring(index);
-				
-				Street = value;
-
+                if (value[index - 1] != ' ')
+                {
+                    value = value.Substring(0, index) + " " + value.Substring(index);
+                }
+                Street = value;
 			}
 
 			isUpdatingStreet = false;

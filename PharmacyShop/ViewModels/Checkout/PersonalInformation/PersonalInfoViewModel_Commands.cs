@@ -39,6 +39,10 @@ namespace PharmacyShop.ViewModels.Checkout.PersonalInformation
 				await Shell.Current.GoToAsync("///PaymentInfoPage");
 			}
 		}
-
+		[RelayCommand]
+		async Task GoBack()
+		{
+			await Shell.Current.GoToAsync($"//CheckoutPage");
+		}
 	}
 }

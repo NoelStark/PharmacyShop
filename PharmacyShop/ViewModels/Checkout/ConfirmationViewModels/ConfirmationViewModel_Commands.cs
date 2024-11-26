@@ -32,5 +32,6 @@ namespace PharmacyShop.ViewModels.Checkout.ConfirmationViewModels
 			//Goes back to the overview page
 			await Shell.Current.GoToAsync("//MedicationOverviewPage");
 		}
+		
 	}
 }

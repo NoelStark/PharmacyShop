@@ -163,7 +163,7 @@ namespace PharmacyShop.ViewModels.MedicationOverview
 			{
 				_medication.CurrentMedicine = InspectSelectedMedicine;
 				WeakReferenceMessenger.Default.Send(new ValueChangedMessage<string>("RefreshPage"));
-				Shell.Current.GoToAsync("//MedicationDetailsPage");
+				Shell.Current.GoToAsync("MedicationDetailsPage", true);
 			}
 		}
 

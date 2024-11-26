@@ -93,7 +93,7 @@
 
         <Grid Grid.Row="4" HorizontalOptions="FillAndExpand" Padding="20,20,20,40">
             <Button WidthRequest="160" Text="Back" FontSize="Medium" TextColor="Black" BackgroundColor="Transparent" 
-              BorderColor="{StaticResource Primary}" BorderWidth="2" HorizontalOptions="Start"/>
+              BorderColor="{StaticResource Primary}" BorderWidth="2" HorizontalOptions="Start" Command="{Binding GoBackCommand}"/>
             <Button WidthRequest="160" Text="Next" FontSize="Medium" HorizontalOptions="End" Command="{Binding PayCommand}"/>
         </Grid>
         

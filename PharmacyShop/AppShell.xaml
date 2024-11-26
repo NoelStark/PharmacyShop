@@ -11,7 +11,7 @@
     <ShellContent Title="Overview" ContentTemplate="{DataTemplate local:MedicationOverviewPage}" Route="MedicationOverviewPage" />
     <ShellContent Title="Details" ContentTemplate="{DataTemplate local:MedicationDetailsPage}" Route="MedicationDetailsPage" FlyoutItemIsVisible="False"/>
     <ShellContent Title="Checkout" ContentTemplate="{DataTemplate checkout:CheckoutPage}" Route="CheckoutPage"/>
-    <ShellContent Title="Checkout V2" ContentTemplate="{DataTemplate checkout:PersonalInfoPage}" Route="PersonalInfoPage"/>
+    <ShellContent Title="Checkout V2" ContentTemplate="{DataTemplate checkout:PersonalInfoPage}" Route="PersonalInfoPage" FlyoutItemIsVisible="False"/>
     <ShellContent Title="Checkout V3" ContentTemplate="{DataTemplate checkout:PaymentInfoPage}" Route="PaymentInfoPage" FlyoutItemIsVisible="False"/>
     <ShellContent Title="Checkout V3" ContentTemplate="{DataTemplate checkout:ConfirmationPage}" Route="ConfirmationPage" FlyoutItemIsVisible="False"/>
 </Shell>

@@ -9,11 +9,16 @@ public partial class PersonalInfoPage : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = personalInfoViewModel;
-		if(BindingContext is PersonalInfoViewModel viewModel)
+	}
+
+	protected override void OnAppearing()
+	{
+		base.OnAppearing();
+		if (BindingContext is PersonalInfoViewModel viewModel)
 		{
+			viewModel.Reinitialize();
 			viewModel.PropertyChanged += Field_PropertyChanged;
 		}
-
 	}
 	private void Field_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
 	{

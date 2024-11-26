@@ -227,7 +227,7 @@ namespace PharmacyShop.ViewModels.Checkout.PaymentInfoViewModels
 		{
 			AgreeToTerms = value;
 			//Makes sure to send a message to the Pay method to check whether AgreeToTerms is true or not
-			PayCommand.NotifyCanExecuteChanged();
+			ValidateForm();
 		}
 		//Dictionary that contains requirements for different card types
 		private Dictionary<string, Regex> cards = new Dictionary<string, Regex>

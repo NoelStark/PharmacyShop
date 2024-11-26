@@ -94,6 +94,9 @@ namespace PharmacyShop.ViewModels.Checkout.PersonalInformation
         [ObservableProperty]
         private bool showErrorPhoneNumber = false;
 
+		[ObservableProperty]
+		private bool shouldSaveInfo = false;
+
         partial void OnFirstNameChanged(string value)
 		{
             string lettersValue = value.Replace(" ", "");

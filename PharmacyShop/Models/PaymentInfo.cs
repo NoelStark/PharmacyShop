@@ -9,11 +9,11 @@ namespace PharmacyShop.Models
 	public class PaymentInfo
 	{
 		public Person Person { get; set; } = new Person();
-		public required string CreditCardName { get; set; }
-		public required string CreditCardNumber { get; set; }
-		public required string CreditCardType { get; set; }
-		public required string ExpireDate { get; set; }
-		public required string SecurityCode { get; set; }
+		public string CreditCardName { get; set; } = string.Empty;
+		public string CreditCardNumber { get; set; } = string.Empty;
+		public string CreditCardType { get; set; } = string.Empty;
+		public string ExpireDate { get; set; } = string.Empty;
+		public string SecurityCode { get; set; } = string.Empty;
 
 	}
 }

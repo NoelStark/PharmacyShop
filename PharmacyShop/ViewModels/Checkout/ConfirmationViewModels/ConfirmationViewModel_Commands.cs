@@ -20,17 +20,15 @@ namespace PharmacyShop.ViewModels.Checkout.ConfirmationViewModels
 		async Task Confirm()
 		{
 			bool paymentSaved = Preferences.Get("ShouldSavePayment", false);
-			
+			bool personalInfoSaved = Preferences.Get("ShouldSaveInfo", false);
+
 			//If statement that clears the payment information if user doesnt want to save it
-			if (!paymentSaved && _personService.PaymentInfo != null)
-			{
-				_personService.PaymentInfo.CreditCardName = string.Empty;
-				_personService.PaymentInfo.CreditCardNumber = string.Empty;
-				_personService.PaymentInfo.ExpireDate = string.Empty;
-				_personService.PaymentInfo.SecurityCode = string.Empty;
-				_personService.PaymentInfo.CreditCardType = string.Empty;
-				_personService.PaymentInfo.Person = new Person();
-			}
+			if (!paymentSaved)
+				_personService.PaymentInfo = new PaymentInfo();
+			if (!personalInfoSaved)
+				_personService.CurrentPerson = new Person();
+			
+			_personService.ItemsCart.Clear();
 			//Goes back to the overview page
 			await Shell.Current.GoToAsync("//MedicationOverviewPage");
 		}

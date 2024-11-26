@@ -35,6 +35,7 @@ namespace PharmacyShop.ViewModels.Checkout.PersonalInformation
 			if (person != null)
 			{
 				_personService.CurrentPerson = person;
+				Preferences.Set("ShouldSaveInfo", ShouldSaveInfo);
 				await Shell.Current.GoToAsync("///PaymentInfoPage");
 			}
 		}

@@ -9,6 +9,7 @@ using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace PharmacyShop.ViewModels.Checkout.PersonalInformation
 {
@@ -31,9 +32,35 @@ namespace PharmacyShop.ViewModels.Checkout.PersonalInformation
 			}
 
 		}
+		public void Reinitialize()
+		{
+			//Fills in the fields with values. If the user didnt save, these fields are empty
+			if (_personService.CurrentPerson != null)
+			{
+				FirstName = _personService.CurrentPerson.FirstName;
+				LastName = _personService.CurrentPerson.LastName;
+				Email = _personService.CurrentPerson.Email;
+				Street = _personService.CurrentPerson.Street;
+				PostalCode = _personService.CurrentPerson.PostalCode;
+				City = _personService.CurrentPerson.City;
+				Phone = _personService.CurrentPerson.Phone;
+				ShouldSaveInfo = Preferences.Get("ShouldSaveInfo", false);
+				ResetFieldsUI();
+			}
+		}
+
+		private void ResetFieldsUI()
+		{
+			ShowErrorEmail = false;
+			ShowErrorPhoneNumber = false;
+			PostalCodeBorderColor = Grey;
+			EmailBorderColor = Grey;
+			PhoneNumberBorderColor = Grey;
+		}
         public PersonalInfoViewModel(PersonService personService)
         {
             _personService = personService;
+			Reinitialize();
 			TotalCartCost = _personService.TotalCartCost;
         }
         /// <summary>

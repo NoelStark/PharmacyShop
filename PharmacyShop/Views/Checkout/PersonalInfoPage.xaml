@@ -78,7 +78,7 @@
         </VerticalStackLayout>
 
         <HorizontalStackLayout Grid.Row="1" Grid.ColumnSpan="2" VerticalOptions="FillAndExpand" Padding="10,20,0,0">
-            <CheckBox VerticalOptions="Center"/>
+            <CheckBox VerticalOptions="Center" IsChecked="{Binding ShouldSaveInfo}"/>
             <Label Text="Save for future purchases" VerticalOptions="Center"/>
         </HorizontalStackLayout>
 

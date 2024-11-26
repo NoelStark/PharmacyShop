@@ -65,7 +65,7 @@ namespace PharmacyShop.ViewModels.Checkout.PaymentInfoViewModels
 		{
 			//TODO Remove this since it doesnt do anything?
 			bool paymentSaved = Preferences.Get("ShouldSavePayment", false);
-			
+			CardImage = string.Empty;
 			//Fills in the fields with values. If the user didnt save, these fields are empty
 			if(_personService.PaymentInfo != null)
 			{

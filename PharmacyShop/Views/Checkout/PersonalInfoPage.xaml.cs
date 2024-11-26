@@ -22,8 +22,10 @@ public partial class PersonalInfoPage : ContentPage
 			entry = PostalCode;
 		else if (e.PropertyName == nameof(PersonalInfoViewModel.Phone))
 			entry = Phone;
+        else if (e.PropertyName == nameof(PersonalInfoViewModel.Street))
+            entry = StreetEntry;
 
-		if(entry != null)
+        if (entry != null)
 		{
 			Dispatcher.Dispatch(() =>
 			{

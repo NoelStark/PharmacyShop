@@ -24,7 +24,8 @@ namespace PharmacyShop.ViewModels.Checkout.PersonalInformation
         private string _lastValidCity = string.Empty;
         private string _lastValidStreet = string.Empty;
         private static readonly Regex NumbersOnly = new Regex("^[0-9]*$");
-		private static readonly Regex EmailRegex = new Regex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$");
+        private static readonly Regex PostalnumbersOnly = new Regex("^[0-9]{0,5}$");
+        private static readonly Regex EmailRegex = new Regex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$");
         private static readonly Regex firstNameRegex = new Regex(@"^[a-z\s\-]{0,15}$", RegexOptions.IgnoreCase);
         private static readonly Regex lastNameRegex = new Regex(@"^[a-z\s]{0,15}$", RegexOptions.IgnoreCase);
 
@@ -196,26 +197,25 @@ namespace PharmacyShop.ViewModels.Checkout.PersonalInformation
 		//When the Street changes its value, a method is entered to check whether all fields are valid or not
 		partial void OnStreetChanged(string value)
 		{
-			//Entry entry = new Entry();
-			//string empty = string.Empty;
-   //         if (isUpdatingStreet)
-   //             return;
+			
+			string empty = string.Empty;
+			if (isUpdatingStreet)
+				return;
 
-			//empty = value;
-   //         if (!string.IsNullOrWhiteSpace(empty) && empty.Any(char.IsDigit))
-   //         {
-   //             isUpdatingStreet = true;
-   //             var index = value.IndexOf(value.First(char.IsDigit));
-   //             value = value.Substring(0, index) + " " + value.Substring(index);
-			//	var move = Street.Length + 2;
-   //             entry.CursorPosition = move;
-   //             Street = value;
+			empty = value;
+			if (!string.IsNullOrWhiteSpace(empty) && empty.Any(char.IsDigit))
+			{
+				isUpdatingStreet = true;
+				var index = value.IndexOf(value.First(char.IsDigit));
+				value = value.Substring(0, index) + " " + value.Substring(index);
+				
+				Street = value;
 
-   //         }
+			}
 
-   //         isUpdatingStreet = false;
+			isUpdatingStreet = false;
 
-            ValidateForm();
+			ValidateForm();
 		}
 
 	
@@ -246,8 +246,8 @@ namespace PharmacyShop.ViewModels.Checkout.PersonalInformation
 
             if (!string.IsNullOrEmpty(value))
             {
-                //If the value is a number and the length isnt 5 or more, the field is updated
-                if (NumbersOnly.IsMatch(value.Replace(" ", "")) && value.Replace(" ", "").Length <= 5)
+				//If the value is a number and the length isnt 5 or more, the field is updated
+                if (PostalnumbersOnly.IsMatch(value.Replace(" ", "")))
                 {
                     //Adds whitespace ' ' if the length is 3
                     if (value.Length == 3 && !value.Contains(" "))
@@ -259,6 +259,11 @@ namespace PharmacyShop.ViewModels.Checkout.PersonalInformation
                         value = value.Substring(0, value.Length - 1);
                         PostalCode = value;
                     }
+
+					if (value.Replace(" ", "").Length == 5)
+                        PostalCodeBorderColor = Grey;
+					else
+                        PostalCodeBorderColor = Red;
 
                     _lastValidPostalCode = PostalCode;
                 }

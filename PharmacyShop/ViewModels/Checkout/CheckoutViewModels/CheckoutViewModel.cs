@@ -30,10 +30,10 @@ namespace PharmacyShop.ViewModels.Checkout.CheckoutViewModels
 			CartList = new ObservableCollection<Cart>(_personService.ItemsCart);
 			OnPropertyChanged(nameof(CartList));
 			//If the cart isnt empty, one can move on to the next step through the 'Next' button
-			if (CartList.Any())
-			{
-				CanExecute = true;
-			}
+			if (!CartList.Any())
+				CanExecute = false;
+			ContinueCommand.NotifyCanExecuteChanged();
+			
 			UpdateTotalPrice();
 		}
 

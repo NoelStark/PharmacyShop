@@ -54,8 +54,8 @@ namespace PharmacyShop.ViewModels.Checkout.CheckoutViewModels
 					else
 					{
 						CanExecute = true;
-						ContinueCommand.NotifyCanExecuteChanged();
 					}
+					ContinueCommand.NotifyCanExecuteChanged();
 				}
 				//Whenever something is Added/Removed, the totalprice is updated
 				UpdateTotalPrice();

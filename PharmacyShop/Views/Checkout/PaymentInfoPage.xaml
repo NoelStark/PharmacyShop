@@ -39,7 +39,7 @@
                     <Grid ColumnDefinitions="Auto, Auto,*" HeightRequest="50">
                         <Image Source="{Binding CardImage}" IsVisible="{Binding IsValidCard}" HorizontalOptions="Start" VerticalOptions="Center" HeightRequest="16" Grid.Column="0"/>
                         <BoxView BackgroundColor="Transparent" WidthRequest="10" Grid.Column="1" IsVisible="{Binding IsValidCard}"/>
-                        <Entry x:Name="CreditCardNumber" Placeholder="xxxx xxxx xxxx xxxx" VerticalOptions="Center" HorizontalOptions="Start" HeightRequest="50" Text="{Binding CreditCardNumber}" Grid.Column="2"/>
+                        <Entry x:Name="CreditCardNumber" Keyboard="Numeric" Placeholder="xxxx xxxx xxxx xxxx" VerticalOptions="Center" HorizontalOptions="Start" HeightRequest="50" Text="{Binding CreditCardNumber}" Grid.Column="2"/>
                     </Grid>
                 </Frame>
             </VerticalStackLayout>
@@ -53,7 +53,7 @@
                     </Grid>
 
                     <Frame HeightRequest="50" WidthRequest="160" BorderColor="{Binding DateBorderColor}">
-                        <Entry x:Name="ExpireDateEntry" Placeholder="MM/YY" VerticalOptions="Center" HeightRequest="50" Text="{Binding ExpireDate}"></Entry>
+                        <Entry x:Name="ExpireDateEntry" Keyboard="Numeric" Placeholder="MM/YY" VerticalOptions="Center" HeightRequest="50" Text="{Binding ExpireDate}"></Entry>
                     </Frame>
                 </VerticalStackLayout>
                 
@@ -63,7 +63,7 @@
                         <Label Text="Invalid CVC" IsVisible="{Binding ShowCVCError}" HorizontalOptions="End" TextColor="Red"/>
                     </Grid>
                     <Frame HeightRequest="50" WidthRequest="160" BorderColor="{Binding SecurityBorderColor}">
-                        <Entry Placeholder="xxx" VerticalOptions="Center" HeightRequest="50" Text="{Binding CVC}"></Entry>
+                        <Entry Placeholder="xxx" Keyboard="Numeric" VerticalOptions="Center" HeightRequest="50" Text="{Binding CVC}"></Entry>
                     </Frame>
 
                 </VerticalStackLayout>

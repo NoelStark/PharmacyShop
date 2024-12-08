@@ -11,10 +11,12 @@ namespace PharmacyShop.ViewModels.MedicationOverview
 {
 	public partial class MedicationOverviewPageViewModel : ObservableObject
 	{
-		private int quantity = 1;
+		private int quantity = 1; //Säkerställer att kvanititet alltid är 1 vid tillagd medicin i varukorg
 
-		private List<Medicine> medicationList = new();
-		public ObservableCollection<Medicine> Medicine { get; private set; } = new();
+		private List<Medicine> medicationList = new(); //Ny lista för mediciner
+		public ObservableCollection<Medicine> Medicine { get; private set; } = new(); //Ny observable collection Medicine
+
+		//ObserbavleProperties som är bindade til xaml koden
 
 		[ObservableProperty]
 		private string searchText = string.Empty;
@@ -46,7 +48,8 @@ namespace PharmacyShop.ViewModels.MedicationOverview
 		[ObservableProperty]
 		private string userInputMaxValue = string.Empty;
 
-		private readonly Dictionary<string, bool> filterDictionary = new()
+        //Skapar en dictionary som håller nyklar vilket är namnet som användaren kan filtrera på med hjälp av checkboxes, med default värde
+        private readonly Dictionary<string, bool> filterDictionary = new()
 		{
 			{"Filmdragerad", false },
 			{"Brustablett", false },
@@ -55,12 +58,13 @@ namespace PharmacyShop.ViewModels.MedicationOverview
 			{"Dragerad", false },
 		};
 
+		//On property change metod för sökord från användaren
 		partial void OnSearchTextChanged(string value)
 		{
 			SearchProduct();
 		}
-
-		partial void OnFilmdrageradChanged(bool value)
+        //On property change metoder från filter baserade checkboxes från användaren
+        partial void OnFilmdrageradChanged(bool value)
 		{
 			filterDictionary["Filmdragerad"] = value;
 		}

@@ -91,7 +91,7 @@
                         </Frame>
 
                         <Frame HeightRequest="45" WidthRequest="150" BorderColor="LightGray"  Padding="0" Grid.Column="1">
-                            <Entry Placeholder="max (kr)" Text="{Binding UserInputMaxValue, Mode=TwoWay}" FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold"/>
+                            <Entry Placeholder="max (kr)" Keyboard="Numeric" Text="{Binding UserInputMaxValue, Mode=TwoWay}" FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold"/>
                         </Frame>
                     </Grid>
 

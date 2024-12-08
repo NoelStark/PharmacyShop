@@ -46,7 +46,7 @@
                     <Label Text="Phone Number" FontSize="16" FontAttributes="Bold"></Label>
                 </Grid>
                 <Frame BorderColor="{Binding PhoneNumberBorderColor}" CornerRadius="5" Padding="0">
-                    <Entry x:Name="Phone" Placeholder="xxx-xxx xx xx" CharacterSpacing="2" Grid.ColumnSpan="2"  Text="{Binding Phone}"/>
+                    <Entry x:Name="Phone" Keyboard="Numeric" Placeholder="xxx-xxx xx xx" CharacterSpacing="2" Grid.ColumnSpan="2"  Text="{Binding Phone}"/>
                 </Frame>
             </VerticalStackLayout>
             
@@ -64,7 +64,7 @@
                 <VerticalStackLayout HorizontalOptions="Start" WidthRequest="150">
                     <Label Text="Postal Code" FontSize="16" FontAttributes="Bold"></Label>
                     <Frame BorderColor="{Binding PostalCodeBorderColor}" CornerRadius="5" Padding="0">
-                        <Entry x:Name="PostalCode" Placeholder="xxx xx" CharacterSpacing="2" Grid.ColumnSpan="1"  Text="{Binding PostalCode}" CursorPosition="{Binding CursorPosition}"/>
+                        <Entry x:Name="PostalCode" Keyboard="Numeric" Placeholder="xxx xx" CharacterSpacing="2" Grid.ColumnSpan="1"  Text="{Binding PostalCode}" CursorPosition="{Binding CursorPosition}"/>
                     </Frame>
                 </VerticalStackLayout>
 

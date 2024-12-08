@@ -22,20 +22,21 @@ namespace PharmacyShop.ViewModels.MedicationOverview
         private readonly MedicineService _medication;
         private readonly PersonService _personService;
 
+        //Initializes the Medicine with values from medicationList
         public void Initialize()
         {
-			if(medicationList.Count > 0)
-				Medicine = new ObservableCollection<Medicine>(medicationList);
-
+			if(medicationList.Count > 0) //If there are items in the medicationList, add them to Medicine list
+                Medicine = new ObservableCollection<Medicine>(medicationList);
 		}
+        
 		public MedicationOverviewPageViewModel(MedicineService medication, PersonService personService)
         {
+            //Creating dependanyc injection
             _medication = medication;
             _personService = personService;
-			_= LoadMedicines();
+            //Loads all medicines
+            _ = LoadMedicines();
             
-			//Initialize();
-
 			WeakReferenceMessenger.Default.Unregister<ValueChangedMessage<string>>(this);
 			WeakReferenceMessenger.Default.Unregister<ValueChangedMessage<Medicine>>(this);
 			WeakReferenceMessenger.Default.Unregister<ValueChangedMessage<Dictionary<Medicine, int>>>(this);
@@ -62,38 +63,24 @@ namespace PharmacyShop.ViewModels.MedicationOverview
 			});
 		}
       
-        private async Task Filter(List<Medicine> filter)
+        private async Task Filter(List<Medicine> filter) //This method is used to filter from the users inputs, takes a parameter
         {
-
-			var hashFilter = new HashSet<Medicine>(filter);
-            for(int i = Medicine.Count - 1; i>= 0; i--)
+			HashSet<Medicine> hashFilter = new HashSet<Medicine>(filter); //HashSet list with Medicine that gets values from the parameter
+            for (int i = Medicine.Count - 1; i>= 0; i--) //iterates x times based on the total amount of items in Medicine list
             {
-                if (!hashFilter.Contains(Medicine[i]))
+                if (!hashFilter.Contains(Medicine[i])) //Checks if items in the Medicine list does not contain items from the hashfilter
                 {
-                    Medicine.RemoveAt(i);
+                    Medicine.RemoveAt(i); //If there are, they will be removed
                 }
             }
-            foreach(Medicine item in filter) 
+            foreach(Medicine item in filter)
             {
-                if (!Medicine.Contains(item))
+                if (!Medicine.Contains(item)) //if there are items that deos not exist in the Medicen list but in the filter list
                 {
-                    Medicine.Add(item);
+                    Medicine.Add(item); //if there is, add them to the Medicine list
                 }
             }
-			//         var remove = Medicine.Except(filter).ToList();
-			//         var add = filter.Except(Medicine).ToList();
-
-			//         foreach (var item in remove)
-			//         {
-			//             Medicine.Remove(item);
-			//         }
-			//foreach (var item in add)
-			//{
-			//	Medicine.Add(item);
-			//}
-			//         sw.Stop();
-			//         Console.WriteLine();
-			await Task.Run(()=>OnPropertyChanged(nameof(Medicine)));
+			await Task.Run(()=>OnPropertyChanged(nameof(Medicine))); //On property change of Medicine with an await and task operation
         }
 
 

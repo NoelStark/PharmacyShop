@@ -49,13 +49,10 @@ namespace PharmacyShop.ViewModels.Checkout.CheckoutViewModels
 					{
 						PopupView? popup = new PopupView(this);
 						Application.Current?.MainPage?.ShowPopup(popup);
-						CanExecute = false;
 					}
-					else
-					{
-						CanExecute = true;
-					}
-					ContinueCommand.NotifyCanExecuteChanged();
+                    CanExecute = CartList.Any() ? true : false;
+					
+                    ContinueCommand.NotifyCanExecuteChanged();
 				}
 				//Whenever something is Added/Removed, the totalprice is updated
 				UpdateTotalPrice();

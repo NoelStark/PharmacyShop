@@ -13,10 +13,11 @@ namespace PharmacyShop.ViewModels.MedicationDetails
 {
 	public partial class MedicationDetailsViewModel : ObservableObject
 	{
+		//ObservableCollections collectioner
 		public ObservableCollection<string> Options { get; set; } = new();
-
 		public ObservableCollection<Medicine> Medicines { get; set; } = new();
 
+		//Observableproperties variabler
 		[ObservableProperty]
 		private int quantity = 0;
 
@@ -44,7 +45,7 @@ namespace PharmacyShop.ViewModels.MedicationDetails
 		[ObservableProperty]
 		public string searchText = string.Empty;
 
-		partial void OnSearchTextChanged(string value)
+		partial void OnSearchTextChanged(string value) //Onpropertychangemetod som hanterar ifall SearchText ändras
 		{
 			WeakReferenceMessenger.Default.Send(new ValueChangedMessage<string>(value));
 			Medicines = _medicationOverview.Medicine;

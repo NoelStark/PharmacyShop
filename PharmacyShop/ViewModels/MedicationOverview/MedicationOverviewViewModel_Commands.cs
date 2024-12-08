@@ -19,13 +19,13 @@ namespace PharmacyShop.ViewModels.MedicationOverview
 	{
 
 		[RelayCommand]
-		public async Task LoadMedicines()
+		public async Task LoadMedicines() //Method to load all medicines
 		{
-			medicationList = _medication.Medicines();
+			medicationList = _medication.Medicines(); //Loads medicines to medication list from medicationservice
 			
-			if (medicationList.Any())
+			if (medicationList.Any()) //if there are medicines
 			{		
-				Medicine = new System.Collections.ObjectModel.ObservableCollection<Medicine>(medicationList);
+				Medicine = new System.Collections.ObjectModel.ObservableCollection<Medicine>(medicationList); //Add them to the observablecollection Medicine list
 				OnPropertyChanged(nameof(Medicine));
 			}	
 			FillSearch();
@@ -33,85 +33,86 @@ namespace PharmacyShop.ViewModels.MedicationOverview
 
 	
 		[RelayCommand]
-        public void ShowFilter()
+        public void ShowFilter() //if user clicks on filter icon
 		{
 			if (IsVisible == false)
 			{ 
-				IsVisible = true;
-				SearchAndFilterIsVisible = false;
+				IsVisible = true; //Show filter
+				SearchAndFilterIsVisible = false; //Close everyting else except filter
             }
 			else
 			{
-                IsVisible = false;
-                SearchAndFilterIsVisible = true;
+                IsVisible = false; //Do not show filter
+                SearchAndFilterIsVisible = true; //Show everyting else except filter
             }
         }
 
 
         [RelayCommand]
-		public void FilterMedicines()
+		public void FilterMedicines() //If user wants to filter medicines with the filter function
 		{
+			//initializes decimals with max and min values so there cant be numbers higher or lower
             decimal minprice = decimal.MinValue;
 			decimal maxprice = decimal.MaxValue;
 
-			if (!string.IsNullOrEmpty(UserInputMinValue))
+			if (!string.IsNullOrEmpty(UserInputMinValue)) //Checks if user have typed in min value
 			{
 				try
 				{
-					decimal.TryParse(UserInputMinValue, out decimal minValue);
-					minprice = minValue;
+					decimal.TryParse(UserInputMinValue, out decimal minValue); //Converting the user input to decimal
+					minprice = minValue; //replacing the minprice with users min value
 				}
 				catch { }
 			}
 
-			if (!string.IsNullOrEmpty(UserInputMaxValue))
-			{
+			if (!string.IsNullOrEmpty(UserInputMaxValue)) //Checks if user have typed in max value
+            {
 				try
 				{
-					decimal.TryParse(UserInputMaxValue, out decimal maxValue);
-					maxprice = maxValue;
-				}
+					decimal.TryParse(UserInputMaxValue, out decimal maxValue); //Converting the user input to decimal
+                    maxprice = maxValue; //replacing the maxprice with users min value
+                }
 				catch { }
 			}
+            //Lamda expression to filter if user checked some of the checkboxes
+            List<string> active = filterDictionary.Where(x => x.Value).Select(x => x.Key.ToLower()).ToList();
 
-			List<string> active = filterDictionary.Where(x => x.Value).Select(x => x.Key.ToLower()).ToList();
-
+			//Lamda expression that filters by checking checkboxes and users min or max values
 			var filter = medicationList.Where(a => !active.Any() || active.Any(y => a.Description.ToLower().Contains(y)))
 				 .Where(b => b.Information?.ItemPrice >= minprice && b.Information.ItemPrice <= maxprice).ToList();
 
-            _= Filter(filter);
+            _= Filter(filter); //Call method filter with filter as a parameter
             IsVisible = false;
             SearchAndFilterIsVisible = true;
         }
 
-		//private Dictionary<string, List<Medicine>> search = new();
-		private ConcurrentDictionary<string, List<Medicine>> search = new();
-		private void FillSearch()
-		{	
-			Parallel.ForEach(medicationList, item =>
+		private ConcurrentDictionary<string, List<Medicine>> search = new(); //creating a ConcurrentDictionary som har nyckelvärde par
+		private void FillSearch() //Metod som fyller i search
+        {   //För snabbaste och bästa effektivitet så används Parallel, det fyller sökindexet parallellt med data från en lista över mediciner.
+            Parallel.ForEach(medicationList, item =>
 			{
+				//Lägger till dessa i sökindexet
 				AddToSearch(item.Name, item);
 				AddToSearch(item.Dose, item);
 				AddToSearch(item.Description, item);
 			});		
 		}
 
-		private void AddToSearch(string text, Medicine medicine)
+		private void AddToSearch(string text, Medicine medicine) //Methods to add medicines to a list based on the users input in the searchbar
 		{
-			var list = search.GetOrAdd(text, _ => new List<Medicine>());
-			lock (list)
-			{
-				list.Add(medicine);
+			List<Medicine> list = search.GetOrAdd(text, _ => new List<Medicine>()); //hämtar alla sökindex och nyckelvärde par som sedan läggs till i list
+			lock (list) //säkerställer att endast en tråd åt gången kan arbeta med listan vilket gör den snabbare
+            {
+				list.Add(medicine); //lägger till dem i listan
 			}
 	
 		}
 
 		[RelayCommand]
-		public void SearchProduct()
+		public void SearchProduct() //Metod som hanterar sökord från användarens input i sökfältet
 		{
-
-			List<Medicine> foundMedicines = new List<Medicine>();
-			if (SearchText == string.Empty)
+			List<Medicine> foundMedicines = new List<Medicine>(); //skapar en ny lista
+			if (SearchText == string.Empty) //Om sökfältet är tomt så laddas alla mediciner in
 			{
 				_= Filter(medicationList);
 			}
@@ -119,78 +120,65 @@ namespace PharmacyShop.ViewModels.MedicationOverview
 			{
 				bool foundMatch = false;
 				HashSet<Medicine> result = new HashSet<Medicine>();
-				foreach(string key in search.Keys)
+				foreach(string key in search.Keys) //Söker igenom alla nyklar ifrån search listan
 				{
-					if (key.ToLower().Contains(SearchText.ToLower()))
+					if (key.ToLower().Contains(SearchText.ToLower())) //Om nycklar hittas baserad på användarens sökord
 					{
-						if (search.TryGetValue(key, out List<Medicine>? medicines))
+						if (search.TryGetValue(key, out List<Medicine>? medicines)) //Hämtar värdet från nycklen
 						{
-							foundMedicines.AddRange(medicines);
-							foundMatch = true;
+							foundMedicines.AddRange(medicines); //lägger till elementet sist i listan
+							foundMatch = true; //Säkerställer att en match har hittats
 						}
 					}
 				}
-				_= Filter(foundMatch ? foundMedicines : new List<Medicine>());
-			}
-
-
-			//if (SearchText != string.Empty)
-			//{
-			//	var filterBySearchResult = medicationList.Where(a => a.Name.ToLower().Contains(SearchText.ToLower()) || a.Dose.ToLower().Contains(SearchText.ToLower()) || a.Description.ToLower().Contains(SearchText.ToLower())).ToList();
-
-			//	Filter(filterBySearchResult);
-
-			//	WeakReferenceMessenger.Default.Send(new ValueChangedMessage<List<Medicine>>(filterBySearchResult));
-			//}
-			//else
-			//{
-			//	Filter(medicationList);
-			//}
-		}
-
-
-		[RelayCommand]
-		public void GoToCheckout()
-		{
-			Shell.Current.GoToAsync("//CheckoutPage");
-		}
-
-
-		[RelayCommand]
-		public void InspectChosenMedicine(Medicine InspectSelectedMedicine)
-		{
-			if (InspectSelectedMedicine != null)
-			{
-				_medication.CurrentMedicine = InspectSelectedMedicine;
-				WeakReferenceMessenger.Default.Send(new ValueChangedMessage<string>("RefreshPage"));
-				Shell.Current.GoToAsync("MedicationDetailsPage", true);
+				_= Filter(foundMatch ? foundMedicines : new List<Medicine>()); //Anropar metoden för filtrering med lista som parameter
 			}
 		}
 
 
 		[RelayCommand]
-		public void BuyChosenMedicine(Medicine BuySelectedMedicine)
+		public void GoToCheckout() //If user pressed on the checkout icon
 		{
-			if (BuySelectedMedicine != null)
-			{
-				Cart? cart = _personService.ItemsCart.FirstOrDefault(x => x.Medicine == BuySelectedMedicine);
+			Shell.Current.GoToAsync("//CheckoutPage"); //route to CheckoutPage
+        }
 
-				if (cart == null)
+
+		[RelayCommand]
+		public void InspectChosenMedicine(Medicine InspectSelectedMedicine) //If user presses on a medicine and want to inspect it
+        {
+			if (InspectSelectedMedicine != null) //If there is a selected medicine
+			{
+				_medication.CurrentMedicine = InspectSelectedMedicine; //Get the insepcted medicine, gives it value to CurrentMedicen
+				WeakReferenceMessenger.Default.Send(new ValueChangedMessage<string>("RefreshPage")); //sends message that a new medicine is selected and therefore the page needs to be refreshed
+				Shell.Current.GoToAsync("MedicationDetailsPage", true); //Route to MedicationDetailsPage
+            }
+		}
+
+
+		[RelayCommand]
+		public void BuyChosenMedicine(Medicine BuySelectedMedicine) //If user wants to buy a medicine by pressing on the buy
+		{
+			if (BuySelectedMedicine != null) //if there is a medicine selected
+			{
+				Cart? cart = _personService.ItemsCart.FirstOrDefault(x => x.Medicine == BuySelectedMedicine); //Add the item to the cart
+
+				if (cart == null) //If there are no items in the cart
 				{
-					_personService.ItemsCart.Add(new Cart
+					_personService.ItemsCart.Add(new Cart //Create new cart information
 					{
 						Medicine = BuySelectedMedicine,
 						Quantity = quantity,
 						Information = BuySelectedMedicine.Information
 					});
 				}
-				else
+				else 
 				{
-					Cart? item = _personService.ItemsCart.Find(a => a == cart);
+					Cart? item = _personService.ItemsCart.Find(a => a == cart); //Find the current cart information
 					if(item != null)
-						item.Quantity += quantity;
+						item.Quantity += quantity; //add the totla cuantity
 				}
 				quantity = 1;
+				//Function to create popup with a message that an item have been added to the cart
 				PopupView? popup = new PopupView(this);
 				if(Application.Current != null)
 					if(Application.Current.MainPage != null)

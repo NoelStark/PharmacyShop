@@ -21,25 +21,25 @@ namespace PharmacyShop.ViewModels.MedicationDetails
 
 		public MedicationDetailsViewModel(MedicineService medicineService, MedicationOverviewPageViewModel medicationOverview)
         {
+			//Skapar dependancy injection
 			_medicineService = medicineService;
 			_medicationOverview = medicationOverview;
 			_medicines = new ObservableCollection<Medicine>();
 		}
 
-		public void Reinitialize()
-		{
-
-			FillFields();
-			IsSearchVisible = false;
+		public void Reinitialize() //Reinitializes sidan
+        {
+			FillFields(); //Anropar på metoden
+			IsSearchVisible = false; //Ska inte visas en layout för mediciner under sökfält förräns användaren väljer att söka
 			SearchText = string.Empty;
-			if (!WeakReferenceMessenger.Default.IsRegistered<ValueChangedMessage<List<Medicine>>>(this))
+			if (!WeakReferenceMessenger.Default.IsRegistered<ValueChangedMessage<List<Medicine>>>(this)) //Om anväanderan inte är på samma medicine
 			{
-				WeakReferenceMessenger.Default.Register<ValueChangedMessage<List<Medicine>>>(this, (recipient, message) =>
+				WeakReferenceMessenger.Default.Register<ValueChangedMessage<List<Medicine>>>(this, (recipient, message) => //Hämtar den nya medicinen som ska bli inspectad
 				{
 					Medicines.Clear();
 					foreach (Medicine medicine in message.Value)
 					{
-						Medicines.Add(medicine);
+						Medicines.Add(medicine); //Visar medicinen
 					}
 				});
 			}
@@ -49,21 +49,16 @@ namespace PharmacyShop.ViewModels.MedicationDetails
 			{
 				WeakReferenceMessenger.Default.Register<ValueChangedMessage<string>>(this, (recipient, message) =>
 				{
-					if (message.Value == "RefreshPage")
+					if (message.Value == "RefreshPage") //Om messaget är att refresha sidan
 					{
-						// Logic to handle the message
-						IsSearchVisible = false;
-						FillFields();
+						IsSearchVisible = false; //Säkerställer att ingen sök layout under searchbaren är synlig
+						FillFields(); //Anropar metoden
 					}
 				});
 			}
-			
-			
-			
-			
 		}
 
-		private void FillFields()
+		private void FillFields() //Metod för att fylla i och tömma vissa variabler
 		{
 			SearchText = string.Empty;
 			IsSearchVisible = false;

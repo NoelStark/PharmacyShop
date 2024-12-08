@@ -32,6 +32,8 @@ namespace PharmacyShop.ViewModels.Checkout.CheckoutViewModels
 			//If the cart isnt empty, one can move on to the next step through the 'Next' button
 			if (!CartList.Any())
 				CanExecute = false;
+			else
+				CanExecute = true;
 			ContinueCommand.NotifyCanExecuteChanged();
 			
 			UpdateTotalPrice();
@@ -52,7 +54,9 @@ namespace PharmacyShop.ViewModels.Checkout.CheckoutViewModels
 					CartList.Clear();
 					_personService.ItemsCart.Clear();
 				}
-				UpdateTotalPrice();
+				CanExecute = CartList.Any() ? true : false;
+				ContinueCommand.NotifyCanExecuteChanged();
+                UpdateTotalPrice();
             }
         }
 

@@ -29,7 +29,7 @@ namespace PharmacyShop.ViewModels
 		private object clearCart;
 
         [RelayCommand]
-		public async void RemoveCart()
+		public async void RemoveCart() //If user presses the Remove cart icon
 		{
             RemoveCartButton = true;
 			if (clearCart is CheckoutViewModel cvm)
@@ -38,9 +38,6 @@ namespace PharmacyShop.ViewModels
 				ClosePopup(true);
 			}
         }
-
-
-
 
         private async void ClosePopup(bool saveButtonClicked = false)
 		{

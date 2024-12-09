@@ -103,9 +103,8 @@ namespace PharmacyShop.ViewModels.Checkout.PersonalInformation
             if (firstNameRegex.IsMatch(value.Replace(" ", "")))
 			{
 				if (!value.EndsWith(" ") && !_lastValidFirstName.EndsWith(" "))
-				{
                     _lastValidFirstName = value;
-                }
+                
             }
 
             FirstName = _lastValidFirstName;
@@ -119,9 +118,8 @@ namespace PharmacyShop.ViewModels.Checkout.PersonalInformation
             if (lastNameRegex.IsMatch(value.Replace(" ", "")))
 			{
                 if (!value.EndsWith(" ") && !_lastValidLastName.EndsWith(" "))
-                {
                     _lastValidLastName = value;
-                }
+                
             }
 
             LastName = _lastValidLastName;
@@ -148,13 +146,14 @@ namespace PharmacyShop.ViewModels.Checkout.PersonalInformation
 		//When the Phone number changes its value, a method is entered to check whether all fields are valid or not
 		partial void OnPhoneChanged(string value)
 		{
+			int[] positions = { 3, 6, 8 };
 			//If the phone number is currently being updated we exit the method
 			if (isUpdatingPhone) return;
 			//Since the phone numbers contains ' ' for readability, those are removed during the check
 			string numericValue = value.Replace(" ", "");
 
 			//If the value is a number and the length isnt 10 or more, the field is updated
-			if (NumbersOnly.IsMatch(value.Replace(" ", "")) && numericValue.Length <= 10)
+			if (NumbersOnly.IsMatch(numericValue) && numericValue.Length <= 10)
 			{
 				isUpdatingPhone = true;
 				if (numericValue.Length < 10)
@@ -170,14 +169,10 @@ namespace PharmacyShop.ViewModels.Checkout.PersonalInformation
 				//If-statements that adds whitespace ' ' for readability if the length is X long
 				if (numericValue.Length > _lastValidPhone.Replace(" ", "").Length)
 				{
-					if (numericValue.Length == 3 || numericValue.Length == 6 || numericValue.Length == 8)
-					{
+					if (positions.Contains(numericValue.Length))				
 						Phone = value + " ";
-					}
 					else
-					{
-						Phone = value;
-					}
+						Phone = value;		
 				}
 				else
 					Phone = value;
@@ -208,14 +203,12 @@ namespace PharmacyShop.ViewModels.Checkout.PersonalInformation
 				isUpdatingStreet = true;
 				var index = value.IndexOf(value.First(char.IsDigit));
                 if (value[index - 1] != ' ')
-                {
                     value = value.Substring(0, index) + " " + value.Substring(index);
-                }
+                
                 Street = value;
 			}
 
 			isUpdatingStreet = false;
-
 			ValidateForm();
 		}
 
@@ -227,9 +220,8 @@ namespace PharmacyShop.ViewModels.Checkout.PersonalInformation
             if (lastNameRegex.IsMatch(value.Replace(" ", "")))
 			{
 				if (!value.EndsWith(" ") && !_lastValidCity.EndsWith(" "))
-				{
                     _lastValidCity = value;
-                }
+                
 			}
 
             City = _lastValidCity;
@@ -252,14 +244,10 @@ namespace PharmacyShop.ViewModels.Checkout.PersonalInformation
                 {
                     //Adds whitespace ' ' if the length is 3
                     if (value.Length == 3 && !value.Contains(" "))
-                    {
                         PostalCode = value + " ";
-                    }
+                    
                     else if (value.Length < _lastValidPostalCode.Length && value.EndsWith(" "))
-                    {
-                        value = value.Substring(0, value.Length - 1);
-                        PostalCode = value;
-                    }
+						PostalCode = value.Substring(0, value.Length - 1);
 
 					if (value.Replace(" ", "").Length == 5)
                         PostalCodeBorderColor = Grey;

@@ -17,7 +17,7 @@ namespace PharmacyShop.ViewModels.MedicationOverview
 {
 	public partial class MedicationOverviewPageViewModel : ObservableObject
 	{
-
+		
 		[RelayCommand]
 		public async Task LoadMedicines() //Method to load all medicines
 		{
@@ -149,8 +149,15 @@ namespace PharmacyShop.ViewModels.MedicationOverview
 			if (InspectSelectedMedicine != null) //If there is a selected medicine
 			{
 				_medication.CurrentMedicine = InspectSelectedMedicine; //Get the insepcted medicine, gives it value to CurrentMedicen
-				WeakReferenceMessenger.Default.Send(new ValueChangedMessage<string>("RefreshPage")); //sends message that a new medicine is selected and therefore the page needs to be refreshed
-				Shell.Current.GoToAsync("MedicationDetailsPage", true); //Route to MedicationDetailsPage
+				if(Shell.Current.CurrentPage.GetType() != typeof(MedicationDetailsPage))
+				{
+
+					Shell.Current.GoToAsync("MedicationDetailsPage", true); //Route to MedicationDetailsPage
+				}
+				else
+				{
+					WeakReferenceMessenger.Default.Send(new ValueChangedMessage<string>("RefreshPage")); //sends message that a new medicine is selected and therefore the page needs to be refreshed
+				}
             }
 		}
 

@@ -38,24 +38,22 @@ namespace PharmacyShop.ViewModels.Checkout.CheckoutViewModels
 		{
 			if (cartItem.Quantity > 0)
 			{
-				cartItem.Quantity--;
+				int currentQuantity = cartItem.Quantity;
+				currentQuantity--;
 				//If the quantity reaches 0, the item is removed from the cart
-				if (cartItem.Quantity == 0)
+				if (currentQuantity == 0)
 				{
-					CartList.Remove(cartItem);
-					_personService.ItemsCart.Remove(cartItem);
-					//If the cart is empty, one shouldnt be able to press the 'Next' button
-					if (!CartList.Any())
-					{
-						PopupView? popup = new PopupView(this);
-						Application.Current?.MainPage?.ShowPopup(popup);
-					}
+					RemoveItemInCart(cartItem);
                     CanExecute = CartList.Any() ? true : false;
 					
                     ContinueCommand.NotifyCanExecuteChanged();
 				}
+				else
+				{
+					cartItem.Quantity--;
+					UpdateTotalPrice();
+				}
 				//Whenever something is Added/Removed, the totalprice is updated
-				UpdateTotalPrice();
 			}
 		}
 		[RelayCommand]
@@ -77,9 +75,9 @@ namespace PharmacyShop.ViewModels.Checkout.CheckoutViewModels
 		}
 
 		[RelayCommand]
-		static async Task GoBack()
+		static void GoBack()
 		{
-			await Shell.Current.GoToAsync($"//MedicationOverviewPage");
+			Shell.Current.GoToAsync($"//MedicationOverviewPage", true);
 
 		}
 

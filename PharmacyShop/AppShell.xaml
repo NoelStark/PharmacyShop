@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:PharmacyShop.Views"
     xmlns:checkout="clr-namespace:PharmacyShop.Views.Checkout"
-    Shell.FlyoutBehavior="Flyout"
+    Shell.FlyoutBehavior="Disabled"
     Title="PharmacyShop">
 
     <ShellContent Title="Overview" ContentTemplate="{DataTemplate local:MedicationOverviewPage}" Route="MedicationOverviewPage" />

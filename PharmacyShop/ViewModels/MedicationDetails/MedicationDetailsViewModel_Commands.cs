@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using PharmacyShop.Views;
 
 namespace PharmacyShop.ViewModels.MedicationDetails
 {
@@ -19,7 +21,6 @@ namespace PharmacyShop.ViewModels.MedicationDetails
 		void GoBack() //Metod för om användaren trycker på tillbaka pilen
 		{
 			Shell.Current.GoToAsync($"//MedicationOverviewPage"); //Diregerar till MedicationOverviewPage
-
         }
 		[RelayCommand]
 		void MedicineClick(Medicine medicine) //Metod för om användaren söker på mediciner och trycker på en medicin
@@ -53,7 +54,6 @@ namespace PharmacyShop.ViewModels.MedicationDetails
         public void GoToCheckout() //Metod för om användaren trycker på cart symbolen
         {
             Shell.Current.GoToAsync("//CheckoutPage"); //Diregerar till checkoutpage
-
         }
     }
 }

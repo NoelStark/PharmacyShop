@@ -18,8 +18,8 @@ namespace PharmacyShop.ViewModels.Checkout.ConfirmationViewModels
 		public ConfirmationViewModel(PersonService personService)
 		{
 			_personService = personService;
-			Reinitialize();
 			GenerateOrderNumber();
+			Reinitialize();
 		}
 
 		/// <summary>
@@ -67,7 +67,7 @@ namespace PharmacyShop.ViewModels.Checkout.ConfirmationViewModels
 
 		public async Task SupplierEmail()
 		{
-			string productsFromCart = $"Customer Name: {_personService.CurrentPerson.FullName}\nCustomer Email: {_personService.CurrentPerson.Email}\nCustomer Email: {_personService.CurrentPerson.Phone}\nOrdernumber{OrderNumber}\n\nProducts:";
+			string productsFromCart = $"Customer Name: {_personService.CurrentPerson.FullName}\nCustomer Email: {_personService.CurrentPerson.Email}\nCustomer Phone: {_personService.CurrentPerson.Phone}\nOrdernumber{OrderNumber}\n\nProducts:";
 			foreach (var item in ItemsCart)
 			{
                 productsFromCart += $"\nName: {item.Medicine.Name} {item.Medicine.Dose} {item.Medicine.Description}\nArticlenumber: {item.Medicine.ArticleNumber}, Quantity: {item.Quantity}\n";

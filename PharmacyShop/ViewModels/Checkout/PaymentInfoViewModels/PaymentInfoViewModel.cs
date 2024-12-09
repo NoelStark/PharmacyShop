@@ -34,7 +34,7 @@ namespace PharmacyShop.ViewModels.Checkout.PaymentInfoViewModels
         {
             _personService = personService;
 			Reinitialize();
-			TotalCartCost = _personService.TotalCartCost;
+			
 		}
 
 		/// <summary>
@@ -65,9 +65,12 @@ namespace PharmacyShop.ViewModels.Checkout.PaymentInfoViewModels
 		{
 			//TODO Remove this since it doesnt do anything?
 			bool paymentSaved = Preferences.Get("ShouldSavePayment", false);
-			CardImage = string.Empty;
-			//Fills in the fields with values. If the user didnt save, these fields are empty
-			if(_personService.PaymentInfo != null)
+			if (!paymentSaved)
+                CardImage = string.Empty;
+
+            TotalCartCost = _personService.TotalCartCost;
+            //Fills in the fields with values. If the user didnt save, these fields are empty
+            if (_personService.PaymentInfo != null)
 			{
 				CreditCardNumber = _personService.PaymentInfo.CreditCardNumber;
 				Name = _personService.PaymentInfo.CreditCardName;

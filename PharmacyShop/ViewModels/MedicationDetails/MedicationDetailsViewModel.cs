@@ -21,45 +21,44 @@ namespace PharmacyShop.ViewModels.MedicationDetails
 
 		public MedicationDetailsViewModel(MedicineService medicineService, MedicationOverviewPageViewModel medicationOverview)
         {
-			//Skapar dependancy injection
 			_medicineService = medicineService;
 			_medicationOverview = medicationOverview;
 			_medicines = new ObservableCollection<Medicine>();
 		}
 
-		public void Reinitialize() //Reinitializes sidan
+		public void Reinitialize() //Reinitializes the page
         {
-			FillFields(); //Anropar på metoden
-			IsSearchVisible = false; //Ska inte visas en layout för mediciner under sökfält förräns användaren väljer att söka
+			FillFields();
+			IsSearchVisible = false;
 			SearchText = string.Empty;
-			if (!WeakReferenceMessenger.Default.IsRegistered<ValueChangedMessage<List<Medicine>>>(this)) //Om anväanderan inte är på samma medicine
+			if (!WeakReferenceMessenger.Default.IsRegistered<ValueChangedMessage<List<Medicine>>>(this)) //If the user is not on the same medication
 			{
-				WeakReferenceMessenger.Default.Register<ValueChangedMessage<List<Medicine>>>(this, (recipient, message) => //Hämtar den nya medicinen som ska bli inspectad
-				{
+				WeakReferenceMessenger.Default.Register<ValueChangedMessage<List<Medicine>>>(this, (recipient, message) => //Retrieves the new medication to be inspected
+                {
 					Medicines.Clear();
 					foreach (Medicine medicine in message.Value)
 					{
-						Medicines.Add(medicine); //Visar medicinen
+						Medicines.Add(medicine);
 					}
 				});
 			}
 
-			// Register for the message only if not already registered
+			//Register for the message only if not already registered
 			if (!WeakReferenceMessenger.Default.IsRegistered<ValueChangedMessage<string>>(this))
 			{
 				WeakReferenceMessenger.Default.Register<ValueChangedMessage<string>>(this, (recipient, message) =>
 				{
-					if (message.Value == "RefreshPage") //Om messaget är att refresha sidan
+					if (message.Value == "RefreshPage") //Om messaget är att refresha sidan, it calls on the method to fill in/clear all fields
 					{
-						IsSearchVisible = false; //Säkerställer att ingen sök layout under searchbaren är synlig
-						FillFields(); //Anropar metoden
+						IsSearchVisible = false;
+						FillFields();
 					}
 				});
 			}
 		}
 
-		private void FillFields() //Metod för att fylla i och tömma vissa variabler
-		{
+		private void FillFields() //Method for populating and clearing specific variables
+        {
 			SearchText = string.Empty;
 			IsSearchVisible = false;
 			Options.Clear();

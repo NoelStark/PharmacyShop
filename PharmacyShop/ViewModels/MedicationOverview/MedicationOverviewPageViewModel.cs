@@ -37,7 +37,11 @@ namespace PharmacyShop.ViewModels.MedicationOverview
             //Loads all medicines
             _ = LoadMedicines();
             
-			WeakReferenceMessenger.Default.Unregister<ValueChangedMessage<string>>(this);
+            /// <summary>
+            /// The application uses WeakReferenceMessenger handle updates and actions based on specific messages. 
+            /// It unregisters the current object from handling three types of messages, then registers new handelrs
+            /// </summary>
+            WeakReferenceMessenger.Default.Unregister<ValueChangedMessage<string>>(this);
 			WeakReferenceMessenger.Default.Unregister<ValueChangedMessage<Medicine>>(this);
 			WeakReferenceMessenger.Default.Unregister<ValueChangedMessage<Dictionary<Medicine, int>>>(this);
 

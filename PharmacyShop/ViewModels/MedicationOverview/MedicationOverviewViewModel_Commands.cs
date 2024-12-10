@@ -85,34 +85,35 @@ namespace PharmacyShop.ViewModels.MedicationOverview
             IsVisible = false;
             SearchAndFilterIsVisible = true;
         }
+		private ConcurrentDictionary<string, List<Medicine>> search = new();
 
-		private ConcurrentDictionary<string, List<Medicine>> search = new(); //creating a ConcurrentDictionary som har nyckelvärde par
-		private void FillSearch() //Metod som fyller i search
-        {   //För snabbaste och bästa effektivitet så används Parallel, det fyller sökindexet parallellt med data från en lista över mediciner.
+        //Metod that fills search. Foor the fastest and most efficient performance, Parallel is used to populate the search index concurrently with data from a list of medications
+        private void FillSearch() 
+        {   
             Parallel.ForEach(medicationList, item =>
 			{
-				//Lägger till dessa i sökindexet
 				AddToSearch(item.Name, item);
 				AddToSearch(item.Dose, item);
 				AddToSearch(item.Description, item);
 			});		
 		}
 
-		private void AddToSearch(string text, Medicine medicine) //Methods to add medicines to a list based on the users input in the searchbar
+        //Methods to add medicines to a list based on the users input in the searchbar. Retrieves all search indexes and key-value pairs, which are then added to a list
+        private void AddToSearch(string text, Medicine medicine)
 		{
-			List<Medicine> list = search.GetOrAdd(text, _ => new List<Medicine>()); //hämtar alla sökindex och nyckelvärde par som sedan läggs till i list
-			lock (list) //säkerställer att endast en tråd åt gången kan arbeta med listan vilket gör den snabbare
+			List<Medicine> list = search.GetOrAdd(text, _ => new List<Medicine>());
+			lock (list)
             {
-				list.Add(medicine); //lägger till dem i listan
+				list.Add(medicine);
 			}
 	
 		}
 
 		[RelayCommand]
-		public void SearchProduct() //Metod som hanterar sökord från användarens input i sökfältet
-		{
-			List<Medicine> foundMedicines = new List<Medicine>(); //skapar en ny lista
-			if (SearchText == string.Empty) //Om sökfältet är tomt så laddas alla mediciner in
+		public void SearchProduct() //Method that handles search terms from the user input in the search field
+        {
+			List<Medicine> foundMedicines = new List<Medicine>();
+			if (SearchText == string.Empty)
 			{
 				_= Filter(medicationList);
 			}
@@ -120,33 +121,33 @@ namespace PharmacyShop.ViewModels.MedicationOverview
 			{
 				bool foundMatch = false;
 				HashSet<Medicine> result = new HashSet<Medicine>();
-				foreach(string key in search.Keys) //Söker igenom alla nyklar ifrån search listan
+				foreach(string key in search.Keys)
 				{
-					if (key.ToLower().Contains(SearchText.ToLower())) //Om nycklar hittas baserad på användarens sökord
+					if (key.ToLower().Contains(SearchText.ToLower())) //If key is found based on the users search
 					{
-						if (search.TryGetValue(key, out List<Medicine>? medicines)) //Hämtar värdet från nycklen
+						if (search.TryGetValue(key, out List<Medicine>? medicines)) //Retrieves the key value
 						{
-							foundMedicines.AddRange(medicines); //lägger till elementet sist i listan
-							foundMatch = true; //Säkerställer att en match har hittats
+							foundMedicines.AddRange(medicines);
+							foundMatch = true;
 						}
 					}
 				}
-				_= Filter(foundMatch ? foundMedicines : new List<Medicine>()); //Anropar metoden för filtrering med lista som parameter
+				_= Filter(foundMatch ? foundMedicines : new List<Medicine>()); //Calls the method for filtering, with list as parameter
 			}
 		}
 
 
 		[RelayCommand]
-		public void GoToCheckout() //If user pressed on the checkout icon
+		public void GoToCheckout() //If user pressed on the checkout icon, direct to CheckoutPage
 		{
-			Shell.Current.GoToAsync("//CheckoutPage"); //route to CheckoutPage
+			Shell.Current.GoToAsync("//CheckoutPage");
         }
 
 
 		[RelayCommand]
 		public void InspectChosenMedicine(Medicine InspectSelectedMedicine) //If user presses on a medicine and want to inspect it
         {
-			if (InspectSelectedMedicine != null) //If there is a selected medicine
+			if (InspectSelectedMedicine != null)
 			{
 				_medication.CurrentMedicine = InspectSelectedMedicine; //Get the insepcted medicine, gives it value to CurrentMedicen
 				if(Shell.Current.CurrentPage.GetType() != typeof(MedicationDetailsPage))

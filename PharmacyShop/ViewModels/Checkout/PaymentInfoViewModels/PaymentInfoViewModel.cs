@@ -78,9 +78,7 @@ namespace PharmacyShop.ViewModels.Checkout.PaymentInfoViewModels
 				CVC = _personService.PaymentInfo.SecurityCode;
 				SaveInformation = paymentSaved;
 				AgreeToTerms = false;
-
 			}
-			
 		}
 
 		private void ValidateForm()

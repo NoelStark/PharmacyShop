@@ -16,44 +16,45 @@ namespace PharmacyShop.ViewModels.MedicationDetails
 {
 	public partial class MedicationDetailsViewModel : ObservableObject
 	{
-		private ObservableCollection<Medicine> _medicines; //En observablecollection som håller mediciner
+		private ObservableCollection<Medicine> _medicines;
 		[RelayCommand]
-		void GoBack() //Metod för om användaren trycker på tillbaka pilen
+		void GoBack() //Method that enables the user to direct back to the MedicationOverviewPage
 		{
-			Shell.Current.GoToAsync($"//MedicationOverviewPage"); //Diregerar till MedicationOverviewPage
+			Shell.Current.GoToAsync($"//MedicationOverviewPage");
         }
-		[RelayCommand]
-		void MedicineClick(Medicine medicine) //Metod för om användaren söker på mediciner och trycker på en medicin
-		{
-			WeakReferenceMessenger.Default.Send(new ValueChangedMessage<Medicine>(medicine)); //Ett message som säger att en ny medicin ska visas
-		}
-
-		[RelayCommand]
-		void IncreaseQuantity() //Metod om användaren trycker på att öka kvantiteten
-		{
-			Quantity++; //Ökar kvantiteten med 1
-		}
-
-		[RelayCommand]
-		void DecreaseQuantity() //Metod om användaren trycker på att minska kvantiteten
+        //Method for when the user searches for medications and selects a specific medication. It sends a message of the selected medicine to show
+        [RelayCommand]
+		void MedicineClick(Medicine medicine)
         {
-			if (Quantity > 1) //Så länge det inte är mindre än 0
+			WeakReferenceMessenger.Default.Send(new ValueChangedMessage<Medicine>(medicine));
+		}
+
+		[RelayCommand]
+		void IncreaseQuantity() //Method for when the user clicks to increase the quantity, each click is +1
+        {
+			Quantity++;
+		}
+
+		[RelayCommand]
+		void DecreaseQuantity() //Method for when the user clicks to decrease the quantity, each click is -1
+        {
+			if (Quantity > 1)
 			{
-				Quantity--; //Minskar kvantiteten med 1
+				Quantity--; 
             }
 		}
 		[RelayCommand]
-		void AddToCart() //Metod om användaren trycker på knappen att lägga till i kundvagn
+		void AddToCart() //Method that enables user to add items to cart. The method sends a message so the item gets added in the cartlist
 		{
-			Dictionary<Medicine, int> medicineQuantity = new Dictionary<Medicine, int> { { _medicineService.CurrentMedicine, Quantity } }; //Dictionary som fåt all inmatad information och 
+			Dictionary<Medicine, int> medicineQuantity = new Dictionary<Medicine, int> { { _medicineService.CurrentMedicine, Quantity } }; //A dictionary that receives all the input information
 
-			WeakReferenceMessenger.Default.Send(new ValueChangedMessage<Dictionary<Medicine, int>>(medicineQuantity)); //Message varan
+            WeakReferenceMessenger.Default.Send(new ValueChangedMessage<Dictionary<Medicine, int>>(medicineQuantity));
 		}
 
         [RelayCommand]
-        public void GoToCheckout() //Metod för om användaren trycker på cart symbolen
+        public void GoToCheckout() //Method that enables to go to checkoutpage
         {
-            Shell.Current.GoToAsync("//CheckoutPage"); //Diregerar till checkoutpage
+            Shell.Current.GoToAsync("//CheckoutPage"); 
         }
     }
 }
